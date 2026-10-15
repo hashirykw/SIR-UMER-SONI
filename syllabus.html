@@ -1,0 +1,1159 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<script>(function(d){d.classList.add('js');try{var t=JSON.parse(localStorage.getItem('umr-theme'));if(t)d.setAttribute('data-theme',t)}catch(e){}})(document.documentElement)</script>
+<title>Syllabus tracker · Sir Umer Soni Biology</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<meta name="description" content="All 19 O Level 5090 topics and 21 IGCSE 0610 topics, with a tracker that remembers what you've finished.">
+<meta name="theme-color" content="#11101c">
+<meta property="og:title" content="Syllabus tracker · Sir Umer Soni Biology"><meta property="og:description" content="All 19 O Level 5090 topics and 21 IGCSE 0610 topics, with a tracker that remembers what you've finished."><meta property="og:type" content="website"><meta property="og:url" content="https://sirumersoni.vercel.app/syllabus"><meta property="og:image" content="umer-soni.jpg">
+<link rel="canonical" href="https://sirumersoni.vercel.app/syllabus">
+<link rel="icon" id="favicon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='18' fill='%23e8487a'/%3E%3Ccircle cx='32' cy='32' r='20' fill='none' stroke='%23fff' stroke-width='4'/%3E%3Ccircle cx='37' cy='27' r='7' fill='%23fff'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Unbounded:wght@300..800&family=Hanken+Grotesk:wght@400..700&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+<script>(function(d){var go=function(){d.classList.add('ready')};setTimeout(go,1200);try{Promise.all([document.fonts.load('600 1em "Unbounded"'),document.fonts.load('400 1em "Hanken Grotesk"')]).then(go,go)}catch(e){go()}})(document.documentElement)</script>
+
+<style>
+/* Hallmark · macrostructure: Specimen Story (multi-page) · genre: atmospheric · tone: scientific-editorial
+ * theme: custom (vibe: "histology slide under brightfield; fluorescence scope in the dark")
+ * paper (dark) oklch(13.5% .025 285) · accent oklch(72% .19 0) eosin/mCherry · cool oklch(76% .12 235) DAPI · bio oklch(80% .16 150) GFP
+ * type: Unbounded + Hanken Grotesk + IBM Plex Mono · nav: N5 floating pill + N13 ⌘K · footer: Ft5 statement
+ * diversification vs MAK: accent hue warm-amber → rose-magenta, display grotesk → wide rounded, structure rail → pinned specimen story
+ * Hallmark · pre-emit critique: P5 H4 E4 S5 R4 V5 */
+:root{
+  /* layout: a microscope bench — one lens-framed hero, a pinned "diagram first" story, slide-box rails, quiet panels around them */
+  --c-paper:oklch(13.5% .025 285); --c-paper-2:oklch(17% .028 285); --c-paper-3:oklch(20.5% .03 285); --c-paper-4:oklch(25.5% .032 285);
+  --c-ink:oklch(96% .012 330); --c-ink-2:oklch(82% .02 300); --c-ink-3:oklch(66% .025 295);
+  --c-line:oklch(100% 0 0 / .08); --c-line-2:oklch(100% 0 0 / .15);
+  --c-accent:oklch(72% .19 0); --c-accent-hi:oklch(78% .17 5); --c-on-accent:oklch(18% .05 330);
+  --c-accent-soft:oklch(72% .19 0 / .14); --c-accent-glow:oklch(72% .19 0 / .38);
+  --c-cool:oklch(76% .12 235); --c-cool-soft:oklch(76% .12 235 / .15);
+  --c-ok:oklch(80% .16 150); --c-ok-soft:oklch(80% .16 150 / .15); --c-bad:oklch(70% .17 30); --c-pink:oklch(78% .14 305); --c-eco:oklch(80% .13 85);
+  --c-scrim:oklch(8% .03 285 / .66); --c-shadow:oklch(4% .03 285 / .62);
+  --f-display:"Unbounded","Arial Black",system-ui,sans-serif;
+  --f-body:"Hanken Grotesk",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  --f-mono:"IBM Plex Mono",ui-monospace,"SFMono-Regular",Menlo,Consolas,monospace;
+  --s-1:4px;--s-2:8px;--s-3:12px;--s-4:16px;--s-5:24px;--s-6:32px;--s-7:48px;--s-8:64px;--s-9:96px;--s-10:128px;
+  --t-xs:12px;--t-sm:14px;--t-md:16px;--t-lg:19px;--t-xl:clamp(20px,2.2vw,26px);--t-2xl:clamp(26px,3.8vw,46px);--t-3xl:clamp(34px,5.6vw,72px);--t-hero:clamp(40px,7.2vw,104px);
+  --r-sm:12px;--r-md:18px;--r-lg:28px;--r-pill:999px;
+  --e-out:cubic-bezier(.16,1,.3,1);--e-in:cubic-bezier(.7,0,.84,0);--e-io:cubic-bezier(.65,0,.35,1);
+  --d-1:.15s;--d-2:.3s;--d-3:.6s;--d-4:1s;
+  --max:1280px; --nav-h:64px;
+  color-scheme:dark;
+}
+@media (prefers-color-scheme: light){:root:not([data-theme="dark"]){
+  --c-paper:oklch(98.4% .006 340);--c-paper-2:oklch(96.2% .011 340);--c-paper-3:oklch(100% 0 0);--c-paper-4:oklch(92.5% .016 335);
+  --c-ink:oklch(22% .06 295);--c-ink-2:oklch(38% .05 295);--c-ink-3:oklch(52% .035 295);
+  --c-line:oklch(25% .05 295 / .1);--c-line-2:oklch(25% .05 295 / .19);
+  --c-accent:oklch(55% .21 0);--c-accent-hi:oklch(50% .2 2);--c-on-accent:oklch(99% .008 340);
+  --c-accent-soft:oklch(55% .21 0 / .1);--c-accent-glow:oklch(55% .21 0 / .28);
+  --c-cool:oklch(45% .16 285);--c-cool-soft:oklch(45% .16 285 / .1);--c-ok:oklch(52% .14 150);--c-ok-soft:oklch(52% .14 150 / .12);--c-bad:oklch(55% .19 30);--c-pink:oklch(52% .16 315);--c-eco:oklch(55% .13 75);
+  --c-scrim:oklch(22% .05 295 / .42);--c-shadow:oklch(30% .06 300 / .18);color-scheme:light}}
+:root[data-theme="light"]{
+  --c-paper:oklch(98.4% .006 340);--c-paper-2:oklch(96.2% .011 340);--c-paper-3:oklch(100% 0 0);--c-paper-4:oklch(92.5% .016 335);
+  --c-ink:oklch(22% .06 295);--c-ink-2:oklch(38% .05 295);--c-ink-3:oklch(52% .035 295);
+  --c-line:oklch(25% .05 295 / .1);--c-line-2:oklch(25% .05 295 / .19);
+  --c-accent:oklch(55% .21 0);--c-accent-hi:oklch(50% .2 2);--c-on-accent:oklch(99% .008 340);
+  --c-accent-soft:oklch(55% .21 0 / .1);--c-accent-glow:oklch(55% .21 0 / .28);
+  --c-cool:oklch(45% .16 285);--c-cool-soft:oklch(45% .16 285 / .1);--c-ok:oklch(52% .14 150);--c-ok-soft:oklch(52% .14 150 / .12);--c-bad:oklch(55% .19 30);--c-pink:oklch(52% .16 315);--c-eco:oklch(55% .13 75);
+  --c-scrim:oklch(22% .05 295 / .42);--c-shadow:oklch(30% .06 300 / .18);color-scheme:light}
+@view-transition{navigation:auto}
+::view-transition-old(root){animation:vt-out .22s linear both}
+::view-transition-new(root){animation:vt-in .38s var(--e-out) both}
+@keyframes vt-out{to{opacity:0}}
+@keyframes vt-in{from{opacity:0}}
+
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html,body{overflow-x:clip}
+html{-webkit-text-size-adjust:100%;scrollbar-color:var(--c-paper-4) var(--c-paper)}
+html.lenis,html.lenis body{height:auto}.lenis.lenis-smooth{scroll-behavior:auto!important}.lenis.lenis-stopped{overflow:hidden}
+body{margin:0;background:var(--c-paper);color:var(--c-ink);font:400 var(--t-md)/1.6 var(--f-body);-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+::selection{background:var(--c-accent);color:var(--c-on-accent)}
+::-webkit-scrollbar{width:10px;height:10px}::-webkit-scrollbar-track{background:var(--c-paper)}
+::-webkit-scrollbar-thumb{background:var(--c-paper-4);border-radius:10px;border:2px solid var(--c-paper)}::-webkit-scrollbar-thumb:hover{background:var(--c-accent)}
+img{max-width:100%;display:block}
+a{color:inherit}
+button{font:inherit;color:inherit;cursor:pointer}
+:focus-visible{outline:2px solid var(--c-accent);outline-offset:3px;border-radius:6px}
+h1,h2,h3,h4{font-family:var(--f-display);font-weight:600;letter-spacing:-.035em;line-height:1.04;margin:0;text-wrap:balance;font-style:normal;overflow-wrap:anywhere;min-width:0}
+h2{font-size:var(--t-2xl)}
+h3{font-size:var(--t-xl);letter-spacing:-.025em;line-height:1.15}
+p{margin:0;text-wrap:pretty}
+.mono{font-family:var(--f-mono)}
+.wrap{position:relative;z-index:2;width:100%;max-width:var(--max);margin:0 auto;padding-left:max(20px,env(safe-area-inset-left,0px));padding-right:max(20px,env(safe-area-inset-right,0px))}
+.sec{position:relative;z-index:2;padding-block:clamp(72px,10vw,140px)}
+.lede{font-size:clamp(16px,1.5vw,19px);color:var(--c-ink-2);max-width:60ch}
+.hl{color:var(--c-accent)}
+.u-line{background:linear-gradient(var(--c-accent),var(--c-accent)) 0 92%/100% .09em no-repeat;padding-bottom:.04em}
+.stack{display:grid;gap:var(--s-4)}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+/* -------- 3D background -------- */
+#bg3d{position:fixed;inset:0;z-index:0;pointer-events:none;opacity:0;transition:opacity 1.8s var(--e-out)}
+#bg3d.on{opacity:.95}
+.no-webgl #bg3d{opacity:1}
+#bg3d canvas{width:100%!important;height:100%!important;display:block}
+.bg-veil{position:fixed;inset:0;z-index:1;pointer-events:none;background:radial-gradient(140% 90% at 50% 40%,transparent 55%,color-mix(in oklab,var(--c-paper) 70%,transparent) 100%)}
+.no-webgl #bg3d{background:radial-gradient(60% 50% at 70% 20%,var(--c-accent-soft),transparent 70%),radial-gradient(50% 40% at 10% 60%,var(--c-cool-soft),transparent 70%)}
+
+/* -------- buttons (default · hover · focus · active · disabled · loading · error · success) -------- */
+.btn{position:relative;display:inline-flex;align-items:center;justify-content:center;gap:10px;height:48px;padding:0 22px;border-radius:var(--r-pill);border:1px solid var(--c-line-2);background:var(--c-paper-3);color:var(--c-ink);font:600 15px/1 var(--f-body);text-decoration:none;white-space:nowrap;transition:background var(--d-2) var(--e-out),border-color var(--d-2) var(--e-out),transform var(--d-2) var(--e-out),box-shadow var(--d-2) var(--e-out);will-change:transform}
+.btn svg{width:18px;height:18px;flex:none}
+.btn:hover{border-color:var(--c-accent);background:var(--c-paper-4)}
+.btn:active{transform:translateY(1px) scale(.98)}
+.btn[disabled],.btn[aria-disabled="true"]{opacity:.45;pointer-events:none}
+.btn[data-state="loading"]{color:transparent}.btn[data-state="loading"]::after{content:"";position:absolute;width:16px;height:16px;border-radius:50%;border:2px solid var(--c-ink);border-right-color:transparent;animation:spin .7s linear infinite}
+.btn[data-state="error"]{border-color:var(--c-bad);color:var(--c-bad)}
+.btn[data-state="success"]{border-color:var(--c-ok);color:var(--c-ok)}
+@keyframes spin{to{transform:rotate(1turn)}}
+.btn-pri{background:var(--c-accent);border-color:transparent;color:var(--c-on-accent);box-shadow:0 12px 34px -14px var(--c-accent-glow)}
+.btn-pri:hover{background:var(--c-accent-hi);border-color:transparent}
+.btn-ghost{background:transparent}
+.btn-sm{height:38px;padding:0 15px;font-size:14px}
+.btn .fill{position:absolute;inset:0;border-radius:inherit;overflow:hidden;pointer-events:none}
+.btn-link{display:inline-flex;align-items:center;gap:8px;font:600 15px var(--f-body);color:var(--c-ink);text-decoration:none;border-bottom:1px solid var(--c-line-2);padding-bottom:3px;transition:border-color var(--d-2),color var(--d-2);white-space:nowrap}
+.btn-link:hover{color:var(--c-accent);border-color:var(--c-accent)}
+button.btn-link{background:none;border:0;border-bottom:1px solid var(--c-line-2);border-radius:0;padding:0 0 3px;cursor:pointer}
+.btn-link svg{width:16px;height:16px;transition:transform var(--d-2) var(--e-out)}.btn-link:hover svg{transform:translateX(4px)}
+
+/* -------- chips / pills -------- */
+.pill{display:inline-flex;align-items:center;gap:8px;height:30px;padding:0 12px;border-radius:var(--r-pill);border:1px solid var(--c-line-2);font:500 12.5px/1 var(--f-mono);color:var(--c-ink-2);background:var(--c-paper-2);white-space:nowrap}
+.live{width:7px;height:7px;border-radius:50%;background:var(--c-ok);box-shadow:0 0 0 0 var(--c-ok-soft);animation:live 2s infinite}
+@keyframes live{0%{box-shadow:0 0 0 0 var(--c-ok-soft)}70%{box-shadow:0 0 0 8px transparent}}
+
+/* -------- kinetic + scramble text -------- */
+.kin{display:inline}
+.kin .ch{display:inline-block;transition:font-variation-settings .35s var(--e-out),transform .35s var(--e-out),color .35s;font-variation-settings:"wght" var(--w,700)}
+.kin .sp{display:inline-block;width:.26em}
+[data-scramble]{font-variant-ligatures:none}
+
+/* -------- nav (N5 floating pill + mobile dropdown + ⌘K) -------- */
+.nav{position:fixed;left:0;right:0;top:calc(12px + env(safe-area-inset-top,0px));z-index:60;pointer-events:none;transition:transform var(--d-3) var(--e-out)}
+.nav.tuck{transform:translateY(calc(-100% - 24px))}
+.nav .wrap{display:flex;justify-content:center}
+.nav-pill{pointer-events:auto;position:relative;display:flex;align-items:center;gap:6px;height:var(--nav-h);padding:8px 8px 8px 14px;border-radius:var(--r-pill);background:color-mix(in oklab,var(--c-paper-2) 86%,transparent);border:1px solid var(--c-line-2);box-shadow:0 18px 50px -24px var(--c-shadow);backdrop-filter:blur(18px) saturate(1.3);-webkit-backdrop-filter:blur(18px) saturate(1.3);width:100%;max-width:1120px}
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none;margin-right:auto;min-width:0}
+.brand-mark{width:40px;height:40px;border-radius:12px;overflow:hidden;display:grid;place-items:center;background:var(--c-accent);color:var(--c-on-accent);font:800 13px/1 var(--f-mono);letter-spacing:-.04em;flex:none}
+.brand-mark img{width:100%;height:100%;object-fit:contain;background:var(--c-paper-3)}
+.brand-mark.has-img{background:var(--c-paper-3)}
+.brand b{display:block;font:600 15px/1 var(--f-display);letter-spacing:-.03em;white-space:nowrap}
+.brand small{display:block;font:500 10.5px/1.4 var(--f-mono);color:var(--c-ink-3);letter-spacing:.08em;white-space:nowrap}
+.nav-links{position:relative;display:flex;align-items:center;gap:2px}
+.nav-links a{position:relative;z-index:1;height:40px;display:flex;align-items:center;padding:0 13px;border-radius:var(--r-pill);font:500 14px/1 var(--f-body);color:var(--c-ink-2);text-decoration:none;white-space:nowrap;transition:color var(--d-2)}
+.nav-links a:hover,.nav-links a[aria-current="page"]{color:var(--c-ink)}
+.nav-blob{position:absolute;z-index:0;top:0;height:40px;border-radius:var(--r-pill);background:var(--c-paper-4);transition:transform .45s var(--e-out),width .45s var(--e-out),opacity .3s;opacity:0}
+.nav-tools{display:flex;align-items:center;gap:6px;margin-left:6px}
+.kbtn{height:40px;display:inline-flex;align-items:center;gap:8px;padding:0 10px 0 12px;border-radius:var(--r-pill);border:1px solid var(--c-line-2);background:var(--c-paper-3);font:500 13px var(--f-body);color:var(--c-ink-2);white-space:nowrap}
+.kbtn svg{width:18px;height:18px;flex:none}
+.kbtn kbd{font:600 11px var(--f-mono);padding:3px 6px;border-radius:6px;background:var(--c-paper-4);color:var(--c-ink)}
+.ibtn{position:relative;width:40px;height:40px;border-radius:50%;border:1px solid var(--c-line-2);background:var(--c-paper-3);display:grid;place-items:center;flex:none;transition:border-color var(--d-2),background var(--d-2)}
+.ibtn:hover{border-color:var(--c-accent)}
+.ibtn svg{width:18px;height:18px}
+.ibtn[aria-pressed="true"]{background:var(--c-accent);color:var(--c-on-accent);border-color:transparent}
+.badge{position:absolute;top:-4px;right:-4px;min-width:18px;height:18px;padding:0 5px;border-radius:9px;background:var(--c-accent);color:var(--c-on-accent);font:700 10.5px/18px var(--f-mono);text-align:center}
+.badge:empty,.badge[data-n="0"]{display:none}
+.burger{display:none}
+.burger span{display:block;width:16px;height:1.6px;background:currentColor;border-radius:2px;transition:transform var(--d-2) var(--e-out),opacity var(--d-2)}
+.burger span+span{margin-top:4px}
+.burger[aria-expanded="true"] span:first-child{transform:translateY(2.8px) rotate(45deg)}
+.burger[aria-expanded="true"] span:last-child{transform:translateY(-2.8px) rotate(-45deg)}
+.mmenu{position:absolute;top:calc(100% + 10px);right:0;width:min(300px,calc(100vw - 32px));padding:10px;border-radius:20px;background:var(--c-paper-2);border:1px solid var(--c-line-2);box-shadow:0 30px 70px -30px var(--c-shadow);transform-origin:top right;transform:scale(.92) translateY(-6px);opacity:0;visibility:hidden;transition:transform .4s var(--e-out),opacity .25s,visibility .25s}
+.mmenu.open{transform:none;opacity:1;visibility:visible}
+.mmenu a{display:flex;align-items:center;justify-content:space-between;gap:12px;height:46px;padding:0 14px;border-radius:12px;text-decoration:none;font:600 16px var(--f-body);color:var(--c-ink);opacity:0;transform:translateX(10px);transition:background var(--d-2),opacity .35s var(--e-out),transform .35s var(--e-out)}
+.mmenu.open a{opacity:1;transform:none}
+.mmenu a:hover,.mmenu a[aria-current="page"]{background:var(--c-paper-4)}
+.mmenu a span{font:500 11px var(--f-mono);color:var(--c-ink-3)}
+.mmenu .mm-cta{display:flex;gap:8px;padding:8px 4px 2px}
+.mmenu .mm-cta .btn{flex:1}
+@media (max-width:1120px){.nav-links{display:none}.burger{display:grid}.kbtn span,.kbtn kbd{display:none}.kbtn{width:40px;padding:0;justify-content:center}}
+@media (hover:none){.kbtn kbd{display:none}}
+@media (max-width:420px){.brand small{display:none}.nav-tools .ibtn.optional{display:none}}
+
+/* ⌘K palette */
+.cmdk{position:fixed;inset:0;z-index:90;display:flex;justify-content:center;align-items:flex-start;padding:max(14vh,80px) 16px 16px;visibility:hidden;opacity:0;transition:opacity .2s,visibility .2s}
+.cmdk.open{visibility:visible;opacity:1}
+.cmdk .scrim{position:absolute;inset:0;background:var(--c-scrim);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px)}
+.cmdk-box{position:relative;width:min(620px,100%);border-radius:20px;background:var(--c-paper-2);border:1px solid var(--c-line-2);box-shadow:0 40px 100px -30px var(--c-shadow);overflow:hidden;transform:translateY(-10px) scale(.98);transition:transform .35s var(--e-out)}
+.cmdk.open .cmdk-box{transform:none}
+.cmdk-in{display:flex;align-items:center;gap:10px;padding:0 16px;border-bottom:1px solid var(--c-line)}
+.cmdk-in span{font:600 14px var(--f-mono);color:var(--c-accent)}
+.cmdk-in input{flex:1;height:56px;border:0;background:transparent;font:500 17px var(--f-body);color:var(--c-ink);outline:none}
+.cmdk-list{max-height:min(52vh,420px);overflow-y:auto;padding:8px;overscroll-behavior:contain}
+.cmdk-g{font:600 11px var(--f-mono);letter-spacing:.1em;text-transform:uppercase;color:var(--c-ink-3);padding:10px 10px 6px}
+.cmdk-i{display:flex;align-items:center;gap:12px;width:100%;text-align:left;padding:10px 12px;border:0;border-radius:12px;background:transparent;font:500 15px var(--f-body);color:var(--c-ink);text-decoration:none}
+.cmdk-i small{margin-left:auto;font:500 12px var(--f-mono);color:var(--c-ink-3);white-space:nowrap}
+.cmdk-i.on{background:var(--c-paper-4)}
+.cmdk-i .ic{width:28px;height:28px;border-radius:8px;display:grid;place-items:center;background:var(--c-accent-soft);color:var(--c-accent);font:700 12px var(--f-mono);flex:none}
+.cmdk-foot{display:flex;gap:14px;padding:10px 16px;border-top:1px solid var(--c-line);font:500 11.5px var(--f-mono);color:var(--c-ink-3)}
+
+/* -------- section heads (varied, never tag-left/heading-right) -------- */
+.sh{display:grid;gap:var(--s-4);margin-bottom:clamp(36px,5vw,64px);max-width:860px}
+.sh.center{margin-inline:auto;text-align:center;justify-items:center}
+.sh.split{max-width:none;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);align-items:end;gap:var(--s-5) var(--s-8)}
+@media (max-width:860px){.sh.split{grid-template-columns:1fr}}
+
+/* -------- cards / panels -------- */
+.panel{position:relative;border-radius:var(--r-lg);border:1px solid var(--c-line);background:var(--c-paper-2);min-width:0}
+.spot{position:relative;overflow:hidden}
+.spot::before{content:"";position:absolute;inset:0;border-radius:inherit;background:radial-gradient(420px circle at var(--mx,50%) var(--my,-20%),var(--c-accent-soft),transparent 46%);opacity:0;transition:opacity var(--d-2);pointer-events:none}
+.spot:hover::before{opacity:1}
+
+/* -------- marquee -------- */
+.mq{display:flex;overflow:hidden;user-select:none;-webkit-mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent);mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent)}
+.mq-t{display:flex;flex:none;gap:var(--s-3);padding-right:var(--s-3);animation:mq var(--mq,40s) linear infinite}
+.mq.rev .mq-t{animation-direction:reverse}
+.mq:hover .mq-t{animation-play-state:paused}
+@keyframes mq{to{transform:translateX(-100%)}}
+
+/* -------- forms -------- */
+.field{display:grid;gap:6px;min-width:0}
+.field label,.lbl{font:500 11.5px var(--f-mono);letter-spacing:.08em;text-transform:uppercase;color:var(--c-ink-3)}
+input,select,textarea{width:100%;font:inherit;color:var(--c-ink);background:var(--c-paper);border:1px solid var(--c-line-2);border-radius:12px;padding:12px 14px;transition:border-color var(--d-2),box-shadow var(--d-2)}
+input:hover,select:hover,textarea:hover{border-color:var(--c-ink-3)}
+input:focus,select:focus,textarea:focus{outline:none;border-color:var(--c-accent);box-shadow:0 0 0 4px var(--c-accent-soft)}
+input[aria-invalid="true"]{border-color:var(--c-bad)}
+textarea{resize:vertical;min-height:96px}
+.seg{display:inline-flex;flex-wrap:wrap;gap:4px;padding:4px;border-radius:var(--r-pill);background:var(--c-paper-2);border:1px solid var(--c-line)}
+.seg button{height:36px;padding:0 14px;border:0;border-radius:var(--r-pill);background:transparent;font:600 13.5px var(--f-body);color:var(--c-ink-2);white-space:nowrap;transition:background var(--d-2),color var(--d-2)}
+.seg button:hover{color:var(--c-ink)}
+.seg button[aria-pressed="true"],.seg button[aria-selected="true"]{background:var(--c-accent);color:var(--c-on-accent)}
+
+/* -------- modal / drawer / toast -------- */
+.modal{position:fixed;inset:0;z-index:80;display:grid;place-items:center;padding:16px;visibility:hidden;opacity:0;transition:opacity .25s,visibility .25s}
+.modal.open{visibility:visible;opacity:1}
+.modal .scrim{position:absolute;inset:0;background:var(--c-scrim);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px)}
+.modal-box{position:relative;width:min(640px,100%);max-height:min(86vh,780px);overflow:auto;border-radius:var(--r-lg);background:var(--c-paper-2);border:1px solid var(--c-line-2);padding:clamp(20px,3vw,32px);transform:translateY(20px) scale(.97);transition:transform .45s var(--e-out);overscroll-behavior:contain}
+.modal.open .modal-box{transform:none}
+.x{position:absolute;top:14px;right:14px;width:38px;height:38px;border-radius:50%;border:1px solid var(--c-line-2);background:var(--c-paper-3);font-size:18px;line-height:1;display:grid;place-items:center}
+.toast{position:fixed;left:50%;bottom:calc(88px + env(safe-area-inset-bottom,0px));z-index:95;transform:translate(-50%,16px);opacity:0;padding:11px 18px;border-radius:var(--r-pill);background:var(--c-ink);color:var(--c-paper);font:600 14px var(--f-body);pointer-events:none;transition:transform .35s var(--e-out),opacity .35s;max-width:calc(100vw - 32px);text-align:center}
+.toast.on{opacity:1;transform:translate(-50%,0)}
+
+/* cart drawer (small, right) */
+.cart{position:fixed;z-index:85;top:calc(12px + env(safe-area-inset-top,0px));right:max(12px,env(safe-area-inset-right,0px));width:min(400px,calc(100vw - 24px));max-height:calc(100vh - 24px);display:flex;flex-direction:column;border-radius:22px;background:var(--c-paper-2);border:1px solid var(--c-line-2);box-shadow:0 40px 100px -30px var(--c-shadow);transform:translateX(calc(100% + 24px));transition:transform .5s var(--e-out);overflow:hidden}
+.cart.open{transform:none}
+.cart-h{display:flex;align-items:center;justify-content:space-between;padding:16px 18px;border-bottom:1px solid var(--c-line)}
+.cart-h b{font:700 18px var(--f-display)}
+.cart-h .x{position:static}
+.cart-b{flex:1;overflow-y:auto;padding:12px 14px;display:grid;gap:10px;align-content:start;overscroll-behavior:contain}
+.ci{display:grid;grid-template-columns:44px 1fr auto;gap:12px;align-items:center;padding:10px;border-radius:14px;background:var(--c-paper-3);border:1px solid var(--c-line)}
+.ci .cv{width:44px;height:56px;border-radius:6px;display:grid;place-items:center;font:800 11px var(--f-mono);color:var(--c-on-accent);background:var(--cc,var(--c-accent))}
+.ci b{display:block;font:600 14px/1.3 var(--f-body)}
+.ci small{font:500 12px var(--f-mono);color:var(--c-ink-3)}
+.qty{display:flex;align-items:center;gap:6px}
+.qty button{width:28px;height:28px;border-radius:50%;border:1px solid var(--c-line-2);background:var(--c-paper-2)}
+.qty span{min-width:18px;text-align:center;font:600 14px var(--f-mono)}
+.cart-f{padding:14px 18px 18px;border-top:1px solid var(--c-line);display:grid;gap:12px}
+.cart-tot{display:flex;justify-content:space-between;font:600 15px var(--f-body)}
+.cart-tot b{font:800 20px var(--f-display)}
+.cart-empty{padding:30px 10px;text-align:center;color:var(--c-ink-3)}
+
+/* -------- chatbot (small panel on every screen size) -------- */
+.bot-fab{position:fixed;z-index:70;right:max(16px,env(safe-area-inset-right,0px));bottom:calc(16px + env(safe-area-inset-bottom,0px));display:flex;align-items:center;gap:10px;height:54px;padding:0 18px 0 7px;border:0;border-radius:var(--r-pill);background:var(--c-accent);color:var(--c-on-accent);font:600 14.5px var(--f-body);box-shadow:0 16px 40px -14px var(--c-accent-glow);transition:transform var(--d-3) var(--e-out)}
+.bot-fab .bf-i{width:40px;height:40px;border-radius:50%;background:var(--c-on-accent);color:var(--c-accent);display:grid;place-items:center;font:700 13px var(--f-mono)}
+.bot-fab:hover{transform:translateY(-2px)}
+.bot-fab.away{transform:translateY(160%)}
+@media (max-width:560px){.bot-fab .bf-t{display:none}.bot-fab{padding:0 7px}}
+.bot{position:fixed;z-index:75;right:max(12px,env(safe-area-inset-right,0px));bottom:calc(80px + env(safe-area-inset-bottom,0px));width:min(370px,calc(100vw - 24px));height:min(540px,calc(100vh - 150px),calc(100dvh - 150px));display:flex;flex-direction:column;border-radius:22px;background:var(--c-paper-2);border:1px solid var(--c-line-2);box-shadow:0 40px 100px -30px var(--c-shadow);overflow:hidden;transform-origin:bottom right;transform:scale(.9) translateY(14px);opacity:0;visibility:hidden;transition:transform .45s var(--e-out),opacity .25s,visibility .25s}
+.bot.open{transform:none;opacity:1;visibility:visible}
+@media (max-width:560px){.bot{height:min(470px,calc(100dvh - 160px))}}
+.bot-h{display:flex;align-items:center;gap:10px;padding:12px 14px;border-bottom:1px solid var(--c-line);background:var(--c-paper-3)}
+.bot-h .av{width:36px;height:36px;border-radius:11px;background:var(--c-accent);color:var(--c-on-accent);display:grid;place-items:center;font:800 11px var(--f-mono);overflow:hidden;flex:none}
+.bot-h .av img{width:100%;height:100%;object-fit:cover}
+.bot-h b{display:block;font:700 15px var(--f-display)}
+.bot-h small{display:flex;align-items:center;gap:6px;font:500 11px var(--f-mono);color:var(--c-ink-3)}
+.bot-h .x{position:static;margin-left:auto;width:34px;height:34px}
+.bot-h .ctx{font:600 11px var(--f-mono);padding:4px 8px;border-radius:8px;background:var(--c-accent-soft);color:var(--c-accent);white-space:nowrap}
+.bot-m{flex:1;overflow-y:auto;padding:14px;display:flex;flex-direction:column;gap:10px;overscroll-behavior:contain}
+.mg{max-width:88%;padding:10px 13px;border-radius:16px;font-size:14.5px;line-height:1.5;overflow-wrap:anywhere;animation:mg .35s var(--e-out)}
+@keyframes mg{from{opacity:0;transform:translateY(6px)}}
+.mg.b{background:var(--c-paper-3);border:1px solid var(--c-line);border-bottom-left-radius:5px}
+.mg.u{align-self:flex-end;background:var(--c-accent);color:var(--c-on-accent);border-bottom-right-radius:5px}
+.mg a{color:var(--c-accent);font-weight:600}
+.mg code{font:500 13px var(--f-mono);background:var(--c-paper-4);padding:1px 5px;border-radius:5px}
+.mg .acts{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+.mg .acts a,.mg .acts button{display:inline-flex;align-items:center;height:30px;padding:0 11px;border-radius:var(--r-pill);border:1px solid var(--c-line-2);background:var(--c-paper-2);font:600 12.5px var(--f-body);color:var(--c-ink);text-decoration:none}
+.mg ul{margin:6px 0 0;padding-left:18px}
+.mg.typing{display:flex;gap:4px;padding:14px}
+.mg.typing i{width:6px;height:6px;border-radius:50%;background:var(--c-ink-3);animation:bl 1s infinite}
+.mg.typing i:nth-child(2){animation-delay:.15s}.mg.typing i:nth-child(3){animation-delay:.3s}
+@keyframes bl{50%{opacity:.25;transform:translateY(-2px)}}
+.bot-s{display:flex;gap:6px;overflow-x:auto;padding:0 12px 10px;scrollbar-width:none}
+.bot-s button{flex:none;height:30px;padding:0 11px;border-radius:var(--r-pill);border:1px solid var(--c-line-2);background:var(--c-paper);font:500 12.5px var(--f-body);color:var(--c-ink-2)}
+.bot form{display:flex;gap:8px;padding:10px 12px 12px;border-top:1px solid var(--c-line)}
+.bot form input{height:44px;border-radius:var(--r-pill);padding:0 16px}
+.bot form button{flex:none;width:44px;height:44px;border-radius:50%;border:0;background:var(--c-accent);color:var(--c-on-accent);display:grid;place-items:center}
+
+/* -------- footer (Ft5 statement) -------- */
+.foot{position:relative;z-index:2;border-top:1px solid var(--c-line);padding-block:clamp(56px,8vw,96px) calc(28px + env(safe-area-inset-bottom,0px));overflow:hidden}
+.foot-big{display:block;font:700 clamp(46px,12vw,190px)/.9 var(--f-display);letter-spacing:-.07em;color:transparent;-webkit-text-stroke:1.2px var(--c-line-2);white-space:nowrap;text-decoration:none;transition:-webkit-text-stroke-color .4s}
+.foot-big:hover{-webkit-text-stroke-color:var(--c-accent)}
+.foot-row{display:flex;flex-wrap:wrap;gap:12px 28px;align-items:center;justify-content:space-between;margin-top:var(--s-6)}
+.foot-row nav{display:flex;flex-wrap:wrap;gap:6px 22px}
+.foot-row nav a{font:500 15px var(--f-body);color:var(--c-ink-2);text-decoration:none;white-space:nowrap}
+.foot-row nav a:hover{color:var(--c-accent)}
+.foot-meta{display:flex;flex-wrap:wrap;gap:8px 24px;justify-content:space-between;margin-top:var(--s-6);padding-top:var(--s-5);border-top:1px solid var(--c-line);font:500 12px/1.6 var(--f-mono);color:var(--c-ink-3)}
+.foot-meta a{color:var(--c-ink-2)}
+
+/* -------- page head (inner pages) -------- */
+.ph{position:relative;z-index:2;padding-block:calc(var(--nav-h) + 90px) clamp(40px,6vw,72px)}
+.ph h1{font-size:var(--t-3xl);font-weight:600;letter-spacing:-.05em;line-height:1;max-width:17ch}
+.ph .lede{margin-top:var(--s-5)}
+.crumb{display:flex;align-items:center;gap:8px;margin-bottom:var(--s-5);font:500 12.5px var(--f-mono);color:var(--c-ink-3)}
+.crumb a{color:var(--c-ink-2);text-decoration:none;white-space:nowrap}.crumb a:hover{color:var(--c-accent)}
+
+/* -------- reveal helpers (visible at rest; JS hides only below-fold items) -------- */
+.rv{will-change:transform,opacity}
+
+/* -------- motion safety -------- */
+@media (prefers-reduced-motion: reduce){
+  *,*::before,*::after{animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.12s!important;scroll-behavior:auto!important}
+  .mq-t{animation:none}
+  ::view-transition-old(root),::view-transition-new(root){animation:none}
+}
+
+/* logo / portrait fallbacks */
+.brand-mark .bm-t{display:none}
+.brand-mark.fb .bm-t,[data-fb-host].fb .brand-mark .bm-t{display:block}
+[data-fb-host].has-img .brand-mark{background:var(--c-paper-3)}
+@media (max-width:640px){.nav .enrol-cta{display:none}}
+.mm-tools{display:flex;gap:8px;padding:8px 6px 4px;border-top:1px solid var(--c-line);margin-top:6px}
+.mm-tools .ibtn{width:44px;height:44px}
+
+/* ===== v3: no-flash intro, images, roll nav, dock, cursor, word reveals ===== */
+@keyframes intro{from{opacity:0;transform:translateY(26px)}}
+@keyframes introClip{from{opacity:0;clip-path:inset(14% 10% 14% 10% round 32px);transform:scale(1.04)}to{clip-path:inset(0 0 0 0 round 32px)}}
+html.js:not(.ready) :is(.hero-copy>*,.portrait,.ab-copy>*,.ab-portrait,.ph .crumb,.ph h1,.ph .lede,.ph .ring-box,.ph .n-cart,.ph .pill){opacity:0}
+html.js.ready :is(.hero-copy>*,.ab-copy>*,.ph .crumb,.ph h1,.ph .lede,.ph .ring-box,.ph .n-cart,.ph .pill){animation:intro .95s var(--e-out) both}
+html.js.ready :is(.portrait,.ab-portrait){animation:introClip 1.3s var(--e-out) both .1s}
+html.js.ready :is(.hero-copy,.ab-copy)>:nth-child(2),html.js.ready .ph h1{animation-delay:.07s}
+html.js.ready :is(.hero-copy,.ab-copy)>:nth-child(3),html.js.ready .ph .lede{animation-delay:.14s}
+html.js.ready :is(.hero-copy,.ab-copy)>:nth-child(4),html.js.ready :is(.ph .ring-box,.ph .n-cart){animation-delay:.21s}
+html.js.ready :is(.hero-copy,.ab-copy)>:nth-child(5){animation-delay:.28s}
+
+img[data-fallback]{opacity:0;transition:opacity .6s var(--e-out)}
+.has-img img[data-fallback]{opacity:1}
+.brand-mark .bm-t{display:block}
+.brand.has-img .brand-mark .bm-t{display:none}
+.brand.has-img .brand-mark{background:var(--c-paper-3)}
+.brand-mark{position:relative}
+.brand-mark img{position:absolute;inset:0}
+
+.roll{display:inline-block;height:1.25em;line-height:1.25em;overflow:hidden;vertical-align:middle}
+.roll>span{display:block;transition:transform .45s var(--e-out)}
+.roll>span::after{content:attr(data-t);display:block;color:var(--c-accent)}
+.nav-links a:hover .roll>span{transform:translateY(-1.25em)}
+
+.dock{position:fixed;z-index:70;left:max(16px,env(safe-area-inset-left,0px));bottom:calc(16px + env(safe-area-inset-bottom,0px));display:flex;gap:6px;padding:6px;border-radius:var(--r-pill);background:color-mix(in oklab,var(--c-paper-2) 90%,transparent);border:1px solid var(--c-line-2);box-shadow:0 18px 44px -20px var(--c-shadow);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);transition:transform var(--d-3) var(--e-out)}
+.dock .ibtn{width:42px;height:42px}
+.dock.away{transform:translateY(160%)}
+.top-btn{position:relative}
+.tp-ring{position:absolute;inset:-1px;width:calc(100% + 2px);height:calc(100% + 2px);transform:rotate(-90deg);pointer-events:none}
+.tp-ring circle{fill:none;stroke:var(--c-accent);stroke-width:2.5;stroke-linecap:round;stroke-dasharray:119.38;stroke-dashoffset:119.38;transition:stroke-dashoffset .15s linear}
+@media (max-width:560px){.dock .ibtn{width:40px;height:40px}}
+
+.cursor{position:fixed;left:0;top:0;z-index:100;pointer-events:none;display:none}
+html.has-cursor .cursor{display:block}
+.c-dot,.c-ring{position:fixed;left:0;top:0;border-radius:50%;will-change:transform}
+.c-dot{width:6px;height:6px;margin:-3px 0 0 -3px;background:var(--c-accent)}
+.c-ring{width:36px;height:36px;margin:-18px 0 0 -18px;border:1.5px solid var(--c-accent);opacity:.45;transition:width .35s var(--e-out),height .35s var(--e-out),margin .35s var(--e-out),opacity .35s,background .35s}
+.cursor.hover .c-ring{width:64px;height:64px;margin:-32px 0 0 -32px;opacity:.9;background:var(--c-accent-soft)}
+.cursor.down .c-ring{width:28px;height:28px;margin:-14px 0 0 -14px}
+.cursor.gone{opacity:0}
+
+.wm{display:inline-block;overflow:hidden;vertical-align:bottom;padding-bottom:.1em;margin-bottom:-.1em}
+.wi{display:inline-block;will-change:transform}
+
+@media (prefers-reduced-motion: reduce){html.js :is(.hero-copy>*,.portrait,.ab-copy>*,.ab-portrait,.ph .crumb,.ph h1,.ph .lede,.ph .ring-box,.ph .n-cart,.ph .pill){opacity:1!important;animation:none!important}.cursor{display:none!important}}
+
+/* ===== Soni: brand glyphs, microscope labels ===== */
+.brand-mark svg{width:26px;height:26px}
+.bot-fab .bf-i svg{width:24px;height:24px}
+.bot-h .av svg{width:22px;height:22px}
+.spec-tag{display:inline-flex;align-items:center;gap:8px;height:28px;padding:0 11px;border-radius:6px;border:1px solid var(--c-line-2);background:color-mix(in oklab,var(--c-paper-2) 88%,transparent);font:500 11.5px var(--f-mono);letter-spacing:.06em;text-transform:uppercase;color:var(--c-ink-2);white-space:nowrap}
+.spec-tag i{width:8px;height:8px;border-radius:50%;background:var(--c-accent);flex:none}
+.g-cell{--gc:var(--c-accent)}.g-plant{--gc:var(--c-ok)}.g-human{--gc:var(--c-cool)}.g-life{--gc:var(--c-pink)}.g-eco{--gc:var(--c-eco)}
+
+/* ===== cell diagrams ===== */
+.cellsvg{display:block;width:100%;height:auto;overflow:visible}
+.cellsvg .dr{fill:none;stroke:var(--c-ink-2);stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+.cellsvg .wall{stroke:var(--c-ok);stroke-width:5;fill:color-mix(in oklab,var(--c-ok) 7%,transparent)}
+.cellsvg .mem{stroke:var(--c-cool);stroke-width:2.4}
+.cellsvg .cyt{fill:color-mix(in oklab,var(--c-cool) 9%,transparent);stroke:none}
+.cellsvg.animal .cyt{fill:color-mix(in oklab,var(--c-accent) 8%,transparent)}
+.cellsvg .vac{stroke:var(--c-pink);fill:color-mix(in oklab,var(--c-pink) 12%,transparent)}
+.cellsvg .sap{font:500 13px var(--f-mono);fill:var(--c-ink-3);text-anchor:middle}
+.cellsvg .nuc{stroke:var(--c-pink);stroke-width:2.6;fill:color-mix(in oklab,var(--c-pink) 22%,transparent)}
+.cellsvg .nlo{fill:var(--c-pink)}
+.cellsvg .chl{stroke:var(--c-ok);fill:color-mix(in oklab,var(--c-ok) 30%,transparent)}
+.cellsvg .gr{stroke:var(--c-ok);stroke-width:2}
+.cellsvg .mit{stroke:var(--c-accent);fill:color-mix(in oklab,var(--c-accent) 22%,transparent)}
+.cellsvg .cri{stroke:var(--c-accent);stroke-width:1.6}
+.cellsvg .rib{fill:var(--c-ink-2)}
+.cellsvg .ld{fill:none;stroke:var(--c-ink-3);stroke-width:1.3}
+.cellsvg .tip{fill:var(--c-ink)}
+.cellsvg .lt{font:500 15px var(--f-mono);fill:var(--c-ink)}
+.cellsvg .st{transition:opacity .4s var(--e-out),filter .4s}
+.cellsvg.focus .st{opacity:.28}
+.cellsvg.focus .st.on{opacity:1;filter:drop-shadow(0 0 10px var(--c-accent-glow))}
+.cellsvg .pin{cursor:pointer;outline:none}
+.cellsvg .pin circle{fill:var(--c-paper-3);stroke:var(--c-line-2);stroke-width:1.5;transition:fill .25s,stroke .25s}
+.cellsvg .pin text{font:700 12px var(--f-mono);fill:var(--c-ink);pointer-events:none}
+.cellsvg .pin:hover circle,.cellsvg .pin.sel circle{stroke:var(--c-accent);fill:var(--c-accent-soft)}
+.cellsvg .pin.ok circle{fill:var(--c-ok);stroke:var(--c-ok)}
+.cellsvg .pin.ok text{fill:var(--c-paper)}
+.cellsvg .pin.bad circle{stroke:var(--c-bad);fill:color-mix(in oklab,var(--c-bad) 18%,transparent)}
+.cellsvg .pin:focus-visible circle{stroke:var(--c-accent);stroke-width:3}
+
+.syl-head{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:var(--s-6);align-items:end}
+@media (max-width:760px){.syl-head{grid-template-columns:1fr}}
+.ring-box{position:relative;display:grid;place-items:center;width:200px;height:200px;border-radius:50%}
+.pring{width:160px;height:160px;transform:rotate(-90deg)}
+.pr-bg{fill:none;stroke:var(--c-paper-4);stroke-width:10}
+.pr-fg{fill:none;stroke:var(--c-ok);stroke-width:10;stroke-linecap:round;stroke-dasharray:376.99;stroke-dashoffset:376.99;transition:stroke-dashoffset 1s var(--e-out)}
+.pr-t{position:absolute;display:grid;justify-items:center}
+.pr-t b{font:600 30px/1 var(--f-display);font-variant-numeric:tabular-nums;letter-spacing:-.04em}
+.pr-t span{font:500 11.5px var(--f-mono);color:var(--c-ink-3);margin-top:4px}
+.syl-tools{display:flex;flex-wrap:wrap;gap:12px;align-items:center;margin-bottom:var(--s-5)}
+.syl-search{flex:1;min-width:220px}
+.syl-search input{border-radius:var(--r-pill);height:46px}
+.tgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,230px),1fr));gap:12px}
+.topic{--pc:var(--gc,var(--c-accent));position:relative;display:flex;flex-direction:column;gap:10px;min-height:178px;padding:18px;border-radius:20px;border:1px solid var(--c-line);background:var(--c-paper-2);text-align:left;transition:transform .4s var(--e-out),border-color var(--d-2),background var(--d-2);overflow:hidden}
+.topic:hover{transform:translateY(-5px);border-color:var(--pc)}
+.topic .tn{font:600 34px/1 var(--f-display);letter-spacing:-.05em;color:var(--pc)}
+.topic h3{font:600 16.5px/1.3 var(--f-body);letter-spacing:0}
+.topic .tm{margin-top:auto;display:flex;justify-content:space-between;gap:8px;font:500 11.5px var(--f-mono);color:var(--c-ink-3);text-transform:uppercase;letter-spacing:.05em}
+.topic .tp{padding:3px 8px;border-radius:6px;background:color-mix(in oklab,var(--pc) 16%,transparent);color:var(--pc);white-space:nowrap}
+.topic .tk{position:absolute;top:16px;right:16px;width:26px;height:26px;border-radius:50%;border:1.5px solid var(--c-line-2);display:grid;place-items:center;font-size:13px;color:transparent;transition:all .35s var(--e-out)}
+.topic.done{background:color-mix(in oklab,var(--c-ok) 8%,var(--c-paper-2));border-color:color-mix(in oklab,var(--c-ok) 45%,transparent)}
+.topic.done .tk{background:var(--c-ok);border-color:var(--c-ok);color:var(--c-paper);transform:scale(1.08)}
+.topic .bar{position:absolute;left:0;bottom:0;height:3px;width:100%;background:var(--pc);transform:scaleX(0);transform-origin:0 50%;transition:transform .5s var(--e-out)}
+.topic:hover .bar{transform:scaleX(1)}
+.empty{padding:30px 0;color:var(--c-ink-3);font:500 14px var(--f-mono)}
+.sub-list{list-style:none;margin:18px 0 0;padding:0;display:grid;gap:8px}
+.sub-list li{display:grid;grid-template-columns:auto 1fr;gap:14px;align-items:baseline;padding:12px 14px;border-radius:12px;background:var(--c-paper);border:1px solid var(--c-line);font-size:15px}
+.sub-list li span{font:700 13px var(--f-mono);color:var(--c-accent)}
+.m-actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:22px}
+.syl-foot{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+.sf-card{display:grid;gap:12px;align-content:start;padding:var(--s-5)}
+.sf-card .btn{justify-self:start;margin-top:6px}
+@media (max-width:900px){.syl-foot{grid-template-columns:1fr}}
+
+.defhint{margin-top:18px;padding:14px 16px;border-radius:14px;border:1px dashed var(--c-line-2);display:grid;gap:6px}
+.defhint span{font:600 11px var(--f-mono);letter-spacing:.08em;text-transform:uppercase;color:var(--c-accent)}
+.defhint p{font-size:15px;color:var(--c-ink-2)}
+
+</style>
+</head>
+<body data-page="syllabus">
+<a class="sr" href="#main">Skip to content</a>
+<div id="bg3d" aria-hidden="true"></div><div class="bg-veil" aria-hidden="true"></div>
+<header class="nav"><div class="wrap"><div class="nav-pill">
+<a class="brand" href="index.html" aria-label="Sir Umer Soni Biology, home"><span class="brand-mark"><svg viewBox="0 0 40 40" aria-hidden="true"><circle cx="20" cy="20" r="15.5" fill="none" stroke="currentColor" stroke-width="2.4"/><circle cx="23.5" cy="17" r="5.2" fill="currentColor"/><circle cx="13.5" cy="25" r="1.8" fill="currentColor" opacity=".7"/><circle cx="25" cy="27.5" r="1.4" fill="currentColor" opacity=".7"/></svg></span><span><b>Umer Soni</b><small>Biology Enclave</small></span></a>
+<nav class="nav-links" aria-label="Main"><span class="nav-blob" aria-hidden="true"></span><a href="courses.html" data-p="courses"><span class="roll"><span data-t="Courses">Courses</span></span></a><a href="syllabus.html" data-p="syllabus"><span class="roll"><span data-t="Syllabus">Syllabus</span></span></a><a href="past-papers.html" data-p="papers"><span class="roll"><span data-t="Past papers">Past papers</span></span></a><a href="lab.html" data-p="lab"><span class="roll"><span data-t="Bio Lab">Bio Lab</span></span></a><a href="notes.html" data-p="notes"><span class="roll"><span data-t="Notes">Notes</span></span></a><a href="about.html" data-p="about"><span class="roll"><span data-t="Sir Umer">Sir Umer</span></span></a><a href="contact.html" data-p="contact"><span class="roll"><span data-t="Contact">Contact</span></span></a></nav>
+<div class="nav-tools">
+<button class="kbtn" type="button" data-cmdk aria-label="Search the site"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg><span>Search</span><kbd>⌘K</kbd></button>
+<button class="ibtn" type="button" data-cart-open aria-label="Open cart"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M5 8h14l-1 12H6zM9 8V6a3 3 0 016 0v2"/></svg><span class="badge" data-cart-n></span></button>
+<a class="btn btn-pri btn-sm enrol-cta mag" href="contact.html#enrol">Enrol</a>
+<button class="ibtn burger" type="button" aria-expanded="false" aria-controls="mmenu" aria-label="Menu"><span></span><span></span></button>
+</div>
+<div class="mmenu" id="mmenu"><a href="courses.html" data-p="courses">Courses<span>5090 · 0610</span></a><a href="syllabus.html" data-p="syllabus">Syllabus<span>tracker</span></a><a href="past-papers.html" data-p="papers">Past papers<span>timer + MS</span></a><a href="lab.html" data-p="lab">Bio Lab<span>label · cross · define</span></a><a href="notes.html" data-p="notes">Notes<span>store</span></a><a href="about.html" data-p="about">Sir Umer<span>diagram first</span></a><a href="contact.html" data-p="contact">Contact<span>enrol</span></a><div class="mm-tools"><a class="btn btn-pri btn-sm" style="flex:1" href="contact.html#enrol">Enrol now</a></div></div>
+</div></div></header>
+<main id="main">
+<header class="ph">
+  <div class="wrap syl-head">
+    <div>
+      <div class="crumb"><a href="index.html">Home</a><span>/</span><span>Syllabus</span></div>
+      <h1 data-kin>Every topic, ticked off as it clicks.</h1>
+      <p class="lede">The complete Cambridge content for O Level 5090 and IGCSE 0610. Open a topic for its sub-topics and a syllabus definition to learn. Your progress saves on this device.</p>
+    </div>
+    <div class="ring-box panel" aria-live="polite">
+      <svg viewBox="0 0 140 140" class="pring"><circle cx="70" cy="70" r="60" class="pr-bg"/><circle cx="70" cy="70" r="60" class="pr-fg" id="pRing"/></svg>
+      <div class="pr-t"><b id="pPct">0%</b><span id="pTxt">0 of 19 done</span></div>
+    </div>
+  </div>
+</header>
+
+<section class="wrap syl-tools">
+  <div class="seg" role="tablist" id="sylTabs">
+    <button role="tab" aria-selected="true" data-k="ol">O Level 5090</button>
+    <button role="tab" aria-selected="false" data-k="ig">IGCSE 0610</button>
+  </div>
+  <div class="seg" id="sylFilter" aria-label="Filter by area"></div>
+  <div class="syl-search"><input id="sylQ" type="search" placeholder="Find a topic: enzymes, heart, photosynthesis…" aria-label="Find a topic"></div>
+</section>
+
+<section class="wrap syl-grid-wrap">
+  <div class="tgrid" id="tgrid"></div>
+  <p class="empty" id="sylEmpty" hidden>No topic matches that search. Try a shorter word.</p>
+</section>
+
+<section class="sec" style="padding-top:clamp(48px,6vw,80px)">
+  <div class="wrap syl-foot">
+    <div class="panel sf-card"><h3>Practise a topic you just finished</h3><p class="lede" style="font-size:15px">Past papers open with mark schemes, and the timer keeps you honest.</p><a class="btn btn-pri mag" href="past-papers.html">Open past papers</a></div>
+    <div class="panel sf-card"><h3>Stuck on one?</h3><p class="lede" style="font-size:15px">Ask Bio bot “what's in topic 11” or “define osmosis”, or message on WhatsApp.</p><button class="btn mag" type="button" id="askBot">Ask Bio bot</button></div>
+    <div class="panel sf-card"><h3>Start again</h3><p class="lede" style="font-size:15px">Clear the ticks for the current syllabus on this device.</p><button class="btn btn-ghost" type="button" id="sylReset">Reset this tracker</button></div>
+  </div>
+</section>
+
+</main>
+<footer class="foot"><div class="wrap">
+<p class="lede" style="margin-bottom:var(--s-5)">O Level and IGCSE Biology, taught diagram first in Karachi and online by Sir Umer Soni.</p>
+<a class="foot-big" href="contact.html#enrol" aria-label="Enrol with Sir Umer Soni">Umer Soni</a>
+<div class="foot-row"><nav aria-label="Footer"><a href="courses.html">Courses</a><a href="syllabus.html">Syllabus</a><a href="past-papers.html">Past papers</a><a href="lab.html">Bio Lab</a><a href="notes.html">Notes</a><a href="about.html">Sir Umer</a><a href="contact.html">Contact</a></nav><div style="display:flex;gap:8px;flex-wrap:wrap"><a class="btn btn-sm" href="https://instagram.com/umer.q.soni" target="_blank" rel="noopener">Instagram</a><a class="btn btn-sm" href="https://facebook.com/sirumersoni" target="_blank" rel="noopener">Facebook</a><a class="btn btn-sm btn-pri" href="https://wa.me/923463311647" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 00-8.6 15.1L2 22l5-1.3A10 10 0 1012 2zm5.3 14.1c-.2.6-1.3 1.2-1.8 1.2-.5.1-1 .2-3.3-.7-2.8-1.1-4.6-4-4.7-4.2-.1-.2-1.1-1.5-1.1-2.9s.7-2 1-2.3c.3-.3.6-.3.8-.3h.6c.2 0 .4 0 .6.5l.8 2c.1.2.1.4 0 .5l-.4.6-.4.4c-.1.1-.3.3-.1.6.2.3.8 1.3 1.7 2.1 1.2 1 2.1 1.3 2.4 1.5.3.1.5.1.6-.1l.8-1c.2-.3.4-.2.6-.1l1.9.9c.3.1.5.2.5.3.1.2.1.7-.1 1.3z"/></svg>WhatsApp</a></div></div>
+<div class="foot-meta"><span>© <span data-year>2026</span> Sir Umer Soni · Biology Enclave · Karachi</span><span>Syllabus details summarised from Cambridge International's published syllabuses. Not affiliated with Cambridge.</span><span>Website by <a href="https://nexlyr.solutions" target="_blank" rel="noopener">Nexlyr Solutions</a></span></div>
+</div></footer>
+
+<div class="cmdk" id="cmdk" role="dialog" aria-modal="true" aria-label="Search"><div class="scrim"></div><div class="cmdk-box"><div class="cmdk-in"><span>&gt;</span><input id="cmdkIn" placeholder="Jump to a page, topic or action…" autocomplete="off" aria-label="Search"><kbd class="pill" style="height:24px">esc</kbd></div><div class="cmdk-list" id="cmdkList"></div><div class="cmdk-foot"><span>↑↓ move</span><span>↵ open</span><span>/ or ⌘K toggles</span></div></div></div>
+<div class="modal" id="modal" aria-hidden="true"><div class="scrim" data-close></div><div class="modal-box" role="dialog" aria-modal="true" aria-labelledby="mTitle"><button class="x" type="button" data-close aria-label="Close">×</button><div id="modalBody"></div></div></div>
+<aside class="cart" id="cart" aria-hidden="true" aria-label="Cart"><div class="cart-h"><b>Your cart</b><button class="x" id="cartX" type="button" aria-label="Close cart">×</button></div><div class="cart-b" id="cartBody"></div>
+<form class="cart-f" id="cartFoot" novalidate hidden><div class="cart-tot"><span>Total</span><b id="cartTotal">Rs. 0</b></div>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px"><div class="field"><label for="coName">Name</label><input id="coName" autocomplete="name"></div><div class="field"><label for="coPhone">WhatsApp</label><input id="coPhone" inputmode="tel" autocomplete="tel" placeholder="03XX XXXXXXX"></div></div>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px"><div class="field"><label for="coCity">City</label><input id="coCity" autocomplete="address-level2" placeholder="Karachi"></div><div class="field"><label for="coPay">Pay by</label><select id="coPay"><option>Cash on delivery</option><option>Bank transfer</option><option>JazzCash</option><option>Easypaisa</option></select></div></div>
+<div class="field"><label for="coAddr">Address (printed orders)</label><input id="coAddr" autocomplete="street-address"></div>
+<p id="coErr" role="alert" style="font:500 12.5px var(--f-mono);color:var(--c-bad);min-height:1em"></p>
+<button class="btn btn-pri" type="submit"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 00-8.6 15.1L2 22l5-1.3A10 10 0 1012 2zm5.3 14.1c-.2.6-1.3 1.2-1.8 1.2-.5.1-1 .2-3.3-.7-2.8-1.1-4.6-4-4.7-4.2-.1-.2-1.1-1.5-1.1-2.9s.7-2 1-2.3c.3-.3.6-.3.8-.3h.6c.2 0 .4 0 .6.5l.8 2c.1.2.1.4 0 .5l-.4.6-.4.4c-.1.1-.3.3-.1.6.2.3.8 1.3 1.7 2.1 1.2 1 2.1 1.3 2.4 1.5.3.1.5.1.6-.1l.8-1c.2-.3.4-.2.6-.1l1.9.9c.3.1.5.2.5.3.1.2.1.7-.1 1.3z"/></svg>Order on WhatsApp</button></form></aside>
+
+<button class="bot-fab" id="botFab" type="button" aria-expanded="false" aria-controls="bot"><span class="bf-i"><svg viewBox="0 0 40 40" aria-hidden="true"><circle cx="20" cy="20" r="15.5" fill="none" stroke="currentColor" stroke-width="2.4"/><circle cx="23.5" cy="17" r="5.2" fill="currentColor"/><circle cx="13.5" cy="25" r="1.8" fill="currentColor" opacity=".7"/><circle cx="25" cy="27.5" r="1.4" fill="currentColor" opacity=".7"/></svg></span><span class="bf-t">Ask Bio bot</span></button>
+<section class="bot" id="bot" aria-hidden="true" aria-label="Bio bot"><div class="bot-h"><span class="av"><svg viewBox="0 0 40 40" aria-hidden="true"><circle cx="20" cy="20" r="15.5" fill="none" stroke="currentColor" stroke-width="2.4"/><circle cx="23.5" cy="17" r="5.2" fill="currentColor"/><circle cx="13.5" cy="25" r="1.8" fill="currentColor" opacity=".7"/><circle cx="25" cy="27.5" r="1.4" fill="currentColor" opacity=".7"/></svg></span><div><b>Bio bot</b><small><span class="live"></span>answers instantly</small></div><span class="ctx" id="botCtx" hidden></span><button class="x" id="botX" type="button" aria-label="Close chat">×</button></div>
+<div class="bot-m" id="botMsgs" aria-live="polite"></div><div class="bot-s" id="botSug"></div>
+<form id="botForm"><input id="botIn" placeholder="Define osmosis, Tt x tt, paper 2…" autocomplete="off" aria-label="Message"><button type="submit" aria-label="Send"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button></form></section>
+<div class="dock" id="dock" role="group" aria-label="Display and sound">
+<button class="ibtn" type="button" data-theme-btn aria-label="Switch light or dark theme" title="Brightfield / fluorescence"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" data-theme-icon><path d="M21 12.8A9 9 0 1111.2 3a7 7 0 009.8 9.8z"/></svg></button>
+<button class="ibtn" type="button" data-snd aria-pressed="true" aria-label="Sound effects" title="Sound"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M11 5L6 9H3v6h3l5 4zM16 9a4 4 0 010 6M19 6a8 8 0 010 12"/></svg></button>
+<button class="ibtn top-btn" type="button" id="topBtn" aria-label="Back to top" title="Back to top"><svg class="tp-ring" viewBox="0 0 44 44" aria-hidden="true"><circle cx="22" cy="22" r="19"/></svg><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M12 19V5M6 11l6-6 6 6"/></svg></button>
+</div>
+<div class="cursor" aria-hidden="true"><i class="c-ring"></i><i class="c-dot"></i></div>
+<div class="toast" id="toast" role="status"></div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.min.js"></script>
+<script async src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js" onload="window.BIO&&BIO.initBg&&BIO.initBg()" onerror="document.documentElement.classList.add('no-webgl')"></script>
+<script>
+/* Sir Umer Soni · Biology · shared engine (inlined into every page at build time) */
+(function(){
+"use strict";
+const $=(s,r=document)=>r.querySelector(s), $$=(s,r=document)=>[...r.querySelectorAll(s)];
+const RM=matchMedia("(prefers-reduced-motion: reduce)").matches;
+const FINE=matchMedia("(hover:hover) and (pointer:fine)").matches;
+const store={get(k,d){try{const v=localStorage.getItem(k);return v===null?d:JSON.parse(v)}catch(e){return d}},set(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}};
+const sess={get(k,d){try{const v=sessionStorage.getItem(k);return v===null?d:JSON.parse(v)}catch(e){return d}},set(k,v){try{sessionStorage.setItem(k,JSON.stringify(v))}catch(e){}}};
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+/* ---- CONTACT: set Sir Umer's own WhatsApp here (country code, no + or spaces) ---- */
+const WA="923463311647", WA_DISPLAY="+92 346 3311647", IG="https://instagram.com/umer.q.soni";
+const wa=t=>"https://wa.me/"+WA+"?text="+encodeURIComponent(t);
+const PAGE=document.body.dataset.page||"home";
+
+/* ======================= DATA ======================= */
+/* Syllabus content: Cambridge O Level Biology 5090 (2026–2028) and Cambridge IGCSE Biology 0610 (2026–2028) */
+const SYL={
+ ol:{label:"O Level Biology 5090",short:"5090",word:"Topic",papers:{all:"Papers 1, 2 & 3/4"},topics:[
+  {n:1,t:"Cells",s:["Cell structure and function","Specialised cells, tissues and organs"]},
+  {n:2,t:"Classification",s:["Concept and use of a classification system","Features of organisms"]},
+  {n:3,t:"Movement into and out of cells",s:["Diffusion and osmosis","Active transport"]},
+  {n:4,t:"Biological molecules",s:["Biological molecules"]},
+  {n:5,t:"Enzymes",s:["Enzyme action","Effects of temperature and pH"]},
+  {n:6,t:"Plant nutrition",s:["Photosynthesis","Leaf structure","Mineral nutrition"]},
+  {n:7,t:"Transport in flowering plants",s:["Uptake and transport of water and ions","Transpiration and translocation"]},
+  {n:8,t:"Human nutrition",s:["Diet","Human digestive system","Absorption and assimilation"]},
+  {n:9,t:"Human gas exchange",s:["Human gas exchange"]},
+  {n:10,t:"Respiration",s:["Respiration","Aerobic respiration","Anaerobic respiration"]},
+  {n:11,t:"Transport in humans",s:["Circulatory system","Heart","Blood vessels","Blood"]},
+  {n:12,t:"Disease and immunity",s:["Disease","Antibiotics","Immunity"]},
+  {n:13,t:"Excretion",s:["Excretion","Urinary system"]},
+  {n:14,t:"Coordination and control",s:["Mammalian nervous system","Mammalian sense organs","Mammalian hormones","Homeostasis","Temperature control","Blood glucose control"]},
+  {n:15,t:"Coordination and response in plants",s:["Coordination and response in plants"]},
+  {n:16,t:"Development of organisms and continuity of life",s:["Nuclear division","Asexual and sexual reproduction","Sexual reproduction in plants","Sexual reproduction in humans"]},
+  {n:17,t:"Inheritance",s:["Variation","DNA","Inheritance","Selection"]},
+  {n:18,t:"Biotechnology and genetic modification",s:["Biotechnology","Genetic modification"]},
+  {n:19,t:"Relationships of organisms with one another and with the environment",s:["Energy flow","Nutrient cycles","Ecosystems and biodiversity","Effects of humans on ecosystems","Conservation"]}]},
+ ig:{label:"IGCSE Biology 0610",short:"0610",word:"Topic",papers:{all:"Core & Extended papers"},topics:[
+  {n:1,t:"Characteristics and classification of living organisms",s:["Characteristics of living organisms","Concept and uses of classification systems","Features of organisms"]},
+  {n:2,t:"Organisation of the organism",s:["Cell structure","Size of specimens"]},
+  {n:3,t:"Movement into and out of cells",s:["Diffusion","Osmosis","Active transport"]},
+  {n:4,t:"Biological molecules",s:["Biological molecules"]},
+  {n:5,t:"Enzymes",s:["Enzymes"]},
+  {n:6,t:"Plant nutrition",s:["Photosynthesis","Leaf structure"]},
+  {n:7,t:"Human nutrition",s:["Diet","Digestive system","Physical digestion","Chemical digestion","Absorption"]},
+  {n:8,t:"Transport in plants",s:["Xylem and phloem","Water uptake","Transpiration","Translocation"]},
+  {n:9,t:"Transport in animals",s:["Circulatory systems","Heart","Blood vessels","Blood"]},
+  {n:10,t:"Diseases and immunity",s:["Diseases and immunity"]},
+  {n:11,t:"Gas exchange in humans",s:["Gas exchange in humans"]},
+  {n:12,t:"Respiration",s:["Respiration","Aerobic respiration","Anaerobic respiration"]},
+  {n:13,t:"Excretion in humans",s:["Excretion in humans"]},
+  {n:14,t:"Coordination and response",s:["Coordination and response","Sense organs","Hormones","Homeostasis","Tropic responses"]},
+  {n:15,t:"Drugs",s:["Drugs"]},
+  {n:16,t:"Reproduction",s:["Asexual reproduction","Sexual reproduction","Sexual reproduction in plants","Sexual reproduction in humans","Sex hormones in humans","Sexually transmitted infections"]},
+  {n:17,t:"Inheritance",s:["Chromosomes, genes and proteins","Mitosis","Meiosis","Monohybrid inheritance"]},
+  {n:18,t:"Variation and selection",s:["Variation","Adaptive features","Selection"]},
+  {n:19,t:"Organisms and their environment",s:["Energy flow","Food chains and food webs","Nutrient cycles","Populations"]},
+  {n:20,t:"Human influences on ecosystems",s:["Food supply","Habitat destruction","Pollution","Conservation"]},
+  {n:21,t:"Biotechnology and genetic modification",s:["Biotechnology and genetic modification","Biotechnology","Genetic modification"]}]}
+};
+/* topic → organ-system group, used for colour coding */
+const GROUP={ol:{1:"cell",2:"cell",3:"cell",4:"cell",5:"cell",6:"plant",7:"plant",8:"human",9:"human",10:"human",11:"human",12:"human",13:"human",14:"human",15:"plant",16:"life",17:"life",18:"life",19:"eco"},
+ ig:{1:"cell",2:"cell",3:"cell",4:"cell",5:"cell",6:"plant",7:"human",8:"plant",9:"human",10:"human",11:"human",12:"human",13:"human",14:"human",15:"human",16:"life",17:"life",18:"life",19:"eco",20:"eco",21:"life"}};
+const GNAME={cell:"Cells & molecules",plant:"Plants",human:"Human body",life:"Life & inheritance",eco:"Ecology"};
+const PMETA={
+ "5090":{name:"O Level Biology",grades:"A*–E",papers:{1:{n:"Multiple Choice",min:60,m:40,w:"30%"},2:{n:"Theory",min:105,m:80,w:"50%"},3:{n:"Practical Test",min:90,m:40,w:"20% (or Paper 4)"},4:{n:"Alternative to Practical",min:60,m:40,w:"20% (or Paper 3)"}}},
+ "0610":{name:"IGCSE Biology",grades:"A*–G",papers:{1:{n:"Multiple Choice (Core)",min:45,m:40,w:"30% · Core"},2:{n:"Multiple Choice (Extended)",min:45,m:40,w:"30% · Extended"},3:{n:"Theory (Core)",min:75,m:80,w:"50% · Core"},4:{n:"Theory (Extended)",min:75,m:80,w:"50% · Extended"},5:{n:"Practical Test",min:75,m:40,w:"20%"},6:{n:"Alternative to Practical",min:60,m:40,w:"20%"}}}
+};
+/* Notes catalogue — titles & prices are demo values; edit here and every page updates */
+const PRODUCTS=[
+ {id:"ol-v1",code:"5090",lvl:"O Level",t:"Biology Notes · Volume 1",d:"Topics 1–9 as exam answers: cells, classification, transport across membranes, molecules, enzymes, plants, nutrition and gas exchange.",print:2400,pdf:1300,cc:"var(--c-accent)"},
+ {id:"ol-v2",code:"5090",lvl:"O Level",t:"Biology Notes · Volume 2",d:"Topics 10–19: respiration, circulation, immunity, excretion, coordination, reproduction, inheritance, biotechnology and ecology.",print:2400,pdf:1300,cc:"var(--c-cool)"},
+ {id:"ol-diag",code:"5090",lvl:"O Level · IGCSE",t:"The Diagram Book",d:"Every diagram the papers ask you to draw or label, each with the function line that earns the second mark.",print:1900,pdf:1000,cc:"var(--c-ok)"},
+ {id:"ol-def",code:"5090",lvl:"O Level · IGCSE",t:"Definitions & Key Terms",d:"The syllabus definitions word for word, plus the command words and how examiners mark each one.",print:900,pdf:500,cc:"var(--c-pink)"},
+ {id:"ol-p2",code:"5090",lvl:"O Level",t:"Topical Paper 2 Book",d:"Theory questions grouped by topic with mark-scheme answers alongside, so you see exactly what scores.",print:3200,pdf:1800,cc:"var(--c-accent)"},
+ {id:"ol-p1",code:"5090",lvl:"O Level",t:"Topical MCQ Book",d:"Paper 1 multiple-choice questions sorted by topic, with the reason behind every correct option.",print:2200,pdf:1200,cc:"var(--c-cool)"},
+ {id:"ol-atp",code:"5090",lvl:"O Level · IGCSE",t:"Alternative to Practical Workbook",d:"Paper 4 skills: drawing, tables, graphs, variables, food tests and planning an investigation.",print:2000,pdf:1100,cc:"var(--c-ok)"},
+ {id:"ig-ext",code:"0610",lvl:"IGCSE",t:"IGCSE Extended Notes",d:"All 21 topics with the Supplement content marked, for students sitting Papers 2 and 4.",print:3000,pdf:1700,cc:"var(--c-pink)"}
+];
+/* Syllabus definitions bank (Cambridge wording). Used by the Bio Lab flashcards and the chatbot. */
+const DEFS=[
+ ["Diffusion","the net movement of particles from a region of their higher concentration to a region of their lower concentration (down a concentration gradient), as a result of their random movement",3],
+ ["Osmosis","the net movement of water molecules from a region of higher water potential (dilute solution) to a region of lower water potential (concentrated solution), through a partially permeable membrane",3],
+ ["Active transport","the movement of particles through a cell membrane from a region of lower concentration to a region of higher concentration (against a concentration gradient), using energy from respiration",3],
+ ["Enzyme","a protein that functions as a biological catalyst",5],
+ ["Catalyst","a substance that increases the rate of a chemical reaction and is not changed by the reaction",5],
+ ["Photosynthesis","the process by which plants synthesise carbohydrates from raw materials using energy from light",6],
+ ["Transpiration","the loss of water vapour from plant leaves by evaporation of water at the surfaces of the mesophyll cells followed by diffusion of water vapour through the stomata",7],
+ ["Translocation","the movement of sucrose and amino acids in phloem from sources to sinks",7],
+ ["Ingestion","the taking of substances, e.g. food and drink, into the body through the mouth",8],
+ ["Digestion","the breakdown of large, insoluble molecules into small, soluble molecules",8],
+ ["Absorption","the movement of nutrients from the intestines into the blood",8],
+ ["Assimilation","the uptake and use of nutrients by cells",8],
+ ["Egestion","the passing out of food that has not been digested or absorbed, as faeces, through the anus",8],
+ ["Respiration","the chemical reactions in cells that break down nutrient molecules and release energy for metabolism",10],
+ ["Aerobic respiration","the chemical reactions in cells that use oxygen to break down nutrient molecules to release energy",10],
+ ["Anaerobic respiration","the chemical reactions in cells that break down nutrient molecules to release energy without using oxygen",10],
+ ["Pathogen","a disease-causing organism",12],
+ ["Transmissible disease","a disease in which the pathogen can be passed from one host to another",12],
+ ["Excretion","the removal of the waste products of metabolism and substances in excess of requirements",13],
+ ["Homeostasis","the maintenance of a constant internal environment",14],
+ ["Hormone","a chemical substance, produced by a gland and carried by the blood, which alters the activity of one or more specific target organs",14],
+ ["Gravitropism","a response in which parts of a plant grow towards or away from gravity",15],
+ ["Phototropism","a response in which parts of a plant grow towards or away from the direction from which light is coming",15],
+ ["Asexual reproduction","a process resulting in the production of genetically identical offspring from one parent",16],
+ ["Sexual reproduction","a process involving the fusion of the nuclei of two gametes to form a zygote and the production of offspring that are genetically different from each other",16],
+ ["Gene","a length of DNA that codes for a protein",17],
+ ["Allele","an alternative form of a gene",17],
+ ["Genotype","the genetic make-up of an organism in terms of the alleles present",17],
+ ["Phenotype","the observable features of an organism",17],
+ ["Homozygous","having two identical alleles of a particular gene",17],
+ ["Heterozygous","having two different alleles of a particular gene",17],
+ ["Dominant allele","an allele that is expressed if it is present",17],
+ ["Recessive allele","an allele that is only expressed when there is no dominant allele of the gene present",17],
+ ["Mutation","a genetic change",17],
+ ["Variation","differences between individuals of the same species",17],
+ ["Natural selection","the process by which individuals better adapted to their environment are more likely to survive, reproduce and pass on their alleles",17],
+ ["Genetic modification","changing the genetic material of an organism by removing, changing or inserting individual genes",18],
+ ["Population","a group of organisms of one species, living in the same area, at the same time",19],
+ ["Community","all of the populations of different species in an ecosystem",19],
+ ["Ecosystem","a unit containing the community of organisms and their environment, interacting together",19],
+ ["Food chain","shows the transfer of energy from one organism to the next, beginning with a producer",19],
+ ["Producer","an organism that makes its own organic nutrients, usually using energy from sunlight, through photosynthesis",19],
+ ["Biodiversity","the number of different species that live in an area",19]
+];
+const PAGES=[["Home","index.html","home"],["Courses","courses.html","courses"],["Syllabus","syllabus.html","syllabus"],["Past papers","past-papers.html","papers"],["Bio Lab","lab.html","lab"],["Notes store","notes.html","notes"],["Sir Umer","about.html","about"],["Enrol & contact","contact.html","contact"]];
+window.BIO={$,$$,store,sess,esc,wa,SYL,GROUP,GNAME,PMETA,PRODUCTS,DEFS,RM,FINE,WA_DISPLAY,IG};
+const money=n=>"Rs. "+Number(n).toLocaleString("en-PK");
+BIO.money=money;
+
+/* ======================= SOUND ======================= */
+const Snd=(function(){
+  let ctx=null,on=store.get("umr-snd",true),last=0,master=null;
+  function ac(){ if(!ctx){ try{ctx=new (window.AudioContext||window.webkitAudioContext)(); master=ctx.createGain(); master.gain.value=.55; master.connect(ctx.destination);}catch(e){return null} } if(ctx.state==="suspended") ctx.resume(); return ctx; }
+  function tone(f,d,type,v,slide,delay){ if(!on) return; const c=ac(); if(!c||c.state!=="running") return; const t=c.currentTime+(delay||0),o=c.createOscillator(),g=c.createGain(); o.type=type||"sine"; o.frequency.setValueAtTime(f,t); if(slide) o.frequency.exponentialRampToValueAtTime(Math.max(30,f*slide),t+d); g.gain.setValueAtTime(0,t); g.gain.linearRampToValueAtTime(v||.04,t+.01); g.gain.exponentialRampToValueAtTime(.0001,t+d); o.connect(g).connect(master); o.start(t); o.stop(t+d+.03); }
+  function noise(d,v,hp){ if(!on) return; const c=ac(); if(!c||c.state!=="running") return; const b=c.createBuffer(1,c.sampleRate*d,c.sampleRate),a=b.getChannelData(0); for(let i=0;i<a.length;i++) a[i]=(Math.random()*2-1)*(1-i/a.length); const s=c.createBufferSource(); s.buffer=b; const f=c.createBiquadFilter(); f.type="bandpass"; f.frequency.value=hp||1800; const g=c.createGain(); g.gain.value=v||.04; s.connect(f).connect(g).connect(master); s.start(); }
+  ["pointerdown","keydown"].forEach(ev=>addEventListener(ev,()=>ac(),{once:true,passive:true}));
+  return { get on(){return on}, set(v){on=v;store.set("umr-snd",v);if(v){ac();setTimeout(()=>this.chime(),30)}},
+    tick(){const n=performance.now(); if(n-last<60) return; last=n; tone(2400,.025,"square",.008)},
+    click(){tone(560,.07,"triangle",.045,1.5)},
+    soft(){tone(820,.05,"sine",.03)},
+    whoosh(){noise(.28,.05,900);tone(220,.3,"sine",.02,2.6)},
+    open(){tone(440,.09,"sine",.035,1.5);tone(660,.12,"sine",.03,1.3,.06)},
+    close(){tone(660,.09,"sine",.03,.66)},
+    step(v){tone(260+v*10,.08,"sine",.04)},
+    swap(){tone(380,.12,"sawtooth",.02,1.6)},
+    type(){tone(1800+Math.random()*600,.02,"square",.006)},
+    plop(){tone(320,.14,"sine",.06,2.2)},
+    chime(){[660,880,1320].forEach((f,i)=>tone(f,.25,"sine",.035,1,i*.09))},
+    alarm(){[0,.22,.44].forEach(d=>tone(990,.16,"square",.03,1,d))},
+    err(){tone(170,.2,"square",.025,.7)} };
+})();
+BIO.Snd=Snd;
+document.addEventListener("pointerover",e=>{ if(FINE && e.target.closest("a,button,.tile,.card-h")) Snd.tick(); },{passive:true});
+document.addEventListener("click",e=>{ const t=e.target.closest("a,button"); if(!t) return; if(t.matches("[data-nosnd]")) return; t.closest(".nav-links,.mmenu,.foot")?Snd.soft():Snd.click(); },true);
+
+/* ======================= TOAST ======================= */
+let tT; function toast(m){ const el=$("#toast"); if(!el) return; el.textContent=m; el.classList.add("on"); clearTimeout(tT); tT=setTimeout(()=>el.classList.remove("on"),2000); }
+BIO.toast=toast;
+
+/* ======================= THEME ======================= */
+const root=document.documentElement;
+const sv=store.get("umr-theme",null); if(sv) root.setAttribute("data-theme",sv);
+const isDark=()=>{ const t=root.getAttribute("data-theme"); return t? t==="dark" : !matchMedia("(prefers-color-scheme: light)").matches; };
+function paintTheme(){ const m=$('meta[name="theme-color"]'); if(m) m.content=isDark()?"#11101c":"#fcf8fa"; $$("[data-theme-icon]").forEach(i=>i.innerHTML=isDark()?'<path d="M21 12.8A9 9 0 1111.2 3a7 7 0 009.8 9.8z"/>':'<circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/>'); window.dispatchEvent(new Event("site-theme")); }
+function toggleTheme(){ const n=isDark()?"light":"dark"; root.setAttribute("data-theme",n); store.set("umr-theme",n); paintTheme(); Snd.whoosh(); }
+BIO.toggleTheme=toggleTheme;
+paintTheme();
+matchMedia("(prefers-color-scheme: light)").addEventListener("change",paintTheme);
+
+/* sound button */
+function paintSnd(){ $$("[data-snd]").forEach(b=>{ b.setAttribute("aria-pressed",String(Snd.on)); b.innerHTML=Snd.on?'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M11 5L6 9H3v6h3l5 4zM16 9a4 4 0 010 6M19 6a8 8 0 010 12"/></svg>':'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M11 5L6 9H3v6h3l5 4zM22 9l-6 6M16 9l6 6"/></svg>'; }); }
+function toggleSnd(){ Snd.set(!Snd.on); paintSnd(); toast(Snd.on?"Sound on":"Sound off"); }
+BIO.toggleSnd=toggleSnd;
+$$("[data-snd]").forEach(b=>b.addEventListener("click",toggleSnd)); paintSnd();
+$$("[data-theme-btn]").forEach(b=>b.addEventListener("click",toggleTheme));
+
+/* ======================= SMOOTH SCROLL + GSAP ======================= */
+const G=window.gsap, ST=window.ScrollTrigger;
+if(G&&ST){ G.registerPlugin(ST); ST.config({ignoreMobileResize:true}); }
+let lenis=null;
+if(!RM && window.Lenis){ try{ lenis=new Lenis({lerp:.1,smoothWheel:true,wheelMultiplier:.95,touchMultiplier:1.4}); if(G&&ST){ lenis.on("scroll",ST.update); G.ticker.add(t=>lenis.raf(t*1000)); G.ticker.lagSmoothing(0);} else { (function r(t){lenis.raf(t);requestAnimationFrame(r)})(performance.now()); } }catch(e){lenis=null} }
+BIO.lenis=lenis;
+BIO.lock=v=>{ if(lenis) v?lenis.stop():lenis.start(); document.documentElement.style.overflow=v?"hidden":""; };
+BIO.go=sel=>{ const el=typeof sel==="string"?document.querySelector(sel):sel; if(!el) return; if(lenis) lenis.scrollTo(el,{offset:-90,duration:1.2}); else el.scrollIntoView({behavior:RM?"auto":"smooth"}); };
+document.addEventListener("click",e=>{ const a=e.target.closest('a[href^="#"]'); if(!a) return; const h=a.getAttribute("href"); if(h.length>1 && document.querySelector(h)){ e.preventDefault(); BIO.go(h); history.replaceState(null,"",h);} });
+
+/* ======================= 3D BACKGROUND (Three.js · drifting cells + DNA double helix) ======================= */
+BIO.initBg=function(){
+  const host=$("#bg3d"); if(!host||host.dataset.on) return; host.dataset.on=1;
+  const T=window.THREE; let ok=false;
+  try{ const c=document.createElement("canvas"); ok=!!(T && (c.getContext("webgl")||c.getContext("experimental-webgl"))); }catch(e){}
+  if(!ok){ root.classList.add("no-webgl"); return; }
+  const small=innerWidth<760, dpr=Math.min(small?1.5:1.75,devicePixelRatio||1);
+  const renderer=new T.WebGLRenderer({antialias:false,alpha:true,powerPreference:"high-performance"});
+  renderer.setPixelRatio(dpr); renderer.setSize(innerWidth,innerHeight); host.appendChild(renderer.domElement);
+  const scene=new T.Scene(), cam=new T.PerspectiveCamera(50,innerWidth/innerHeight,.1,200); cam.position.set(0,0,22);
+  const read=()=>{ const cs=getComputedStyle(root), tmp=document.createElement("i"); document.body.appendChild(tmp);
+    const g=v=>{ tmp.style.color=cs.getPropertyValue(v); const m=getComputedStyle(tmp).color.match(/[\d.]+/g)||[255,120,160]; return new T.Color(m[0]/255,m[1]/255,m[2]/255); };
+    const out=[g("--c-accent"),g("--c-cool"),g("--c-ok")]; tmp.remove(); return out; };
+  let [cA,cB,cC]=read();
+  const uni={uT:{value:0},uA:{value:cA},uB:{value:cB},uC:{value:cC},uS:{value:dpr},uLight:{value:isDark()?0:1},uPulse:{value:0}};
+
+  /* --- cells: point sprites drawn as membrane + cytoplasm + nucleus --- */
+  const N=small?70:130, cp=new Float32Array(N*3), cs=new Float32Array(N), ck=new Float32Array(N), cv=new Float32Array(N*3);
+  for(let i=0;i<N;i++){ cp[i*3]=(Math.random()-.5)*48; cp[i*3+1]=(Math.random()-.5)*30; cp[i*3+2]=-Math.random()*26+4;
+    cs[i]=Math.random()<.12?26+Math.random()*30:6+Math.random()*16; ck[i]=Math.random(); cv[i*3]=(Math.random()-.5)*.25; cv[i*3+1]=(Math.random()-.5)*.25; cv[i*3+2]=Math.random(); }
+  const cg=new T.BufferGeometry(); cg.setAttribute("position",new T.BufferAttribute(cp,3)); cg.setAttribute("size",new T.BufferAttribute(cs,1)); cg.setAttribute("kind",new T.BufferAttribute(ck,1)); cg.setAttribute("vel",new T.BufferAttribute(cv,3));
+  const cellMat=new T.ShaderMaterial({transparent:true,depthWrite:false,uniforms:uni,
+    vertexShader:`uniform float uT;uniform float uS;attribute float size;attribute float kind;attribute vec3 vel;varying float vK;varying float vF;varying float vR;
+      void main(){vec3 p=position;p.x+=sin(uT*.07*(1.+vel.z)+kind*20.)*2.2+vel.x*uT*.6;p.y+=cos(uT*.06*(1.+vel.z)+kind*11.)*1.6+vel.y*uT*.6;
+      p.x=mod(p.x+24.,48.)-24.;p.y=mod(p.y+15.,30.)-15.;
+      vK=kind;vR=kind*6.283+uT*.2*(vel.z-.5);vec4 mv=modelViewMatrix*vec4(p,1.);vF=smoothstep(-40.,-14.,mv.z)*smoothstep(4.,-6.,mv.z);
+      gl_PointSize=size*uS*(18./-mv.z);gl_Position=projectionMatrix*mv;}`,
+    fragmentShader:`uniform vec3 uA;uniform vec3 uB;uniform vec3 uC;uniform float uLight;uniform float uT;varying float vK;varying float vF;varying float vR;
+      void main(){vec2 c=gl_PointCoord-.5;float wob=.025*sin(atan(c.y,c.x)*5.+vR*3.);float r=length(c)+wob;if(r>.5)discard;
+      vec3 col=vK<.45?uA:(vK<.8?uB:uC);
+      float mem=smoothstep(.5,.46,r)*smoothstep(.40,.46,r);
+      vec2 nc=c-vec2(cos(vR),sin(vR))*.12;float nuc=smoothstep(.15,.11,length(nc));
+      float cyto=smoothstep(.47,.2,r)*.16;
+      float a=(mem*.9+cyto+nuc*.75)*vF;
+      gl_FragColor=vec4(col,a*(uLight>.5?.55:.62));}`});
+  const cells=new T.Points(cg,cellMat); scene.add(cells);
+
+  /* --- DNA double helix: two backbones + base-pair rungs --- */
+  const turns=small?3.2:4.2, per=small?90:150, rungsEvery=5, R=2.3, Hh=26;
+  const hp=[], hk=[];
+  for(let i=0;i<per;i++){ const f=i/(per-1), a=f*turns*Math.PI*2, y=(f-.5)*Hh;
+    hp.push(Math.cos(a)*R,y,Math.sin(a)*R); hk.push(0); hp.push(Math.cos(a+Math.PI)*R,y,Math.sin(a+Math.PI)*R); hk.push(.5);
+    if(i%rungsEvery===0){ for(let j=1;j<8;j++){ const t=j/8; hp.push(Math.cos(a)*R*(1-2*t),y,Math.sin(a)*R*(1-2*t)); hk.push(t<.5?.8:.95); } } }
+  const hg=new T.BufferGeometry(); hg.setAttribute("position",new T.BufferAttribute(new Float32Array(hp),3)); hg.setAttribute("kind",new T.BufferAttribute(new Float32Array(hk),1));
+  const helixMat=new T.ShaderMaterial({transparent:true,depthWrite:false,uniforms:uni,
+    vertexShader:`uniform float uS;uniform float uPulse;attribute float kind;varying float vK;varying float vZ;varying float vY;
+      void main(){vK=kind;vec4 mv=modelViewMatrix*vec4(position,1.);vZ=mv.z;vY=position.y;float big=kind<.6?1.:.62;
+      float pl=exp(-pow(position.y-uPulse,2.)*.35);gl_PointSize=uS*(4.2*big+pl*5.)*(20./-mv.z);gl_Position=projectionMatrix*mv;}`,
+    fragmentShader:`uniform vec3 uA;uniform vec3 uB;uniform vec3 uC;uniform float uLight;uniform float uPulse;varying float vK;varying float vZ;varying float vY;
+      void main(){vec2 c=gl_PointCoord-.5;float r=length(c);if(r>.5)discard;float a=smoothstep(.5,.1,r);
+      vec3 col=vK<.25?uA:(vK<.6?uB:(vK<.9?uC:uA));float depth=smoothstep(-34.,-16.,vZ);
+      float pl=exp(-pow(vY-uPulse,2.)*.35);
+      gl_FragColor=vec4(mix(col,vec3(1.),pl*.35*(1.-uLight)),a*(.25+.6*depth)*(uLight>.5?.75:.9)+pl*.3);}`});
+  const helix=new T.Points(hg,helixMat); scene.add(helix);
+  if(uni.uLight.value>.5){ cellMat.blending=helixMat.blending=T.NormalBlending; } else { cellMat.blending=helixMat.blending=T.AdditiveBlending; }
+
+  function layout(){ const w=innerWidth; cam.aspect=w/innerHeight; cam.updateProjectionMatrix(); renderer.setSize(w,innerHeight);
+    helix.position.set(w>900?9.5:w>600?6:3.5,0,-6); helix.rotation.z=w>900?.28:.18; helixMat.opacity=1; }
+  layout();
+  let mx=0,my=0,tx=0,ty=0,sy=0,vis=true,t0=performance.now(),pulseT=-9;
+  addEventListener("pointermove",e=>{ tx=e.clientX/innerWidth*2-1; ty=e.clientY/innerHeight*2-1; },{passive:true});
+  addEventListener("scroll",()=>{ sy=scrollY; },{passive:true});
+  addEventListener("resize",layout);
+  addEventListener("site-theme",()=>{ [cA,cB,cC]=read(); uni.uA.value=cA; uni.uB.value=cB; uni.uC.value=cC; uni.uLight.value=isDark()?0:1; cellMat.blending=helixMat.blending=isDark()?T.AdditiveBlending:T.NormalBlending; cellMat.needsUpdate=helixMat.needsUpdate=true; });
+  document.addEventListener("visibilitychange",()=>{ vis=!document.hidden; });
+  BIO.pulse=()=>{ pulseT=performance.now(); };
+  function frame(now){
+    const t=(now-t0)/1000; uni.uT.value=RM?3:t;
+    mx+=(tx-mx)*.04; my+=(ty-my)*.04;
+    const h=Math.max(1,document.documentElement.scrollHeight-innerHeight), sp=sy/h;
+    const pe=(now-pulseT)/1000; uni.uPulse.value=pe<2.6? 14-pe*11 : -40;
+    helix.rotation.y=(RM?0:t*.22)+sp*Math.PI*2.4+mx*.4; helix.position.y=-sp*4+my*-.4;
+    cells.rotation.y=mx*.06; cells.rotation.x=my*.04; cells.position.y=sp*6;
+    cam.position.x=mx*1.2; cam.position.y=-my*.8; cam.lookAt(0,0,-4);
+    renderer.render(scene,cam);
+    if(!host.classList.contains("on")) requestAnimationFrame(()=>host.classList.add("on"));
+    if(!RM && vis) requestAnimationFrame(frame); else if(!RM) setTimeout(()=>requestAnimationFrame(frame),400);
+  }
+  requestAnimationFrame(frame);
+  setInterval(()=>{ if(!document.hidden) BIO.pulse(); },9000);
+};
+if(window.THREE) BIO.initBg();
+
+/* ======================= KINETIC TEXT (variable weight follows cursor) ======================= */
+function splitKin(el){
+  const txt=el.textContent; el.setAttribute("aria-label",txt.replace(/\s+/g," ").trim()); el.innerHTML="";
+  const frag=document.createDocumentFragment();
+  txt.split(/(\s+)/).forEach(w=>{ if(!w) return; if(/^\s+$/.test(w)){ frag.appendChild(document.createTextNode(" ")); return; }
+    const ws=document.createElement("span"); ws.style.whiteSpace="nowrap"; ws.setAttribute("aria-hidden","true");
+    [...w].forEach(c=>{ const s=document.createElement("span"); s.className="ch"; s.textContent=c; ws.appendChild(s); }); frag.appendChild(ws); });
+  el.appendChild(frag); el.classList.add("kin");
+}
+$$("[data-kin]").forEach(el=>{
+  el.style.setProperty("--w",parseInt(getComputedStyle(el).fontWeight,10)||700);
+  $$(":scope > span[data-kpart]",el).length? $$(":scope > span[data-kpart]",el).forEach(splitKin) : splitKin(el);
+  if(!FINE||RM) return;
+  const chs=$$(".ch",el); let raf=0,px=-1e4,py=-1e4;
+  const low=parseInt(getComputedStyle(el).fontWeight,10)||700, peak=Math.min(800,low+180);
+  function paint(){ raf=0; chs.forEach(c=>{ const r=c.getBoundingClientRect(), d=Math.hypot(px-(r.left+r.width/2),py-(r.top+r.height/2)), f=Math.max(0,1-d/220);
+    c.style.setProperty("--w",Math.round(low+(peak-low)*f)); c.style.transform=f>0?"translateY("+(-f*6).toFixed(1)+"px)":""; }); }
+  el.addEventListener("pointermove",e=>{ px=e.clientX; py=e.clientY; if(!raf) raf=requestAnimationFrame(paint); });
+  el.addEventListener("pointerleave",()=>{ px=py=-1e4; if(!raf) raf=requestAnimationFrame(paint); });
+});
+
+/* ======================= SCRAMBLE (code glyph decode) ======================= */
+const GLYPHS="01{}<>/=;:+*#$%&[]";
+function scramble(el){ if(el._scr) return; const orig=el.dataset.text||el.textContent; el.dataset.text=orig; let f=0; const len=orig.length, total=Math.min(18,6+len);
+  el._scr=true; (function run(){ let out=""; for(let i=0;i<len;i++){ const c=orig[i]; if(c===" "){out+=" ";continue} out+= i < (f/total)*len ? c : GLYPHS[(Math.random()*GLYPHS.length)|0]; } el.textContent=out; f++; if(f<=total) requestAnimationFrame(run); else { el.textContent=orig; el._scr=false; } })(); Snd.type(); }
+BIO.scramble=scramble;
+
+
+/* ======================= MAGNETIC + SPOTLIGHT + TILT ======================= */
+if(FINE && !RM){
+  document.addEventListener("pointermove",e=>{
+    const m=e.target.closest(".mag"); if(m){ const r=m.getBoundingClientRect(); m.style.transform="translate("+((e.clientX-r.left-r.width/2)*.22).toFixed(1)+"px,"+((e.clientY-r.top-r.height/2)*.3).toFixed(1)+"px)"; }
+    const s=e.target.closest(".spot"); if(s){ const r=s.getBoundingClientRect(); s.style.setProperty("--mx",(e.clientX-r.left)+"px"); s.style.setProperty("--my",(e.clientY-r.top)+"px"); }
+    const t=e.target.closest("[data-tilt]"); if(t){ const r=t.getBoundingClientRect(),x=(e.clientX-r.left)/r.width-.5,y=(e.clientY-r.top)/r.height-.5,a=+(t.dataset.tilt||8); t.style.transform="perspective(900px) rotateY("+(x*a).toFixed(2)+"deg) rotateX("+(-y*a).toFixed(2)+"deg)"; }
+  },{passive:true});
+  document.addEventListener("pointerout",e=>{ const m=e.target.closest(".mag"); if(m && !m.contains(e.relatedTarget)) m.style.transform=""; const t=e.target.closest("[data-tilt]"); if(t && !t.contains(e.relatedTarget)) t.style.transform=""; });
+}
+
+/* ======================= REVEALS ======================= */
+function reveals(){
+  const els=$$("[data-rv]"); if(RM||!els.length) return;
+  if(G&&ST){
+    els.forEach(el=>{ const r=el.getBoundingClientRect(); if(r.top<innerHeight*.92) return; const kind=el.dataset.rv;
+      const from=kind==="left"?{x:-80,opacity:0}:kind==="right"?{x:80,opacity:0}:kind==="scale"?{scale:.92,opacity:0}:kind==="clip"?{clipPath:"inset(0 0 100% 0)"}:{y:44,opacity:0};
+      G.from(el,{...from,duration:1,ease:"expo.out",delay:+(el.dataset.rvDelay||0),scrollTrigger:{trigger:el,start:"top 90%",once:true}}); });
+    $$("[data-rv-stagger]").forEach(g=>{ const r=g.getBoundingClientRect(); if(r.top<innerHeight*.92) return; const kids=[...g.children];
+      G.from(kids,{y:50,opacity:0,rotateX:-8,transformOrigin:"50% 0",duration:.9,ease:"expo.out",stagger:.07,scrollTrigger:{trigger:g,start:"top 88%",once:true}}); });
+  } else if("IntersectionObserver" in window){
+    const io=new IntersectionObserver(es=>es.forEach(e=>{ if(e.isIntersecting){ e.target.style.transition="opacity .9s var(--e-out),transform .9s var(--e-out)"; e.target.style.opacity=""; e.target.style.transform=""; io.unobserve(e.target);} }),{rootMargin:"0px 0px -8% 0px"});
+    els.forEach(el=>{ if(el.getBoundingClientRect().top>innerHeight){ el.style.opacity="0"; el.style.transform="translateY(40px)"; io.observe(el);} });
+  }
+}
+
+/* overflow rails: pinned horizontal scroll on desktop, native swipe on touch */
+function rails(){
+  $$("[data-rail]").forEach(sec=>{
+    const track=$("[data-rail-track]",sec); if(!track) return;
+    if(G&&ST&&!RM&&innerWidth>900){
+      const dist=()=>Math.max(0,track.scrollWidth-sec.querySelector(".rail-view").clientWidth+40);
+      G.to(track,{x:()=>-dist(),ease:"none",scrollTrigger:{trigger:sec,start:"top top",end:()=>"+="+dist(),pin:true,scrub:.8,invalidateOnRefresh:true,
+        onUpdate:s=>{ const bar=$("[data-rail-bar]",sec); if(bar) bar.style.transform="scaleX("+s.progress.toFixed(3)+")"; }}});
+      $$(".rail-card",track).forEach((c,i)=>{ G.fromTo(c,{rotate:i%2?2:-2,y:30},{rotate:0,y:0,ease:"none",scrollTrigger:{trigger:sec,start:"top bottom",end:"top top",scrub:true}}); });
+    } else { sec.classList.add("rail-native"); }
+  });
+}
+
+/* ======================= CELL DIAGRAMS (shared by home story + Bio Lab) ======================= */
+BIO.CELLS={
+ plant:{ title:"Plant cell", labels:[
+  {k:"wall",t:"Cell wall",x:157,y:100,lx:128,ly:100,side:"l",f:"Made of cellulose. Gives the cell support and a fixed shape, and stops it bursting."},
+  {k:"nucleus",t:"Nucleus",x:197,y:150,lx:128,ly:150,side:"l",f:"Contains DNA in chromosomes and controls the activities of the cell."},
+  {k:"membrane",t:"Cell membrane",x:164,y:205,lx:128,ly:205,side:"l",f:"Partially permeable. Controls which substances enter and leave the cell."},
+  {k:"mito",t:"Mitochondrion",x:204,y:250,lx:128,ly:255,side:"l",f:"Site of aerobic respiration, releasing energy for the cell."},
+  {k:"cyto",t:"Cytoplasm",x:186,y:296,lx:128,ly:305,side:"l",f:"Jelly-like fluid where most of the cell's chemical reactions take place."},
+  {k:"chloro",t:"Chloroplast",x:576,y:112,lx:640,ly:112,side:"r",f:"Contains chlorophyll, which absorbs light energy for photosynthesis."},
+  {k:"vac",t:"Vacuole",x:505,y:192,lx:640,ly:192,side:"r",f:"Large and permanent, filled with cell sap. Keeps the cell firm (turgid)."},
+  {k:"ribo",t:"Ribosome",x:548,y:229,lx:640,ly:268,side:"r",f:"Site of protein synthesis."}]},
+ animal:{ title:"Animal cell", labels:[
+  {k:"membrane",t:"Cell membrane",x:206,y:180,lx:128,ly:170,side:"l",f:"Partially permeable. Controls which substances enter and leave the cell."},
+  {k:"nucleus",t:"Nucleus",x:314,y:205,lx:128,ly:228,side:"l",f:"Contains DNA in chromosomes and controls the activities of the cell."},
+  {k:"cyto",t:"Cytoplasm",x:262,y:296,lx:128,ly:296,side:"l",f:"Jelly-like fluid where most of the cell's chemical reactions take place."},
+  {k:"mito",t:"Mitochondrion",x:506,y:162,lx:640,ly:150,side:"r",f:"Site of aerobic respiration, releasing energy for the cell."},
+  {k:"ribo",t:"Ribosome",x:432,y:291,lx:640,ly:290,side:"r",f:"Site of protein synthesis."}]}
+};
+BIO.cellSVG=function(kind,opt){ opt=opt||{}; const C=BIO.CELLS[kind]; const g=(c,inner)=>'<g class="st st-'+c+'">'+inner+"</g>";
+  const chl=(x,y,r)=>'<g transform="translate('+x+' '+y+') rotate('+r+')"><ellipse class="dr chl" pathLength="1" rx="30" ry="13"/><path class="dr gr" pathLength="1" d="M-16 -4h10M-6 4h12M8 -3h9"/></g>';
+  const mit=(x,y,r)=>'<g transform="translate('+x+' '+y+') rotate('+r+')"><ellipse class="dr mit" pathLength="1" rx="21" ry="10"/><path class="dr cri" pathLength="1" d="M-15 0 l5 -6 l5 9 l5 -9 l5 9 l5 -9 l5 6"/></g>';
+  const dots=a=>a.map(([x,y])=>'<circle class="rib" cx="'+x+'" cy="'+y+'" r="3.2"/>').join("");
+  let body="";
+  if(kind==="plant"){
+    body=g("wall",'<rect class="dr wall" pathLength="1" x="150" y="40" width="460" height="360" rx="46"/>')
+     +g("membrane",'<rect class="dr mem" pathLength="1" x="164" y="54" width="432" height="332" rx="36"/>')
+     +g("cyto",'<rect class="cyt" x="166" y="56" width="428" height="328" rx="34"/>')
+     +g("vac",'<path class="dr vac" pathLength="1" d="M300 120C360 95 470 105 500 150C530 200 520 290 470 320C410 350 330 345 300 310C265 270 255 150 300 120Z"/><text class="sap" x="402" y="226">cell sap</text>')
+     +g("nucleus",'<circle class="dr nuc" pathLength="1" cx="236" cy="150" r="39"/><circle class="nlo" cx="246" cy="143" r="11"/>')
+     +g("chloro",chl(552,118,30)+chl(560,302,-35)+chl(392,80,8)+chl(334,362,-6)+chl(218,336,-25))
+     +g("mito",mit(222,250,22)+mit(476,366,-8))
+     +g("ribo",dots([[250,214],[262,222],[256,290],[540,216],[548,229],[528,350],[198,196]]));
+  } else {
+    body=g("membrane",'<path class="dr mem" pathLength="1" d="M232 122C300 62 470 57 540 112C610 166 602 300 532 350C452 402 302 396 242 342C182 287 172 172 232 122Z"/>')
+     +g("cyto",'<path class="cyt" d="M232 122C300 62 470 57 540 112C610 166 602 300 532 350C452 402 302 396 242 342C182 287 172 172 232 122Z"/>')
+     +g("nucleus",'<circle class="dr nuc" pathLength="1" cx="360" cy="205" r="46"/><circle class="nlo" cx="372" cy="197" r="13"/>')
+     +g("mito",mit(482,168,30)+mit(300,322,-15)+mit(506,296,40))
+     +g("ribo",dots([[420,282],[432,291],[270,232],[281,242],[452,120],[392,330],[540,220]]));
+  }
+  const leaders=C.labels.map((l,i)=>{ const ax=l.side==="l"?l.lx+6:l.lx-6;
+    return '<g class="lb" data-k="'+l.k+'" data-i="'+i+'"><path class="ld" pathLength="1" d="M'+ax+" "+l.ly+" L"+(l.side==="l"?l.lx+26:l.lx-26)+" "+l.ly+" L"+l.x+" "+l.y+'"/><circle class="tip" cx="'+l.x+'" cy="'+l.y+'" r="4"/>'
+      +(opt.quiz?'<g class="pin" data-i="'+i+'" role="button" tabindex="0" aria-label="Structure '+(i+1)+'"><circle cx="'+ax+'" cy="'+l.ly+'" r="13"/><text x="'+ax+'" y="'+(l.ly+4.5)+'" text-anchor="middle">'+(i+1)+'</text></g>':"")
+      +'<text class="lt" x="'+(l.side==="l"?l.lx-12:l.lx+12)+'" y="'+(l.ly+5)+'" text-anchor="'+(l.side==="l"?"end":"start")+'">'+(opt.quiz?"":l.t)+"</text></g>"; }).join("");
+  return '<svg class="cellsvg '+kind+(opt.quiz?" quiz":"")+'" viewBox="0 0 760 440" role="img" aria-label="'+C.title+' diagram">'+body+leaders+"</svg>"; };
+
+/* ======================= NAV ======================= */
+(function(){
+  const nav=$(".nav"); if(!nav) return;
+  $$(".nav-links a,.mmenu a").forEach(a=>{ if(a.dataset.p===PAGE) a.setAttribute("aria-current","page"); });
+  const links=$(".nav-links"), blob=$(".nav-blob");
+  function moveBlob(a){ if(!blob||!a){ if(blob) blob.style.opacity="0"; return;} blob.style.opacity="1"; blob.style.width=a.offsetWidth+"px"; blob.style.transform="translateX("+a.offsetLeft+"px)"; }
+  const cur=$(".nav-links a[aria-current]"); if(cur) requestAnimationFrame(()=>moveBlob(cur));
+  links&&links.addEventListener("pointerover",e=>{ const a=e.target.closest("a"); if(a) moveBlob(a); });
+  links&&links.addEventListener("pointerleave",()=>moveBlob($(".nav-links a[aria-current]")));
+  let last=0; addEventListener("scroll",()=>{ const y=scrollY, d=y-last; if(Math.abs(d)<6) return; nav.classList.toggle("tuck", d>0 && y>520 && !$(".mmenu.open")); last=y; },{passive:true});
+  const burger=$(".burger"), mm=$(".mmenu");
+  function setMM(v){ mm.classList.toggle("open",v); burger.setAttribute("aria-expanded",String(v)); $$("a",mm).forEach((a,i)=>a.style.transitionDelay=v?(i*.03)+"s":"0s"); v?Snd.open():Snd.close(); }
+  burger&&burger.addEventListener("click",e=>{ e.stopPropagation(); setMM(!mm.classList.contains("open")); });
+  document.addEventListener("click",e=>{ if(mm&&mm.classList.contains("open")&&!e.target.closest(".mmenu,.burger")) setMM(false); });
+  addEventListener("keydown",e=>{ if(e.key==="Escape"&&mm&&mm.classList.contains("open")) setMM(false); });
+  // page-leave sound + pulse
+  document.addEventListener("click",e=>{ const a=e.target.closest("a[href$='.html']"); if(a&&!a.target){ Snd.whoosh(); } });
+})();
+
+/* ======================= MODAL ======================= */
+let lastFocus=null;
+BIO.modal=function(html,cls){ const m=$("#modal"); lastFocus=document.activeElement; $("#modalBody").innerHTML=html; m.className="modal open "+(cls||""); m.setAttribute("aria-hidden","false"); BIO.lock(true); Snd.open(); setTimeout(()=>$(".x",m).focus({preventScroll:true}),60); };
+BIO.closeModal=function(){ const m=$("#modal"); if(!m.classList.contains("open")) return; m.classList.remove("open"); m.setAttribute("aria-hidden","true"); BIO.lock(false); Snd.close(); lastFocus&&lastFocus.focus&&lastFocus.focus({preventScroll:true}); };
+document.addEventListener("click",e=>{ if(e.target.closest("[data-close]")) BIO.closeModal(); });
+
+/* ======================= ⌘K PALETTE ======================= */
+(function(){
+  const box=$("#cmdk"); if(!box) return; const inp=$("#cmdkIn"), list=$("#cmdkList"); let items=[],idx=0;
+  const ACTS=[
+    {g:"Actions",t:"Switch light / dark theme",k:"theme",i:"◐",run:()=>toggleTheme()},
+    {g:"Actions",t:"Turn sound on / off",k:"sound audio",i:"♪",run:()=>toggleSnd()},
+    {g:"Actions",t:"Ask Bio bot",k:"chat bot help define",i:"?",run:()=>BIO.bot&&BIO.bot.open()},
+    {g:"Actions",t:"Open my cart",k:"cart notes buy",i:"₨",run:()=>BIO.cart&&BIO.cart.open()},
+    {g:"Actions",t:"Start a timed 5090 Paper 2",k:"timer exam 5090 paper 2 theory",i:"⏱",href:"past-papers.html#t-5090-2"},
+    {g:"Actions",t:"Start a timed 5090 Paper 1 (MCQ)",k:"timer exam 5090 paper 1 mcq",i:"⏱",href:"past-papers.html#t-5090-1"},
+    {g:"Actions",t:"Label a plant cell",k:"diagram label cell lab",i:"◎",href:"lab.html#cell"},
+    {g:"Actions",t:"Drill syllabus definitions",k:"definitions flashcards keywords",i:"Aa",href:"lab.html#def"},
+    {g:"Actions",t:"Message Sir Umer on WhatsApp",k:"whatsapp contact",i:"✆",href:wa("Assalam o Alaikum, I'd like to ask about Sir Umer Soni's Biology classes."),ext:1}
+  ];
+  const PG=PAGES.map(([t,h,p])=>({g:"Pages",t,k:t+" "+p,i:"↗",href:h}));
+  const TP=[]; Object.entries(SYL).forEach(([key,d])=>d.topics.forEach(tp=>TP.push({g:"Syllabus",t:tp.n+". "+tp.t,sub:d.short,k:tp.t+" "+d.short+" "+tp.s.join(" "),i:String(tp.n),href:"syllabus.html#"+key+"-"+tp.n})));
+  const DF=DEFS.map(d=>({g:"Definitions",t:d[0],sub:"topic "+d[2],k:"define "+d[0]+" "+d[1],i:"Aa",run:()=>{ BIO.bot.open(); setTimeout(()=>BIO.bot.ask("define "+d[0].toLowerCase()),250); }}));
+  const ALL=[...PG,...ACTS,...TP,...DF];
+  function score(it,q){ if(!q) return it.g==="Syllabus"?0:1; const hay=(it.t+" "+it.k).toLowerCase(); let s=0; for(const w of q.split(/\s+/)){ if(!w) continue; if(hay.includes(w)) s+=w.length+2; else return 0; } return s; }
+  function render(){ const q=inp.value.trim().toLowerCase(); items=ALL.map(i=>[i,score(i,q)]).filter(x=>x[1]>0).sort((a,b)=>b[1]-a[1]).slice(0,30).map(x=>x[0]); if(idx>=items.length) idx=0;
+    let g="",h=""; items.forEach((it,i)=>{ if(it.g!==g){ g=it.g; h+='<div class="cmdk-g">'+g+"</div>"; } h+='<'+(it.href?'a href="'+esc(it.href)+'"'+(it.ext?' target="_blank" rel="noopener"':""):'button type="button"')+' class="cmdk-i'+(i===idx?" on":"")+'" data-i="'+i+'"><span class="ic">'+esc(it.i)+"</span>"+esc(it.t)+(it.sub?"<small>"+esc(it.sub)+"</small>":"")+"</"+(it.href?"a":"button")+">"; });
+    list.innerHTML=h||'<div class="cmdk-g">No match. Try “osmosis”, “paper 4” or “notes”.</div>'; }
+  function open(){ box.classList.add("open"); inp.value=""; idx=0; render(); BIO.lock(true); Snd.open(); setTimeout(()=>inp.focus(),30); }
+  function close(){ box.classList.remove("open"); BIO.lock(false); }
+  BIO.cmdk={open,close};
+  function run(i){ const it=items[i]; if(!it) return; close(); if(it.run) it.run(); else if(it.ext) window.open(it.href,"_blank","noopener"); else location.href=it.href; }
+  inp.addEventListener("input",()=>{ idx=0; render(); Snd.type(); });
+  inp.addEventListener("keydown",e=>{ if(e.key==="ArrowDown"){e.preventDefault();idx=Math.min(items.length-1,idx+1);render();$(".cmdk-i.on",list)?.scrollIntoView({block:"nearest"});}
+    else if(e.key==="ArrowUp"){e.preventDefault();idx=Math.max(0,idx-1);render();$(".cmdk-i.on",list)?.scrollIntoView({block:"nearest"});}
+    else if(e.key==="Enter"){e.preventDefault();run(idx);} });
+  list.addEventListener("click",e=>{ const b=e.target.closest(".cmdk-i"); if(!b) return; const it=items[+b.dataset.i]; if(it&&it.run){ e.preventDefault(); run(+b.dataset.i);} else close(); });
+  box.addEventListener("click",e=>{ if(e.target.classList.contains("scrim")) close(); });
+  addEventListener("keydown",e=>{ const typing=/input|textarea|select/i.test(document.activeElement.tagName);
+    if((e.key==="k"&&(e.metaKey||e.ctrlKey))||(e.key==="/"&&!typing)){ e.preventDefault(); box.classList.contains("open")?close():open(); }
+    else if(e.key==="Escape"){ if(box.classList.contains("open")) close(); else BIO.closeModal(); } });
+  $$("[data-cmdk]").forEach(b=>b.addEventListener("click",open));
+})();
+
+/* ======================= CART ======================= */
+(function(){
+  const el=$("#cart"); if(!el) return;
+  let items=store.get("umr-cart",[]);
+  const byId=id=>PRODUCTS.find(p=>p.id===id);
+  function save(){ store.set("umr-cart",items); badge(); }
+  function badge(){ const n=items.reduce((a,b)=>a+b.q,0); $$("[data-cart-n]").forEach(b=>{ b.textContent=n||""; b.dataset.n=n; }); }
+  function total(){ return items.reduce((a,i)=>{ const p=byId(i.id); return a+(p?p[i.f]*i.q:0); },0); }
+  function render(){
+    const b=$("#cartBody");
+    if(!items.length){ b.innerHTML='<div class="cart-empty"><p>Your cart is empty.</p><p style="margin-top:12px"><a class="btn btn-sm" href="notes.html">Browse notes</a></p></div>'; $("#cartFoot").hidden=true; return; }
+    $("#cartFoot").hidden=false;
+    b.innerHTML=items.map((i,k)=>{ const p=byId(i.id); if(!p) return ""; return '<div class="ci"><div class="cv" style="--cc:'+p.cc+'">'+p.code+'</div><div><b>'+esc(p.t)+'</b><small>'+(i.f==="print"?"Printed":"PDF")+" · "+money(p[i.f])+'</small></div><div class="qty"><button type="button" data-q="-1" data-k="'+k+'" aria-label="One less">−</button><span>'+i.q+'</span><button type="button" data-q="1" data-k="'+k+'" aria-label="One more">+</button></div></div>'; }).join("");
+    $("#cartTotal").textContent=money(total());
+  }
+  function add(id,f){ f=f||"print"; const ex=items.find(i=>i.id===id&&i.f===f); ex?ex.q++:items.push({id,f,q:1}); save(); render(); Snd.plop(); const p=byId(id); toast((p?p.t:"Item")+" added to cart"); $$("[data-cart-open]").forEach(b=>{ b.animate([{transform:"scale(1)"},{transform:"scale(1.25)"},{transform:"scale(1)"}],{duration:420,easing:"cubic-bezier(.16,1,.3,1)"}); }); }
+  function open(){ render(); el.classList.add("open"); el.setAttribute("aria-hidden","false"); Snd.open(); }
+  function close(){ el.classList.remove("open"); el.setAttribute("aria-hidden","true"); Snd.close(); }
+  BIO.cart={add,open,close,items:()=>items};
+  $("#cartBody").addEventListener("click",e=>{ const b=e.target.closest("[data-q]"); if(!b) return; const k=+b.dataset.k; items[k].q+=+b.dataset.q; if(items[k].q<=0) items.splice(k,1); save(); render(); Snd.soft(); });
+  $$("[data-cart-open]").forEach(b=>b.addEventListener("click",e=>{ e.stopPropagation(); el.classList.contains("open")?close():open(); }));
+  $("#cartX").addEventListener("click",close);
+  document.addEventListener("click",e=>{ if(el.classList.contains("open")&&!e.target.closest("#cart,[data-cart-open],[data-add]")) close(); });
+  document.addEventListener("click",e=>{ const b=e.target.closest("[data-add]"); if(!b) return; add(b.dataset.add,b.dataset.f); });
+  $("#cartFoot").addEventListener("submit",e=>{ e.preventDefault(); const nm=$("#coName"), ph=$("#coPhone"), city=$("#coCity");
+    let bad=false; [[nm,v=>v.trim().length>1],[ph,v=>v.replace(/\D/g,"").length>=10],[city,v=>v.trim().length>1]].forEach(([i,ok])=>{ const f=!ok(i.value); i.setAttribute("aria-invalid",String(f)); if(f) bad=true; });
+    if(bad){ Snd.err(); $("#coErr").textContent="Add your name, a WhatsApp number (10+ digits) and your city."; return; }
+    $("#coErr").textContent="";
+    const lines=items.map(i=>{ const p=byId(i.id); return "• "+p.t+" ("+p.code+") — "+(i.f==="print"?"Printed":"PDF")+" × "+i.q+" = "+money(p[i.f]*i.q); });
+    const msg="Assalam o Alaikum, I'd like to order Sir Umer Soni's notes:\n\n"+lines.join("\n")+"\n\nTotal: "+money(total())+"\n\nName: "+nm.value.trim()+"\nWhatsApp: "+ph.value.trim()+"\nCity: "+city.value.trim()+($("#coAddr").value.trim()?"\nAddress: "+$("#coAddr").value.trim():"")+"\nPayment: "+$("#coPay").value+"\n\nPlease confirm availability and delivery.";
+    Snd.chime(); window.open(wa(msg),"_blank","noopener"); toast("WhatsApp is opening with your order"); });
+  badge();
+})();
+
+/* ======================= CHATBOT (Bio bot) ======================= */
+(function(){
+  const box=$("#bot"), fab=$("#botFab"); if(!box) return;
+  const msgs=$("#botMsgs"), inp=$("#botIn");
+  const ctx=sess.get("umr-bot-ctx",{lvl:null}); let log=sess.get("umr-bot-log",[]);
+  const norm=s=>(" "+s.toLowerCase().replace(/[^a-z0-9*\s'.×+-]/g," ").replace(/\s+/g," ")+" ");
+  function lev(a,b){ if(Math.abs(a.length-b.length)>1) return 9; const m=[...Array(a.length+1)].map((_,i)=>[i]); for(let j=1;j<=b.length;j++) m[0][j]=j; for(let i=1;i<=a.length;i++) for(let j=1;j<=b.length;j++) m[i][j]=Math.min(m[i-1][j]+1,m[i][j-1]+1,m[i-1][j-1]+(a[i-1]===b[j-1]?0:1)); return m[a.length][b.length]; }
+  function has(q,words){ const tok=q.trim().split(" "); let s=0; for(const w of words){ if(w.includes(" ")){ if(q.includes(" "+w+" ")||q.includes(w)) s+=w.length+3; } else if(q.includes(" "+w+" ")) s+=w.length+2; else if(w.length>=5 && tok.some(t=>t.length>=4&&lev(t,w)<=1)) s+=w.length; } return s; }
+  const lvlFrom=q=>/0610|igcse/.test(q)?"0610":(/5090|o ?level|o-level|\bol\b/.test(q)?"5090":null);
+  const acts=arr=>'<div class="acts">'+arr.map(([t,h,x])=>x==="btn"?'<button type="button" '+h+">"+t+"</button>":'<a href="'+h+'"'+(x?' target="_blank" rel="noopener"':"")+">"+t+"</a>").join("")+"</div>";
+  const L=()=>ctx.lvl;
+  const INT=[
+    {k:["hi","hello","salam","assalam","aoa","hey","salaam"],a:()=>"Wa alaikum assalam! I'm Bio bot. Ask me a definition (“define osmosis”), a genetics cross (“Tt x tt”), paper timings, the syllabus, or how to order notes. Which course are you on?"+acts([["O Level 5090",'data-say="I\'m in O Level 5090"',"btn"],["IGCSE 0610",'data-say="I\'m doing IGCSE 0610"',"btn"]])},
+    {k:["i'm in","im in","doing","studying","i am in","my level","i study"],a:q=>{ const l=lvlFrom(q); if(!l) return "Which one: O Level 5090 or IGCSE 0610?"; ctx.lvl=l; save(); return "Got it, <b>"+l+"</b>. I'll answer for "+PMETA[l].name+". Try “what's in paper 2”, “past papers 2024”, “define enzyme” or “notes”."+acts([["Syllabus","syllabus.html"],["Past papers","past-papers.html"],["Notes","notes.html"]]); }},
+    {k:["fees","fee","price","cost","charges","kitni","paisay"],a:()=>"Fees depend on the course and format. Send your level and exam session on WhatsApp and the team will share this session's fee."+acts([["Ask on WhatsApp",wa("Assalam o Alaikum, what are the fees for Sir Umer Soni's "+(L()||"Biology")+" classes?"),1],["Enrol form","contact.html#enrol"]])},
+    {k:["timings","timing","batch","schedule","days","class time","waqt","kab"],a:()=>"Batch timings change every session. Message on WhatsApp with your level and you'll get this session's schedule."+acts([["Ask timings",wa("Assalam o Alaikum, what are the current batch timings"+(L()?" for "+L():"")+"?"),1]])},
+    {k:["3 month","three month","3-month","crash","short course","revision course"],a:()=>"Sir Umer runs a <b>3-month O Level Biology course</b>: the full 5090 syllabus in a fast, exam-focused run, built for students who need to finish before the series."+acts([["Course details","courses.html#c3m"],["Ask on WhatsApp",wa("Assalam o Alaikum, I'd like details of the 3-month O Level Biology course."),1]])},
+    {k:["where","location","address","campus","swk","enclave","cambridge online"],a:()=>"Sir Umer teaches on the SWK Solutions faculty in Karachi and online through <b>Cambridge Online</b>. He also runs <b>Biology Enclave</b>, his own Biology classes."+acts([["Where he teaches","about.html#where"]])},
+    {k:["online","zoom","abroad","remote","outside karachi","recorded","recording","missed"],a:()=>"Yes. Classes run live online and every session is recorded, so students outside Karachi can follow the same course."+acts([["Enrol online","contact.html#enrol"]])},
+    {k:["instagram","insta","facebook","youtube","social","videos"],a:()=>"18K+ students follow <b>@umer.q.soni</b> on Instagram, and 5.3K follow the official Facebook page."+acts([["Instagram",IG,1],["Facebook","https://facebook.com/sirumersoni",1]])},
+    {k:["notes","buy","book","books","material","workbook","store","shop","order","revision book"],a:q=>{ const l=lvlFrom(q)||L(); const ps=PRODUCTS.filter(p=>!l||p.code===l||p.lvl.includes("IGCSE")&&l==="0610").slice(0,4); return "From the notes store"+(l?" for <b>"+l+"</b>":"")+":<ul>"+ps.map(p=>"<li>"+esc(p.t)+" · "+money(p.print)+" printed / "+money(p.pdf)+" PDF</li>").join("")+"</ul>"+acts([...ps.slice(0,2).map(p=>["Add "+p.t.split(" · ")[0].replace("Biology ",""),'data-add="'+p.id+'" data-f="print"',"btn"]),["Open store","notes.html"]]); }},
+    {k:["cart","checkout","my order"],a:()=>"Your cart has "+(BIO.cart?BIO.cart.items().reduce((a,b)=>a+b.q,0):0)+" item(s)."+acts([["Open cart",'data-open-cart',"btn"]])},
+    {k:["past paper","past papers","pastpapers","papers","question paper","specimen"],a:q=>{ const l=lvlFrom(q)||L()||"5090"; const y=(q.match(/20(1\d|2\d)/)||[])[0]; return "Past papers for <b>"+l+"</b>"+(y?" "+y:"")+" open with their mark schemes, examiner reports and grade thresholds, and the tracker logs every score."+acts([["Open "+l+(y?" "+y:""),"past-papers.html#p-"+l+(y?"-"+y:"")]]); }},
+    {k:["mark scheme","marking scheme","ms","answers","examiner report","er"],a:()=>"Every question paper sits beside its mark scheme (MS). Each session also has the examiner report (ER) and grade thresholds (GT)."+acts([["Past papers","past-papers.html"]])},
+    {k:["timer","time myself","timed","stopwatch","countdown"],a:q=>{ const l=lvlFrom(q)||L()||"5090"; const p=(q.match(/paper\s*([1-6])|\bp([1-6])\b/)||[]).slice(1).find(Boolean)||"2"; const pm=PMETA[l].papers[p]||PMETA[l].papers[1]; return "A timed "+l+" Paper "+p+" runs <b>"+dur(pm.min)+"</b>. I'll set it up."+acts([["Start "+l+" P"+p+" timer","past-papers.html#t-"+l+"-"+p]]); }},
+    {k:["duration","how long","marks","weight","weighting","paper 1","paper 2","paper 3","paper 4","paper 5","paper 6","p1","p2","p3","p4","practical","mcq","theory","alternative"],a:q=>{ const l=lvlFrom(q)||L()||"5090"; const pn=(q.match(/paper\s*([1-6])|\bp([1-6])\b/)||[]).slice(1).find(Boolean); const M=PMETA[l];
+      if(pn&&M.papers[pn]){ const p=M.papers[pn]; return "<b>"+l+" Paper "+pn+" · "+p.n+"</b><br>"+dur(p.min)+" · "+p.m+" marks · "+p.w+acts([["Timed attempt","past-papers.html#t-"+l+"-"+pn]]); }
+      return "<b>"+l+" papers</b><ul>"+Object.entries(M.papers).map(([n,p])=>"<li>Paper "+n+": "+p.n+" · "+dur(p.min)+" · "+p.m+" marks · "+p.w+"</li>").join("")+"</ul>"+(l==="5090"?"You sit Paper 1, Paper 2, and either Paper 3 or Paper 4.":"Core: Papers 1, 3 and 5 or 6. Extended: Papers 2, 4 and 5 or 6."); }},
+    {k:["topic","chapter","syllabus","topics","content"],a:q=>{ const n=+((q.match(/(?:topic|chapter)\s*(\d{1,2})/)||[])[1]||0); const l=lvlFrom(q)||L()||"5090"; const key=l==="0610"?"ig":"ol"; const d=SYL[key];
+      if(n){ const t=d.topics.find(x=>x.n===n); if(t) return "<b>"+d.short+" · Topic "+n+": "+esc(t.t)+"</b><ul>"+t.s.map(x=>"<li>"+esc(x)+"</li>").join("")+"</ul>"+acts([["Open in syllabus","syllabus.html#"+key+"-"+n]]); }
+      return "<b>"+d.label+"</b> has "+d.topics.length+" topics. Ask “what's in topic 11” or open the tracker."+acts([["Open syllabus","syllabus.html"]]); }},
+    {k:["label","diagram","cell structure","plant cell","animal cell","organelle"],a:()=>"Diagrams come first in Sir Umer's classes. Try labelling a plant and an animal cell in the Bio Lab. Each structure shows its function once you get it right."+acts([["Label the cell","lab.html#cell"]])},
+    {k:["magnification","magnify","actual size","image size","microscope"],a:()=>"Magnification = image size ÷ actual size. Keep both in the same unit: 1 mm = 1000 µm. The Bio Lab calculator solves for any one of the three."+acts([["Magnification tool","lab.html#mag"]])},
+    {k:["enzyme graph","temperature","ph","denature","optimum"],a:()=>"Rate rises with temperature up to the optimum, then falls sharply as the active site changes shape and the enzyme <b>denatures</b>. pH works the same way either side of the optimum."+acts([["Enzyme simulator","lab.html#enz"]])},
+    {k:["punnett","cross","genetics","ratio","offspring"],a:()=>"Type a cross like <code>Tt x tt</code> and I'll work it out, or use the full Punnett square in the Bio Lab."+acts([["Genetics tool","lab.html#gen"]])},
+    {k:["sir umer","umer soni","who is","about","teacher","experience"],a:()=>"Sir Umer Soni teaches O Level and IGCSE Biology in Karachi. His method is diagram first: label the structure, say what it does, then learn the definition. Four Cambridge distinctions so far."+acts([["About Sir Umer","about.html"]])},
+    {k:["contact","number","phone","call","whatsapp","dm"],a:()=>"WhatsApp <b>"+WA_DISPLAY+"</b>, or DM <b>@umer.q.soni</b> on Instagram."+acts([["WhatsApp",wa("Assalam o Alaikum, I'd like to ask about Sir Umer Soni's Biology classes."),1],["Instagram",IG,1]])},
+    {k:["enrol","enroll","admission","join","register","seat","admit"],a:()=>"Fill the enrol form and WhatsApp opens with your details ready to send."+acts([["Enrol now","contact.html#enrol"]])},
+    {k:["grade","grades","a*","result"],a:q=>{ const l=lvlFrom(q)||L(); return l?PMETA[l].name+" is graded <b>"+PMETA[l].grades+"</b>.":"O Level 5090 is graded A*–E. IGCSE 0610 is A*–G (Core papers cap at C)."; }},
+    {k:["difference","vs","versus","same"],a:()=>"5090 has 19 topics and four papers (you sit 1, 2 and 3 or 4). 0610 has 21 topics with Core and Extended routes. Sir Umer teaches both."},
+    {k:["thanks","thank you","shukriya","jazakallah","jazak"],a:()=>"You're welcome. Diagram first!"}
+  ];
+  function dur(m){ return Math.floor(m/60)?Math.floor(m/60)+"h"+(m%60?" "+m%60+"m":""):m+"m"; }
+  /* direct answers: definitions and genetic crosses */
+  function define(q){ const m=q.match(/(?:define|definition of|what is an?|what is|what are|meaning of|whats)\s+([a-z\s-]{3,40})/); const term=(m?m[1]:q).trim().replace(/\?$/,"").replace(/\s+/g," ");
+    let best=null,bs=0; for(const d of DEFS){ const k=d[0].toLowerCase(); let s=0; if(term===k) s=100; else if(term.includes(k)) s=k.length+10; else if(k.includes(term)&&term.length>4) s=term.length; else if(lev(term,k)<=2&&k.length>5) s=6; if(s>bs){bs=s;best=d;} }
+    if(best&&bs>=6&&(m||bs>=50)) return "<b>"+best[0]+"</b> is "+best[1]+"."+'<br><small style="color:var(--c-ink-3)">Syllabus topic '+best[2]+' · learn it word for word</small>'+acts([["Drill definitions","lab.html#def"]]); return null; }
+  function cross(raw){ const m=raw.match(/\b([A-Za-z])([A-Za-z])\s*(?:x|×|\*|and|with)\s*([A-Za-z])([A-Za-z])\b/); if(!m) return null; const g1=[m[1],m[2]], g2=[m[3],m[4]];
+    const letters=new Set([...g1,...g2].map(c=>c.toLowerCase())); if(letters.size!==1) return null;
+    const out={}; g1.forEach(a=>g2.forEach(b=>{ const k=[a,b].sort((x,y)=>(x===x.toUpperCase()?0:1)-(y===y.toUpperCase()?0:1)).join(""); out[k]=(out[k]||0)+1; }));
+    const U=m[1].toUpperCase(); let dom=0; Object.entries(out).forEach(([k,n])=>{ if(k.includes(U)) dom+=n; });
+    return "<b>"+g1.join("")+" × "+g2.join("")+"</b><ul>"+Object.entries(out).map(([k,n])=>"<li>"+k+": "+n+"/4 ("+n*25+"%)</li>").join("")+"</ul>Phenotype ratio <b>"+dom+" dominant : "+(4-dom)+" recessive</b>."+acts([["Open Punnett square","lab.html#gen"]]); }
+  function answer(raw){ const q=norm(raw); const l=lvlFrom(q); if(l&&l!==ctx.lvl&&!/i'?m in|doing|studying/.test(q)){ ctx.lvl=l; save(); }
+    const c=cross(raw); if(c) return c;
+    if(/define|definition|what is|what are|meaning of|whats /.test(q)){ const d=define(q); if(d) return d; }
+    let best=null,bs=0; for(const it of INT){ const s=has(q,it.k); if(s>bs){bs=s;best=it;} }
+    if(best) return best.a(q);
+    const d=define(q); if(d) return d;
+    return "I don't have that one saved yet. Send it to Sir Umer's team and they'll reply on WhatsApp. Your question is already filled in."+acts([["Ask on WhatsApp",wa("Assalam o Alaikum, I have a Biology question: "+raw),1]]); }
+  function save(){ sess.set("umr-bot-ctx",ctx); const c=$("#botCtx"); if(c){ c.textContent=ctx.lvl||""; c.hidden=!ctx.lvl; } chips(); }
+  function add(html,who,persist){ const d=document.createElement("div"); d.className="mg "+who; d.innerHTML=html; msgs.appendChild(d); msgs.scrollTop=msgs.scrollHeight; if(persist!==false){ log.push([who,html]); log=log.slice(-30); sess.set("umr-bot-log",log);} return d; }
+  function ask(t){ t=t.trim(); if(!t) return; add(esc(t),"u"); Snd.soft(); const ty=add("<i></i><i></i><i></i>","b typing",false); setTimeout(()=>{ ty.remove(); add(answer(t),"b"); Snd.tick(); },Math.min(1000,360+t.length*12)); }
+  function chips(){ const base=ctx.lvl?["Define osmosis","Tt x Tt",ctx.lvl+" past papers","What's in paper 2?","Notes for "+ctx.lvl]:["Define diffusion","Tt x tt","3-month course","Past papers","Fees","Notes"]; $("#botSug").innerHTML=base.map(s=>'<button type="button">'+esc(s)+"</button>").join(""); }
+  let opened=false;
+  function open(){ box.classList.add("open"); box.setAttribute("aria-hidden","false"); fab.setAttribute("aria-expanded","true"); Snd.open();
+    if(!opened){ opened=true; if(log.length) log.forEach(([w,h])=>add(h,w,false)); else add("Assalam o Alaikum! I'm Bio bot. I know every syllabus definition, I can solve genetic crosses, and I can open past papers, timers and notes for you.","b"); }
+    setTimeout(()=>{ if(FINE) inp.focus({preventScroll:true}); },220); }
+  function close(){ box.classList.remove("open"); box.setAttribute("aria-hidden","true"); fab.setAttribute("aria-expanded","false"); Snd.close(); }
+  BIO.bot={open,close,ask};
+  fab.addEventListener("click",e=>{ e.stopPropagation(); box.classList.contains("open")?close():open(); });
+  $("#botX").addEventListener("click",close);
+  $("#botSug").addEventListener("click",e=>{ const b=e.target.closest("button"); if(b) ask(b.textContent); });
+  $("#botForm").addEventListener("submit",e=>{ e.preventDefault(); ask(inp.value); inp.value=""; });
+  msgs.addEventListener("click",e=>{ const s=e.target.closest("[data-say]"); if(s){ ask(s.dataset.say); return; } if(e.target.closest("[data-open-cart]")) BIO.cart&&BIO.cart.open(); });
+  document.addEventListener("click",e=>{ if(box.classList.contains("open")&&!e.target.closest("#bot,#botFab,#cart")) close(); });
+  addEventListener("keydown",e=>{ if(e.key==="Escape"&&box.classList.contains("open")) close(); });
+  save();
+  const ft=$(".foot-meta"); if(ft&&"IntersectionObserver" in window) new IntersectionObserver(es=>fab.classList.toggle("away",es[0].isIntersecting&&!box.classList.contains("open"))).observe(ft);
+})();
+
+/* ======================= COPY + YEAR ======================= */
+document.addEventListener("click",e=>{ const b=e.target.closest("[data-copy]"); if(!b) return; const v=b.dataset.copy; const ok=()=>{ const o=b.textContent; b.textContent="Copied"; setTimeout(()=>b.textContent=o,1400); toast(v+" copied"); };
+  if(navigator.clipboard) navigator.clipboard.writeText(v).then(ok).catch(()=>toast(v)); else toast(v); });
+$$("[data-year]").forEach(y=>y.textContent=new Date().getFullYear());
+
+/* logo fallback (drop soni-logo.png next to the pages to use a real logo) */
+$$("img[data-fallback]").forEach(img=>{ const host=img.closest("[data-fb-host]");
+  const ok=()=>{ host&&host.classList.add("has-img"); if(/soni-logo\.png/.test(img.src)){ const f=$("#favicon"); if(f) f.href=img.src; } };
+  const fail=()=>{ host&&host.classList.add("fb"); img.remove(); };
+  if(img.complete){ img.naturalWidth?ok():fail(); } else { img.addEventListener("load",ok,{once:true}); img.addEventListener("error",fail,{once:true}); } });
+
+/* boot hooks for page scripts */
+BIO.ready=fn=>{ (BIO._q=BIO._q||[]).push(fn); };
+window.addEventListener("DOMContentLoaded",()=>{});
+function wordReveal(){ if(RM||!G||!ST) return;
+  $$("main h2").forEach(h=>{ if(h.closest("[data-kin]")||h.hasAttribute("data-kin")||h.closest(".modal")||h.closest(".story")) return; if(h.getBoundingClientRect().top<innerHeight*.95) return;
+    const walk=n=>{ [...n.childNodes].forEach(c=>{ if(c.nodeType===3){ const parts=c.textContent.split(/(\s+)/); const f=document.createDocumentFragment(); parts.forEach(p=>{ if(!p) return; if(/^\s+$/.test(p)){ f.appendChild(document.createTextNode(p)); return; } const o=document.createElement("span"); o.className="wm"; const i=document.createElement("span"); i.className="wi"; i.textContent=p; o.appendChild(i); f.appendChild(o); }); c.replaceWith(f); } else if(c.nodeType===1&&c.tagName!=="BR") walk(c); }); };
+    h.setAttribute("aria-label",h.textContent.replace(/\s+/g," ").trim()); walk(h);
+    G.from($$(".wi",h),{yPercent:115,duration:1.05,ease:"expo.out",stagger:.045,scrollTrigger:{trigger:h,start:"top 88%",once:true}}); }); }
+function dock(){ const d=$("#dock"), btn=$("#topBtn"); if(!d) return; const ring=$(".tp-ring circle",btn);
+  const upd=()=>{ const h=document.documentElement.scrollHeight-innerHeight, p=h>0?scrollY/h:0; ring.style.strokeDashoffset=(119.38*(1-p)).toFixed(1); };
+  addEventListener("scroll",upd,{passive:true}); upd(); btn.addEventListener("click",()=>{ if(lenis) lenis.scrollTo(0,{duration:1.4}); else scrollTo({top:0,behavior:RM?"auto":"smooth"}); });
+  const ft=$(".foot-meta"); if(ft&&"IntersectionObserver" in window) new IntersectionObserver(es=>d.classList.toggle("away",es[0].isIntersecting)).observe(ft); }
+function cursor(){ if(!FINE||RM) return; const c=$(".cursor"); if(!c) return; const dot=$(".c-dot",c), ring=$(".c-ring",c); let x=-100,y=-100,rx=-100,ry=-100,shown=false;
+  addEventListener("pointermove",e=>{ if(e.pointerType!=="mouse") return; x=e.clientX; y=e.clientY; if(!shown){ shown=true; rx=x; ry=y; root.classList.add("has-cursor"); } c.classList.toggle("hover",!!e.target.closest("a,button,[role=button],input,select,textarea,.topic,.prod,.tile,.rail-card")); },{passive:true});
+  document.addEventListener("pointerdown",()=>c.classList.add("down")); document.addEventListener("pointerup",()=>c.classList.remove("down"));
+  document.addEventListener("mouseleave",()=>c.classList.add("gone")); document.addEventListener("mouseenter",()=>c.classList.remove("gone"));
+  (function f(){ rx+=(x-rx)*.18; ry+=(y-ry)*.18; dot.style.transform="translate3d("+x+"px,"+y+"px,0)"; ring.style.transform="translate3d("+rx.toFixed(1)+"px,"+ry.toFixed(1)+"px,0)"; requestAnimationFrame(f); })(); }
+BIO.boot=function(){ (BIO._q||[]).forEach(f=>{ try{f()}catch(e){console.error(e)} }); reveals(); wordReveal(); rails(); dock(); cursor();
+  if(ST){ const r=()=>ST.refresh(); if(document.fonts&&document.fonts.ready) document.fonts.ready.then(r); addEventListener("load",r,{once:true}); } };
+})();
+
+/* syllabus tracker */
+(function(){
+const {$,$$,SYL,GROUP,GNAME,DEFS,esc,store,Snd,toast,wa}=BIO;
+let key="ol", filt="all", q="";
+const done=store.get("umr-done",{});
+function paintRing(){ const d=SYL[key], n=d.topics.filter(t=>done[key+"-"+t.n]).length, pct=Math.round(n/d.topics.length*100);
+  $("#pRing").style.strokeDashoffset=(376.99*(1-n/d.topics.length)).toFixed(1); $("#pPct").textContent=pct+"%"; $("#pTxt").textContent=n+" of "+d.topics.length+" done"; }
+function render(){ const d=SYL[key], groups=[...new Set(d.topics.map(t=>GROUP[key][t.n]))];
+  $("#sylFilter").innerHTML=['<button type="button" aria-pressed="'+(filt==="all")+'" data-f="all">All</button>'].concat(groups.map(g=>'<button type="button" aria-pressed="'+(filt===g)+'" data-f="'+g+'">'+esc(GNAME[g])+"</button>")).join("");
+  const list=d.topics.filter(t=>(filt==="all"||GROUP[key][t.n]===filt)&&(!q||(t.t+" "+t.s.join(" ")).toLowerCase().includes(q)));
+  $("#tgrid").innerHTML=list.map(t=>{ const id=key+"-"+t.n, g=GROUP[key][t.n]; return '<button type="button" class="topic g-'+g+(done[id]?" done":"")+'" data-n="'+t.n+'" id="'+id+'"><span class="tk" aria-hidden="true">✓</span><span class="tn">'+String(t.n).padStart(2,"0")+"</span><h3>"+esc(t.t)+'</h3><span class="tm"><span class="tp">'+esc(GNAME[g])+"</span><span>"+t.s.length+" sub-topic"+(t.s.length>1?"s":"")+'</span></span><span class="bar"></span></button>'; }).join("");
+  $("#sylEmpty").hidden=list.length>0; paintRing();
+  if(window.gsap&&!BIO.RM) gsap.from("#tgrid .topic",{y:24,opacity:0,duration:.6,ease:"expo.out",stagger:.025,clearProps:"transform,opacity"});
+}
+function open(n){ const d=SYL[key], t=d.topics.find(x=>x.n===+n); if(!t) return; const id=key+"-"+t.n;
+  const df=key==="ol"?DEFS.filter(x=>x[2]===t.n)[0]:null;
+  BIO.modal('<span class="lbl">'+esc(d.label)+" · Topic "+t.n+'</span><h2 id="mTitle" style="font-size:clamp(24px,3.2vw,34px);margin:8px 48px 10px 0">'+esc(t.t)+'</h2><span class="pill">'+esc(GNAME[GROUP[key][t.n]])+'</span><ol class="sub-list">'+t.s.map((s,i)=>'<li><span>'+t.n+"."+(i+1)+"</span>"+esc(s)+"</li>").join("")+"</ol>"+(df?'<div class="defhint"><span>Learn this definition</span><p><b>'+esc(df[0])+"</b>: "+esc(df[1])+".</p></div>":"")+'<div class="m-actions"><button class="btn btn-pri" type="button" id="mDone">'+(done[id]?"Mark as not done":"Mark as understood")+'</button><a class="btn" href="past-papers.html#p-'+(key==="ol"?"5090":"0610")+'">Practise past papers</a><a class="btn-link" target="_blank" rel="noopener" href="'+wa("Assalam o Alaikum Sir Umer, I have a question about "+d.label+" Topic "+t.n+" ("+t.t+").")+'">Ask Sir Umer</a></div>');
+  $("#mDone").addEventListener("click",()=>{ done[id]=!done[id]; store.set("umr-done",done); BIO.closeModal(); render(); if(done[id]){ Snd.chime(); toast(t.t+" ticked off"); BIO.pulse&&BIO.pulse(); } });
+}
+$("#sylTabs").addEventListener("click",e=>{ const b=e.target.closest("button"); if(!b) return; key=b.dataset.k; filt="all"; $$("#sylTabs button").forEach(x=>x.setAttribute("aria-selected",String(x===b))); render(); });
+$("#sylFilter").addEventListener("click",e=>{ const b=e.target.closest("button"); if(!b) return; filt=b.dataset.f; render(); });
+$("#sylQ").addEventListener("input",e=>{ q=e.target.value.trim().toLowerCase(); render(); });
+$("#tgrid").addEventListener("click",e=>{ const b=e.target.closest(".topic"); if(b) open(b.dataset.n); });
+$("#askBot").addEventListener("click",e=>{ e.stopPropagation(); BIO.bot.open(); });
+$("#sylReset").addEventListener("click",()=>{ SYL[key].topics.forEach(t=>delete done[key+"-"+t.n]); store.set("umr-done",done); render(); toast("Tracker cleared for "+SYL[key].short); });
+const h=location.hash.slice(1), m=h.match(/^(ol|ig)-(\d{1,2})$/);
+if(m){ key=m[1]; $$("#sylTabs button").forEach(x=>x.setAttribute("aria-selected",String(x.dataset.k===key))); }
+render();
+if(m) setTimeout(()=>open(m[2]),500);
+})();
+
+BIO.boot();
+</script>
+</body>
+</html>

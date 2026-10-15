@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://sirumersoni.vercel.app/sitemap.xml
