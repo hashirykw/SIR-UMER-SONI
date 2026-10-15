@@ -810,9 +810,11 @@ BIO.initBg=function(){
   const renderer=new T.WebGLRenderer({antialias:false,alpha:true,powerPreference:"high-performance"});
   renderer.setPixelRatio(dpr); renderer.setSize(innerWidth,innerHeight); host.appendChild(renderer.domElement);
   const scene=new T.Scene(), cam=new T.PerspectiveCamera(50,innerWidth/innerHeight,.1,200); cam.position.set(0,0,22);
-  const read=()=>{ const cs=getComputedStyle(root), tmp=document.createElement("i"); document.body.appendChild(tmp);
-    const g=v=>{ tmp.style.color=cs.getPropertyValue(v); const m=getComputedStyle(tmp).color.match(/[\d.]+/g)||[255,120,160]; return new T.Color(m[0]/255,m[1]/255,m[2]/255); };
-    const out=[g("--c-accent"),g("--c-cool"),g("--c-ok")]; tmp.remove(); return out; };
+  /* resolve theme tokens (oklch) to RGB through a 1px canvas, which understands any CSS colour */
+  const px=document.createElement("canvas"); px.width=px.height=1; const pc=px.getContext("2d",{willReadFrequently:true});
+  const read=()=>{ const cs=getComputedStyle(root);
+    const g=v=>{ pc.clearRect(0,0,1,1); pc.fillStyle="#808080"; pc.fillStyle=cs.getPropertyValue(v).trim(); pc.fillRect(0,0,1,1); const d=pc.getImageData(0,0,1,1).data; return new T.Color(d[0]/255,d[1]/255,d[2]/255); };
+    return [g("--c-accent"),g("--c-cool"),g("--c-ok")]; };
   let [cA,cB,cC]=read();
   const uni={uT:{value:0},uA:{value:cA},uB:{value:cB},uC:{value:cC},uS:{value:dpr},uLight:{value:isDark()?0:1},uPulse:{value:0}};
 
@@ -927,9 +929,10 @@ function reveals(){
   if(G&&ST){
     els.forEach(el=>{ const r=el.getBoundingClientRect(); if(r.top<innerHeight*.92) return; const kind=el.dataset.rv;
       const from=kind==="left"?{x:-80,opacity:0}:kind==="right"?{x:80,opacity:0}:kind==="scale"?{scale:.92,opacity:0}:kind==="clip"?{clipPath:"inset(0 0 100% 0)"}:{y:44,opacity:0};
-      G.from(el,{...from,duration:1,ease:"expo.out",delay:+(el.dataset.rvDelay||0),scrollTrigger:{trigger:el,start:"top 90%",once:true}}); });
+      el.style.transition="none"; G.from(el,{...from,duration:1,ease:"expo.out",delay:+(el.dataset.rvDelay||0),clearProps:"transform,opacity,clipPath",onComplete:()=>{ el.style.transition=""; },scrollTrigger:{trigger:el,start:"top 90%",once:true}}); });
     $$("[data-rv-stagger]").forEach(g=>{ const r=g.getBoundingClientRect(); if(r.top<innerHeight*.92) return; const kids=[...g.children];
-      G.from(kids,{y:50,opacity:0,rotateX:-8,transformOrigin:"50% 0",duration:.9,ease:"expo.out",stagger:.07,scrollTrigger:{trigger:g,start:"top 88%",once:true}}); });
+      kids.forEach(k=>k.style.transition="none");
+      G.from(kids,{y:50,opacity:0,rotateX:-8,transformOrigin:"50% 0",duration:.9,ease:"expo.out",stagger:.07,clearProps:"transform,opacity,transformOrigin",onComplete:()=>kids.forEach(k=>{ k.style.transition=""; }),scrollTrigger:{trigger:g,start:"top 88%",once:true}}); });
   } else if("IntersectionObserver" in window){
     const io=new IntersectionObserver(es=>es.forEach(e=>{ if(e.isIntersecting){ e.target.style.transition="opacity .9s var(--e-out),transform .9s var(--e-out)"; e.target.style.opacity=""; e.target.style.transform=""; io.unobserve(e.target);} }),{rootMargin:"0px 0px -8% 0px"});
     els.forEach(el=>{ if(el.getBoundingClientRect().top>innerHeight){ el.style.opacity="0"; el.style.transform="translateY(40px)"; io.observe(el);} });
