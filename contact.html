@@ -609,6 +609,8 @@ input:focus,select:focus,textarea:focus{border-color:var(--c-accent);box-shadow:
 
 @media (max-width:560px){.dock [data-snd]{display:none}}
 
+:is(h1,h2).kin{display:block}
+
 /* ================= INNER PAGES · shared garden treatment ================= */
 .ph .wrap{position:relative;z-index:2}
 .ph-garden .o3{z-index:0}
@@ -737,7 +739,7 @@ main :is(small,span,b,em,dt,label,.pn,.lbl,.pin,.kv span):not(.code):not(.spec-c
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.min.js"></script>
-<script async src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js" onload="window.BIO&&BIO.initBg&&BIO.initBg()" onerror="document.documentElement.classList.add('no-webgl')"></script>
+<script async src="https://cdn.jsdelivr.net/npm/three@0.158.0/build/three.min.js" onload="window.BIO&&BIO.initBg&&BIO.initBg()" onerror="document.documentElement.classList.add('no-webgl')"></script>
 <script>
 /* Sir Umer Soni · Biology · shared engine (inlined into every page at build time) */
 (function(){
@@ -918,157 +920,228 @@ document.addEventListener("click",e=>{ const a=e.target.closest('a[href^="#"]');
 
 /* ======================= 3D GARDEN · Three.js organisms anchored to the layout =======================
    Every <i class="o3" data-o="flower|dna|butterfly|leaf|cell|virus|bacterium|mushroom|ladybird|rbc|pollen"> in the
-   markup is a slot. The scene reads each slot's box every frame and places a glossy model there, so CSS decides
-   where organisms sit on mobile and desktop. data-v = colour variant, data-r = "x,y,z" base tilt in degrees,
-   data-sp = speed. Slots hidden with display:none are skipped. */
+   markup is a slot. The scene reads each slot's box every frame and places a model there, so CSS decides where
+   organisms sit on mobile and desktop. data-v = colour variant, data-r = "x,y,z" base tilt in degrees,
+   data-sp = speed. Slots hidden with display:none are skipped. Needs three.js r150+ (iridescence, sheen). */
 BIO.initBg=function(){
   const host=$("#bg3d"); if(!host||host.dataset.on) return; host.dataset.on=1;
   const T=window.THREE; let ok=false;
-  try{ const c=document.createElement("canvas"); ok=!!(T && (c.getContext("webgl")||c.getContext("experimental-webgl"))); }catch(e){}
+  try{ const c=document.createElement("canvas"); ok=!!(T && (c.getContext("webgl2")||c.getContext("webgl"))); }catch(e){}
   if(!ok){ root.classList.add("no-webgl"); return; }
   const slots=$$(".o3"); if(!slots.length) return;
-  const small=innerWidth<760, dpr=Math.min(small?1.6:2,devicePixelRatio||1);
+  const small=innerWidth<760, dpr=Math.min(small?1.75:2,devicePixelRatio||1);
   let renderer;
   try{ renderer=new T.WebGLRenderer({antialias:true,alpha:true,powerPreference:"high-performance"}); }catch(e){ root.classList.add("no-webgl"); return; }
   renderer.setPixelRatio(dpr); renderer.setSize(innerWidth,innerHeight);
-  renderer.outputEncoding=T.sRGBEncoding; renderer.toneMapping=T.NoToneMapping;
+  if("useLegacyLights" in renderer) renderer.useLegacyLights=true;
+  renderer.outputColorSpace=T.SRGBColorSpace; renderer.toneMapping=T.NoToneMapping;
   host.appendChild(renderer.domElement);
   const scene=new T.Scene(), FOV=28, CZ=40;
   const cam=new T.PerspectiveCamera(FOV,innerWidth/innerHeight,1,120); cam.position.set(0,0,CZ);
 
-  /* soft studio environment: blush-to-lilac dome plus three softboxes, baked to a PMREM for glossy candy reflections */
+  /* studio environment: blush-to-lilac dome with softboxes, prefiltered for soft glossy reflections */
   const pm=new T.PMREMGenerator(renderer), es=new T.Scene();
-  const dome=new T.SphereGeometry(20,32,16), dp=dome.attributes.position, dc=[];
-  const cTop=new T.Color("#ffffff"), cMid=new T.Color("#ffd9ec"), cBot=new T.Color("#cdbdff");
-  for(let i=0;i<dp.count;i++){ const y=dp.getY(i)/20, c=y>0?cMid.clone().lerp(cTop,y):cMid.clone().lerp(cBot,-y); dc.push(c.r,c.g,c.b); }
+  const dome=new T.SphereGeometry(20,48,24), dp=dome.attributes.position, dc=[];
+  const cTop=new T.Color("#ffffff"), cMid=new T.Color("#ffd6ea"), cBot=new T.Color("#c7b6ff");
+  for(let i=0;i<dp.count;i++){ const y=dp.getY(i)/20, c=y>0?cMid.clone().lerp(cTop,Math.pow(y,.7)):cMid.clone().lerp(cBot,-y); dc.push(c.r,c.g,c.b); }
   dome.setAttribute("color",new T.Float32BufferAttribute(dc,3));
   es.add(new T.Mesh(dome,new T.MeshBasicMaterial({side:T.BackSide,vertexColors:true})));
-  const box=(x,y,z,w,h,r,g,b)=>{ const m=new T.Mesh(new T.PlaneGeometry(w,h),new T.MeshBasicMaterial({color:new T.Color(r,g,b),side:T.DoubleSide})); m.position.set(x,y,z); m.lookAt(0,0,0); es.add(m); };
-  box(-7,9,9,9,5,2.1,2,2.1); box(11,3,5,3,8,1.5,1.1,1.45); box(0,-7,-12,14,4,.8,1,.95);
-  scene.environment=pm.fromScene(es,.04).texture;
-  scene.add(new T.HemisphereLight(0xffffff,0xe6dcff,.38));
-  const key=new T.DirectionalLight(0xffffff,.95); key.position.set(-6,9,12); scene.add(key);
-  const rim=new T.DirectionalLight(0xffb3d9,.55); rim.position.set(8,-3,-6); scene.add(rim);
+  const sb=(x,y,z,w,h,r,g,b)=>{ const m=new T.Mesh(new T.PlaneGeometry(w,h),new T.MeshBasicMaterial({color:new T.Color(r,g,b),side:T.DoubleSide})); m.position.set(x,y,z); m.lookAt(0,0,0); es.add(m); };
+  sb(-7,9,9,10,6,2.4,2.35,2.4); sb(12,2,4,3,9,1.6,1.1,1.5); sb(0,-8,-11,16,4,.8,1,.95); sb(-12,-2,2,2,6,1,1.2,1.6);
+  scene.environment=pm.fromScene(es,.035).texture;
+  scene.add(new T.HemisphereLight(0xffffff,0xe3d6ff,.3));
+  const key=new T.DirectionalLight(0xfffaf5,.9); key.position.set(-6,9,12); scene.add(key);
+  const rim=new T.DirectionalLight(0xffb8dc,.85); rim.position.set(9,-2,-8); scene.add(rim);
+  const fill=new T.DirectionalLight(0xc9e6ff,.35); fill.position.set(8,4,6); scene.add(fill);
 
-  const PAL={pink:"#ff5fa8",hot:"#ee2f84",rose:"#ff4f86",lilac:"#a585ff",violet:"#7a55f2",mint:"#5fdcab",leaf:"#22b46f",fern:"#178a55",
-    butter:"#ffc93a",sky:"#5bb8ff",coral:"#ff5866",cream:"#fff0e0",blush:"#ffc2dd",plum:"#3b1145",ink:"#2b1433",white:"#ffffff",red:"#ff4766"};
+  /* ---------- procedural textures ---------- */
+  const TX={};
+  const ctex=(k,w,h,draw,color)=>{ if(TX[k]) return TX[k]; const c=document.createElement("canvas"); c.width=w; c.height=h; draw(c.getContext("2d"),w,h);
+    const t=new T.CanvasTexture(c); if(color) t.colorSpace=T.SRGBColorSpace; t.wrapS=t.wrapT=T.RepeatWrapping; t.anisotropy=4; return TX[k]=t; };
+  const rnd=(s=>()=>(s=(s*16807)%2147483647)/2147483647)(7);
+  const noise=(k,n,rmin,rmax,a)=>ctex(k,256,256,(x,w,h)=>{ x.fillStyle="#808080"; x.fillRect(0,0,w,h);
+    for(let i=0;i<n;i++){ const px=rnd()*w, py=rnd()*h, r=rmin+rnd()*(rmax-rmin), l=rnd()<.5?0:255, g=x.createRadialGradient(px,py,0,px,py,r);
+      g.addColorStop(0,`rgba(${l},${l},${l},${a})`); g.addColorStop(1,`rgba(${l},${l},${l},0)`); x.fillStyle=g;
+      for(const ox of [-w,0,w]) for(const oy of [-h,0,h]){ x.beginPath(); x.arc(px+ox,py+oy,r,0,7); x.fill(); } } });
+  const N1=()=>noise("n1",1400,2,9,.35), N2=()=>noise("n2",500,6,26,.28);
+  const veinPath=(x,w,h,u)=>{ x.beginPath(); x.moveTo(w/2,h); x.quadraticCurveTo(w/2+(u-.5)*w*.7,h*.5,u*w,0); x.stroke(); };
+  const petalTex=(k,base,tip,vein)=>ctex("pt"+k,256,256,(x,w,h)=>{ const g=x.createLinearGradient(0,h,0,0); g.addColorStop(0,base); g.addColorStop(.6,tip); g.addColorStop(1,tip); x.fillStyle=g; x.fillRect(0,0,w,h);
+    x.strokeStyle=vein; x.lineWidth=1.3; for(let i=0;i<22;i++){ const u=(i+.5)/22; x.globalAlpha=.22+.22*Math.sin(u*9); veinPath(x,w,h,u); } x.globalAlpha=1; },true);
+  const petalBump=()=>ctex("pb",256,256,(x,w,h)=>{ x.fillStyle="#808080"; x.fillRect(0,0,w,h); x.strokeStyle="#585858"; x.lineWidth=2; for(let i=0;i<22;i++) veinPath(x,w,h,(i+.5)/22); });
+
+  const P=c=>new T.Color(c);
   const MC={};
-  const mat=(hex,o)=>{ const k=hex+JSON.stringify(o||{}); if(MC[k]) return MC[k];
-    return MC[k]=new T.MeshPhysicalMaterial(Object.assign({color:new T.Color(hex).convertSRGBToLinear(),roughness:.34,metalness:0,clearcoat:1,clearcoatRoughness:.12,envMapIntensity:.62},o||{})); };
+  const mat=(hex,o)=>{ const k=hex+JSON.stringify(o||{},(kk,vv)=>vv&&vv.isTexture?vv.uuid:vv&&vv.isColor?vv.getHex():vv); if(MC[k]) return MC[k];
+    return MC[k]=new T.MeshPhysicalMaterial(Object.assign({color:P(hex),roughness:.32,metalness:0,clearcoat:1,clearcoatRoughness:.12,envMapIntensity:.55},o||{})); };
+  const pearl=(hex,o)=>mat(hex,Object.assign({iridescence:.7,iridescenceIOR:1.35,iridescenceThicknessRange:[180,480],roughness:.24,sheen:.2,sheenColor:P(hex),sheenRoughness:.4},o||{}));
+  const velvet=(hex,o)=>mat(hex,Object.assign({roughness:.55,clearcoat:.2,clearcoatRoughness:.4,sheen:.35,sheenColor:P("#ffd6ea"),sheenRoughness:.4,envMapIntensity:.45},o||{}));
   const add=(g,geo,m,x,y,z)=>{ const o=new T.Mesh(geo,m); o.position.set(x||0,y||0,z||0); g.add(o); return o; };
   const UP=new T.Vector3(0,1,0);
   const fib=(n,i)=>{ const y=1-(i+.5)/n*2, r=Math.sqrt(1-y*y), a=i*2.39996; return new T.Vector3(Math.cos(a)*r,y,Math.sin(a)*r); };
-  const lathe=(pts,seg)=>new T.LatheGeometry(pts.map(p=>new T.Vector2(p[0],p[1])),seg||40);
+  const lathe=(pts,seg)=>new T.LatheGeometry(pts.map(p=>new T.Vector2(p[0],p[1])),seg||48);
+  const PAL={pink:"#ff5fa8",hot:"#ee2f84",rose:"#ff4f86",lilac:"#a585ff",violet:"#7a55f2",mint:"#5fdcab",leaf:"#2fb571",fern:"#178a55",
+    butter:"#ffc93a",sky:"#5bb8ff",coral:"#ff5866",cream:"#fff0e0",blush:"#ffc2dd",plum:"#3b1145",ink:"#22101f",white:"#ffffff",red:"#f2243f"};
 
   /* ---------- models (each fits roughly a unit box) ---------- */
   const B={};
-  B.dna=v=>{ const g=new T.Group(), H=1, R=.17, turns=2, N=22;
-    const strand=ph=>{ const P=[]; for(let i=0;i<=96;i++){ const t=i/96, a=t*turns*Math.PI*2+ph; P.push(new T.Vector3(Math.cos(a)*R,(t-.5)*H,Math.sin(a)*R)); } return new T.CatmullRomCurve3(P); };
-    add(g,new T.TubeGeometry(strand(0),160,.03,12,false),mat(v==="b"?PAL.violet:PAL.hot));
-    add(g,new T.TubeGeometry(strand(Math.PI),160,.03,12,false),mat(v==="b"?PAL.sky:PAL.violet));
-    const cols=[PAL.butter,PAL.mint,PAL.sky,PAL.pink], cy=new T.CylinderGeometry(.013,.013,1,8), sp=new T.SphereGeometry(.034,16,12);
-    for(let i=0;i<N;i++){ const t=(i+.5)/N, a=t*turns*Math.PI*2, y=(t-.5)*H, p1=new T.Vector3(Math.cos(a)*R,y,Math.sin(a)*R), p2=new T.Vector3(-p1.x,y,-p1.z), mid=new T.Vector3(0,y,0);
-      [[p1,cols[i%4]],[p2,cols[(i+2)%4]]].forEach(([p,c])=>{ const m=add(g,cy,mat(c)); m.position.copy(p).add(mid).multiplyScalar(.5); m.scale.y=p.distanceTo(mid); m.quaternion.setFromUnitVectors(UP,p.clone().sub(mid).normalize()); add(g,sp,mat(c)).position.copy(p).multiplyScalar(.88).setY(y); }); }
-    g.userData.a=(o,t)=>{ o.rotation.y=t*.00055; }; return g; };
 
-  B.flower=v=>{ const g=new T.Group(), f=new T.Group(); g.add(f);
-    const V={pink:[PAL.pink,PAL.blush,PAL.butter],lilac:[PAL.lilac,"#e3d8ff",PAL.butter],white:["#ffffff","#ffe3ef",PAL.butter],butter:[PAL.butter,"#fff0b8",PAL.hot],sky:[PAL.sky,"#d6efff",PAL.butter]}[v||"pink"]||[PAL.pink,PAL.blush,PAL.butter];
-    const pet=new T.SphereGeometry(1,28,16);
-    [[9,.22,.2,.105,0,V[0]],[9,.15,.14,.08,Math.PI/9,V[1]]].forEach(([n,dist,len,wid,off,c],layer)=>{
-      for(let i=0;i<n;i++){ const piv=new T.Group(); piv.rotation.z=i/n*Math.PI*2+off; const m=new T.Mesh(pet,mat(c));
-        m.scale.set(len,wid,.028); m.position.set(dist,0,layer*.03); m.rotation.y=-.32-layer*.18; piv.add(m); f.add(piv); } });
-    const ctr=add(f,new T.SphereGeometry(.085,24,16),mat(V[2],{roughness:.55})); ctr.scale.z=.55; ctr.position.z=.06;
-    const dot=new T.SphereGeometry(.016,10,8); for(let i=0;i<20;i++){ const a=i*2.4, r=Math.sqrt(i/20)*.07; add(f,dot,mat(i%2?"#f5a524":"#ffe08a",{roughness:.6}),Math.cos(a)*r,Math.sin(a)*r,.095-r*.25); }
-    f.scale.setScalar(1.5);
-    g.userData.a=(o,t,ph)=>{ f.rotation.z=t*.00022+ph; o.rotation.x=Math.sin(t*.0009+ph)*.12; }; return g; };
+  /* DNA: pearly sugar-phosphate backbones (major/minor groove) with paired, two-tone bases */
+  B.dna=v=>{ const g=new T.Group(), H=1, R=.17, turns=2.1, N=26, ph2=Math.PI*.78;
+    const strand=ph=>{ const Q=[]; for(let i=0;i<=120;i++){ const t=i/120, a=t*turns*Math.PI*2+ph; Q.push(new T.Vector3(Math.cos(a)*R,(t-.5)*H,Math.sin(a)*R)); } return new T.CatmullRomCurve3(Q); };
+    const cA=v==="b"?PAL.violet:PAL.hot, cB=v==="b"?PAL.sky:PAL.violet;
+    add(g,new T.TubeGeometry(strand(0),200,.022,14,false),pearl(cA));
+    add(g,new T.TubeGeometry(strand(ph2),200,.022,14,false),pearl(cB));
+    const ph=new T.SphereGeometry(.034,20,14);
+    for(let i=0;i<=40;i++){ const t=i/40; [[0,cA],[ph2,cB]].forEach(([o,c])=>{ const a=t*turns*Math.PI*2+o; add(g,ph,pearl(c,{iridescence:1}),Math.cos(a)*R,(t-.5)*H,Math.sin(a)*R); }); }
+    const PAIRS=[[PAL.butter,PAL.sky],[PAL.mint,PAL.pink],[PAL.sky,PAL.butter],[PAL.pink,PAL.mint]];
+    const bg=new T.CylinderGeometry(.016,.016,1,12), cap=new T.SphereGeometry(.02,12,10);
+    for(let i=0;i<N;i++){ const t=(i+.5)/N, a=t*turns*Math.PI*2, y=(t-.5)*H, p1=new T.Vector3(Math.cos(a)*R,y,Math.sin(a)*R), p2=new T.Vector3(Math.cos(a+ph2)*R,y,Math.sin(a+ph2)*R), mid=p1.clone().add(p2).multiplyScalar(.5);
+      const pr=PAIRS[i%4];
+      [[p1,pr[0]],[p2,pr[1]]].forEach(([p,c])=>{ const m=add(g,bg,mat(c,{roughness:.25})); m.position.copy(p).add(mid).multiplyScalar(.5); m.scale.y=p.distanceTo(mid)*.92; m.quaternion.setFromUnitVectors(UP,p.clone().sub(mid).normalize()); });
+      add(g,cap,mat("#ffffff",{roughness:.2})).position.copy(mid); }
+    g.userData.a=(o,t)=>{ o.rotation.y=t*.0005; }; return g; };
 
-  B.leaf=v=>{ const g=new T.Group(), geo=new T.PlaneGeometry(1,1,10,28), p=geo.attributes.position;
+  /* flower: cupped, veined velvet petals in two whorls around a phyllotaxis disc of florets */
+  let PG=null;
+  const petalGeo=()=>{ if(PG) return PG; PG=new T.PlaneGeometry(1,1,14,22); const p=PG.attributes.position, uv=PG.attributes.uv;
+    for(let i=0;i<p.count;i++){ const u=p.getX(i), v=p.getY(i)+.5; const notch=1-.22*Math.pow(Math.max(0,1-Math.abs(u)*7),2)*Math.pow(v,8);
+      const w=Math.pow(Math.sin(Math.PI*Math.min(1,v*.97+.03)),.7)*(1-.12*v)*.5*notch;
+      const X=u*2*w, Y=v*notch, Z=.6*X*X+.18*v*v-.05*Math.sin(v*Math.PI); p.setXYZ(i,X,Y,Z); uv.setXY(i,u+.5,v); }
+    PG.computeVertexNormals(); return PG; };
+  B.flower=v=>{ const g=new T.Group(), f=new T.Group(); g.add(f); const key=v||"pink";
+    const V={pink:["#d92a74","#ffc9e0","#b3175c"],lilac:["#6e4fe6","#e8dfff","#4f35c4"],white:["#ff9cc6","#fffafc","#e18db5"],butter:["#f09a00","#fff3b8","#c47c00"],sky:["#2687dc","#dcefff","#1b67ad"]}[key]||["#d92a74","#ffc9e0","#b3175c"];
+    const m1=velvet("#ffffff",{map:petalTex(key,V[0],V[1],V[2]),bumpMap:petalBump(),bumpScale:.7,side:T.DoubleSide});
+    const m2=velvet("#ffffff",{map:petalTex(key+"i",V[0],"#ffffff",V[2]),bumpMap:petalBump(),bumpScale:.7,side:T.DoubleSide});
+    [[10,.42,.16,0,.3,m1,0],[8,.3,.13,Math.PI/8,.62,m2,.025]].forEach(([n,len,wid,off,lift,m,z])=>{
+      for(let i=0;i<n;i++){ const piv=new T.Group(); piv.rotation.z=i/n*Math.PI*2+off+(rnd()-.5)*.09; piv.position.z=z;
+        const pe=new T.Mesh(petalGeo(),m); pe.scale.set(wid*2.4,len*(.94+rnd()*.1),len*.9); pe.rotation.x=lift+(rnd()-.5)*.12; pe.position.y=.03;
+        piv.add(pe); f.add(piv); } });
+    const disc=add(f,new T.SphereGeometry(.09,32,18,0,Math.PI*2,0,Math.PI/2),mat("#e48d00",{roughness:.6,clearcoat:.2}),0,0,.04); disc.rotation.x=Math.PI/2; disc.scale.set(1,.55,1);
+    const fl=new T.SphereGeometry(.0105,8,6), cIn=P("#ff7a00"), cOut=P("#ffe066");
+    for(let i=0;i<150;i++){ const r=Math.sqrt(i/150)*.088, a=i*2.39996, h=Math.sqrt(Math.max(0,1-Math.pow(r/.09,2)))*.05; const c=cIn.clone().lerp(cOut,r/.088);
+      add(f,fl,mat("#"+c.getHexString(),{roughness:.45,clearcoat:.4}),Math.cos(a)*r,Math.sin(a)*r,.045+h); }
+    f.scale.setScalar(1.15);
+    g.userData.a=(o,t,ph)=>{ f.rotation.z=t*.0002+ph; o.rotation.x=Math.sin(t*.0009+ph)*.12; }; return g; };
+
+  /* leaf: curved blade with painted venation, bumped veins and a waxy sheen */
+  B.leaf=v=>{ const g=new T.Group(), geo=new T.PlaneGeometry(1,1,16,32), p=geo.attributes.position, uv=geo.attributes.uv;
     for(let i=0;i<p.count;i++){ const x=p.getX(i), y=p.getY(i)+.5, w=Math.pow(Math.sin(Math.PI*Math.min(1,y*1.02)),.8)*.36*(1-.25*y);
-      const X=x*2*w; p.setXYZ(i,X,y-.5,.42*(y-.5)*(y-.5)-.9*X*X+.06*Math.sin(y*7)); }
+      const X=x*2*w; p.setXYZ(i,X,y-.5,.42*(y-.5)*(y-.5)-.9*X*X+.05*Math.sin(y*7)); uv.setXY(i,x+.5,y); }
     geo.computeVertexNormals();
-    add(g,geo,mat(v==="mint"?PAL.mint:PAL.leaf,{side:T.DoubleSide,roughness:.38}));
-    const rib=new T.CatmullRomCurve3([0,.25,.5,.75,1].map(y=>new T.Vector3(0,y-.5,.42*(y-.5)*(y-.5)+.012)));
-    add(g,new T.TubeGeometry(rib,40,.012,8,false),mat(v==="mint"?PAL.leaf:"#8fe3b8"));
-    const st=add(g,new T.CylinderGeometry(.014,.02,.14,10),mat(PAL.fern)); st.position.set(0,-.56,.07);
+    const dark=v==="mint"?"#1c9a64":"#11804a", lite=v==="mint"?"#8ff0c6":"#5ad691";
+    const veins=(x,w,h,col,base)=>{ if(base){ const gr=x.createLinearGradient(0,h,0,0); gr.addColorStop(0,dark); gr.addColorStop(1,lite); x.fillStyle=gr; x.fillRect(0,0,w,h); } else { x.fillStyle="#808080"; x.fillRect(0,0,w,h); }
+      x.strokeStyle=col; x.lineCap="round"; x.lineWidth=5; x.beginPath(); x.moveTo(w/2,h); x.lineTo(w/2,0); x.stroke(); x.lineWidth=2.2;
+      for(let i=1;i<10;i++){ const y=h-i*h/10.5; [-1,1].forEach(s=>{ x.beginPath(); x.moveTo(w/2,y); x.quadraticCurveTo(w/2+s*w*.22,y-h*.04,w/2+s*w*.48,y-h*.11); x.stroke(); }); }
+      x.lineWidth=.8; x.globalAlpha=.45; for(let i=0;i<220;i++){ const a=rnd()*w, b=rnd()*h; x.beginPath(); x.moveTo(a,b); x.lineTo(a+(rnd()-.5)*18,b+(rnd()-.5)*18); x.stroke(); } x.globalAlpha=1; };
+    const map=ctex("leaf"+v,256,512,(x,w,h)=>veins(x,w,h,"rgba(225,255,236,.7)",1),true), bump=ctex("leafb",256,512,(x,w,h)=>veins(x,w,h,"#b8b8b8",0));
+    add(g,geo,new T.MeshPhysicalMaterial({map,bumpMap:bump,bumpScale:1.2,side:T.DoubleSide,roughness:.4,clearcoat:.75,clearcoatRoughness:.22,sheen:.25,sheenColor:P("#b8ffd8"),sheenRoughness:.5,envMapIntensity:.5}));
+    const st=add(g,new T.CylinderGeometry(.012,.02,.16,12),mat(PAL.fern,{roughness:.4})); st.position.set(0,-.57,.08); st.rotation.x=.3;
     g.userData.a=(o,t,ph)=>{ o.rotation.z=Math.sin(t*.0011+ph)*.16; o.rotation.y=Math.sin(t*.0007+ph)*.35; }; return g; };
 
+  /* butterfly: painted wings with veins, eye-spots and iridescent scales; furry body */
   B.butterfly=v=>{ const g=new T.Group();
-    const cv=document.createElement("canvas"); cv.width=cv.height=256; const x=cv.getContext("2d");
-    const c1=v==="blue"?"#5bb8ff":v==="lilac"?"#a585ff":"#ff5fa8", c2=v==="blue"?"#8a63ff":v==="lilac"?"#ff6fb0":"#9a6bff";
-    const gr=x.createRadialGradient(20,128,10,40,128,250); gr.addColorStop(0,"#ffe6f3"); gr.addColorStop(.22,c1); gr.addColorStop(.85,c2); gr.addColorStop(1,"#3b1145");
-    x.fillStyle=gr; x.fillRect(0,0,256,256); x.fillStyle="rgba(255,255,255,.92)"; [[170,70,13],[200,110,9],[150,170,11],[190,190,8],[120,60,6]].forEach(([a,b,r])=>{ x.beginPath(); x.arc(a,b,r,0,7); x.fill(); });
-    x.fillStyle="rgba(255,212,92,.95)"; [[110,120,10],[140,200,7]].forEach(([a,b,r])=>{ x.beginPath(); x.arc(a,b,r,0,7); x.fill(); });
-    const tex=new T.CanvasTexture(cv); tex.encoding=T.sRGBEncoding;
-    const wm=new T.MeshPhysicalMaterial({map:tex,side:T.DoubleSide,roughness:.4,clearcoat:.6,clearcoatRoughness:.2,envMapIntensity:.45});
-    const wing=(up)=>{ const s=new T.Shape(); if(up){ s.moveTo(0,0); s.bezierCurveTo(.12,.32,.42,.5,.56,.42); s.bezierCurveTo(.66,.34,.6,.12,.38,.04); s.lineTo(0,0); }
-      else { s.moveTo(0,0); s.bezierCurveTo(.3,-.04,.48,-.22,.42,-.38); s.bezierCurveTo(.36,-.5,.14,-.42,.06,-.24); s.lineTo(0,0); }
-      const geo=new T.ShapeGeometry(s,24), p=geo.attributes.position, uv=geo.attributes.uv; for(let i=0;i<p.count;i++) uv.setXY(i,p.getX(i)/.62,(p.getY(i)+.5)); return geo; };
+    const c1=v==="blue"?"#3fa8ff":v==="lilac"?"#9b7bff":"#ff4fa0", c2=v==="blue"?"#7d5cff":v==="lilac"?"#ff6fb0":"#8f5cff";
+    const tex=ctex("wing"+(v||""),512,512,(x,w,h)=>{ const gr=x.createRadialGradient(0,h/2,10,0,h/2,w*1.05); gr.addColorStop(0,"#fff0f7"); gr.addColorStop(.18,c1); gr.addColorStop(.68,c2); gr.addColorStop(.84,"#2a0f33"); gr.addColorStop(1,"#1a0820");
+      x.fillStyle=gr; x.fillRect(0,0,w,h);
+      x.strokeStyle="rgba(30,8,36,.5)"; x.lineWidth=3; x.lineCap="round"; for(let i=0;i<9;i++){ const a=-1.1+i*.27; x.beginPath(); x.moveTo(6,h/2); x.quadraticCurveTo(w*.35*Math.cos(a)+10,h/2+w*.25*Math.sin(a),w*.95*Math.cos(a),h/2+w*.95*Math.sin(a)); x.stroke(); }
+      x.lineWidth=2; x.beginPath(); x.arc(w*.42,h*.42,w*.12,0,7); x.stroke();
+      x.fillStyle="rgba(255,255,255,.95)"; for(let i=0;i<14;i++){ const a=-1+i*.16, r=w*.9; x.beginPath(); x.arc(r*Math.cos(a),h/2+r*Math.sin(a),w*.018,0,7); x.fill(); }
+      const eg=x.createRadialGradient(w*.62,h*.36,0,w*.62,h*.36,w*.08); eg.addColorStop(0,"#fff"); eg.addColorStop(.35,"#ffd45c"); eg.addColorStop(.7,"#2a0f33"); eg.addColorStop(1,"rgba(42,15,51,0)"); x.fillStyle=eg; x.beginPath(); x.arc(w*.62,h*.36,w*.08,0,7); x.fill();
+      const fx=x.createRadialGradient(0,h/2,0,0,h/2,w*.3); fx.addColorStop(0,"rgba(255,255,255,.55)"); fx.addColorStop(1,"rgba(255,255,255,0)"); x.fillStyle=fx; x.fillRect(0,0,w,h); },true);
+    const wm=new T.MeshPhysicalMaterial({map:tex,side:T.DoubleSide,roughness:.45,clearcoat:.5,clearcoatRoughness:.3,iridescence:.6,iridescenceIOR:1.5,iridescenceThicknessRange:[250,600],sheen:.2,sheenColor:P(c1),envMapIntensity:.4});
+    const wing=up=>{ const s=new T.Shape(); if(up){ s.moveTo(0,0); s.bezierCurveTo(.1,.3,.4,.52,.58,.44); s.bezierCurveTo(.7,.38,.66,.14,.4,.04); s.lineTo(0,0); }
+      else { s.moveTo(0,0); s.bezierCurveTo(.32,-.02,.5,-.2,.44,-.38); s.bezierCurveTo(.4,-.52,.2,-.46,.1,-.3); s.bezierCurveTo(.06,-.18,.02,-.06,0,0); }
+      const geo=new T.ShapeGeometry(s,32), p=geo.attributes.position, uv=geo.attributes.uv;
+      for(let i=0;i<p.count;i++){ const x=p.getX(i), y=p.getY(i); uv.setXY(i,x/.72,y+.5); p.setZ(i,.08*x*x-.04*y*y); } geo.computeVertexNormals(); return geo; };
     const L=new T.Group(), R=new T.Group(); [wing(1),wing(0)].forEach(geo=>{ L.add(new T.Mesh(geo,wm)); R.add(new T.Mesh(geo,wm)); }); R.scale.x=-1; g.add(L,R);
-    const body=add(g,lathe([[0,-.24],[.03,-.2],[.036,-.05],[.032,.08],[.022,.14],[0,.16]],24),mat(PAL.plum,{roughness:.45}));
-    add(g,new T.SphereGeometry(.04,18,14),mat(PAL.plum,{roughness:.45}),0,.19,0);
-    [-1,1].forEach(sx=>{ const c=new T.QuadraticBezierCurve3(new T.Vector3(sx*.01,.22,0),new T.Vector3(sx*.05,.33,.02),new T.Vector3(sx*.11,.38,0)); add(g,new T.TubeGeometry(c,16,.006,6,false),mat(PAL.plum)); add(g,new T.SphereGeometry(.016,10,8),mat(PAL.hot),sx*.11,.38,0); });
-    g.scale.setScalar(1.25); g.position.y=.04;
-    g.userData.a=(o,t,ph)=>{ const f=Math.sin(t*.009+ph)*.95+.15; L.rotation.y=-f; R.rotation.y=f; o.rotation.x=-.55+Math.sin(t*.0013+ph)*.12; o.rotation.z=Math.sin(t*.0008+ph)*.25; }; return g; };
+    const fur=velvet(PAL.plum,{bumpMap:N1(),bumpScale:2,roughness:.75,sheenColor:P("#c79ad6")});
+    add(g,lathe([[0,-.26],[.022,-.24],[.034,-.12],[.036,0],[.033,.09],[.024,.15],[0,.16]],28),fur);
+    add(g,new T.SphereGeometry(.042,24,18),fur,0,.19,0);
+    [-1,1].forEach(s=>{ add(g,new T.SphereGeometry(.014,12,10),mat("#111111",{roughness:.1}),s*.028,.21,.025);
+      const c=new T.QuadraticBezierCurve3(new T.Vector3(s*.012,.22,0),new T.Vector3(s*.05,.34,.02),new T.Vector3(s*.11,.4,0)); add(g,new T.TubeGeometry(c,20,.0055,8,false),mat(PAL.plum)); add(g,new T.SphereGeometry(.016,12,10),pearl(PAL.hot),s*.11,.4,0); });
+    g.scale.setScalar(1.2); g.position.y=.03;
+    g.userData.a=(o,t,ph)=>{ const f=Math.sin(t*.009+ph)*.9+.2; L.rotation.y=-f; R.rotation.y=f; o.rotation.x=-.55+Math.sin(t*.0013+ph)*.12; o.rotation.z=Math.sin(t*.0008+ph)*.25; }; return g; };
 
+  /* cell: iridescent soap-film membrane, textured nucleus, ER ribbons, mitochondria, golgi, ribosomes */
   B.cell=v=>{ const g=new T.Group();
-    const mem=add(g,new T.SphereGeometry(.5,48,32),mat(v==="mint"?PAL.mint:PAL.pink,{transparent:true,opacity:.34,depthWrite:false,roughness:.15,side:T.DoubleSide})); mem.renderOrder=2;
-    add(g,new T.SphereGeometry(.17,32,24),mat(PAL.violet),.05,.04,0);
-    add(g,new T.SphereGeometry(.06,20,14),mat(PAL.hot),.1,.08,.12);
-    const mi=lathe([[0,-.09],[.035,-.075],[.045,0],[.035,.075],[0,.09]],20);
-    [[-.24,-.12,.12,.6],[.2,-.22,-.1,-.4],[-.12,.24,-.14,1.2],[-.26,.1,-.12,2]].forEach(([a,b,c,r],i)=>{ const m=add(g,mi,mat(i%2?PAL.coral:PAL.butter),a,b,c); m.rotation.set(r,r*.6,r*1.3); });
-    const rb=new T.SphereGeometry(.018,8,6); for(let i=0;i<28;i++){ const p=fib(28,i).multiplyScalar(.28+(i%3)*.05); add(g,rb,mat(PAL.plum,{roughness:.5}),p.x,p.y,p.z); }
+    const back=add(g,new T.SphereGeometry(.49,48,32),mat("#ffd3e8",{transparent:true,opacity:.25,depthWrite:false,side:T.BackSide,roughness:.4,clearcoat:0})); back.renderOrder=1;
+    add(g,new T.SphereGeometry(.17,48,32),mat(PAL.violet,{bumpMap:N2(),bumpScale:2.5,roughness:.35,sheen:.3,sheenColor:P("#d9c9ff")}),.05,.04,0);
+    add(g,new T.SphereGeometry(.055,24,16),mat(PAL.hot,{bumpMap:N1(),bumpScale:1.5}),.11,.08,.12);
+    for(let k=0;k<3;k++){ const Q=[]; for(let i=0;i<=40;i++){ const a=i/40*Math.PI*1.5+k*2, r=.22+.025*Math.sin(i*1.3)+k*.035; Q.push(new T.Vector3(.05+Math.cos(a)*r,.04+Math.sin(i*.6+k)*.05,Math.sin(a)*r)); }
+      add(g,new T.TubeGeometry(new T.CatmullRomCurve3(Q),80,.012,8,false),mat("#ff9cc8",{roughness:.3})); }
+    const crist=ctex("crist",128,64,(x,w,h)=>{ x.fillStyle="#909090"; x.fillRect(0,0,w,h); x.strokeStyle="#3a3a3a"; x.lineWidth=5; for(let i=0;i<7;i++){ x.beginPath(); x.moveTo(i*w/7+8,0); x.quadraticCurveTo(i*w/7-6,h/2,i*w/7+8,h); x.stroke(); } });
+    const mi=lathe([[0,-.095],[.03,-.085],[.045,-.04],[.047,0],[.045,.04],[.03,.085],[0,.095]],28);
+    [[-.25,-.12,.12,.6],[.2,-.22,-.1,-.4],[-.12,.25,-.14,1.2],[-.27,.1,-.12,2],[.24,.2,.12,1]].forEach(([a,b,c,r],i)=>{ const m=add(g,mi,mat(i%2?PAL.coral:"#ffb347",{bumpMap:crist,bumpScale:3,roughness:.35}),a,b,c); m.rotation.set(r,r*.6,r*1.3); });
+    for(let k=0;k<3;k++){ const d=add(g,new T.TorusGeometry(.07-k*.012,.012,10,32,Math.PI*1.2),mat(PAL.sky,{roughness:.3}),-.2,-.05+k*.03,.18); d.rotation.set(1.2,.2,.6); }
+    const rb=new T.SphereGeometry(.014,8,6); for(let i=0;i<40;i++){ const p=fib(40,i).multiplyScalar(.27+(i%4)*.045); add(g,rb,mat(PAL.plum,{roughness:.4}),p.x,p.y,p.z); }
+    const mem=add(g,new T.SphereGeometry(.5,64,40),mat(v==="mint"?PAL.mint:"#ff9fca",{transparent:true,opacity:.3,depthWrite:false,roughness:.05,clearcoat:1,iridescence:1,iridescenceIOR:1.3,iridescenceThicknessRange:[200,700],envMapIntensity:1}));
+    mem.renderOrder=3;
     g.userData.a=(o,t,ph)=>{ o.rotation.y=t*.00025+ph; o.rotation.x=Math.sin(t*.0006+ph)*.3; }; return g; };
 
-  B.virus=v=>{ const g=new T.Group(); add(g,new T.IcosahedronGeometry(.3,4),mat(v==="pink"?PAL.pink:PAL.lilac,{roughness:.35}));
-    const st=new T.CylinderGeometry(.014,.014,.13,8), tp=new T.SphereGeometry(.042,16,12), n=32;
-    for(let i=0;i<n;i++){ const d=fib(n,i), s=add(g,st,mat(PAL.cream)); s.position.copy(d).multiplyScalar(.35); s.quaternion.setFromUnitVectors(UP,d); add(g,tp,mat(i%3?PAL.hot:PAL.butter)).position.copy(d).multiplyScalar(.43); }
+  /* virus: bumpy capsid with glycoprotein spikes (stalk + three-lobed crown) */
+  B.virus=v=>{ const g=new T.Group(); add(g,new T.IcosahedronGeometry(.29,6),mat(v==="pink"?"#ff8cc0":"#b49cff",{bumpMap:N2(),bumpScale:3,roughness:.4,sheen:.3,sheenColor:P("#ffd6ea")}));
+    const st=new T.CylinderGeometry(.011,.016,.13,10), lobe=new T.SphereGeometry(.022,14,10), n=38, cm=mat(v==="pink"?PAL.violet:PAL.hot,{roughness:.3}), cm2=mat(PAL.butter,{roughness:.3}), sm=mat("#ffe7f2",{roughness:.4});
+    for(let i=0;i<n;i++){ const d=fib(n,i), q=new T.Quaternion().setFromUnitVectors(UP,d), s=add(g,st,sm); s.position.copy(d).multiplyScalar(.345); s.quaternion.copy(q);
+      for(let k=0;k<3;k++){ const a=k/3*Math.PI*2, off=new T.Vector3(Math.cos(a)*.016,0,Math.sin(a)*.016).applyQuaternion(q); add(g,lobe,i%5?cm:cm2).position.copy(d).multiplyScalar(.425).add(off); } }
     g.userData.a=(o,t,ph)=>{ o.rotation.y=t*.0003+ph; o.rotation.z=t*.00018; }; return g; };
 
-  B.bacterium=v=>{ const g=new T.Group(), b=new T.Group(); g.add(b); const pts=[]; for(let i=0;i<=10;i++){ const a=-Math.PI/2+i/10*Math.PI/2; pts.push([Math.cos(a)*.15,-.24+Math.sin(a)*.15]); } for(let i=0;i<=10;i++){ const a=i/10*Math.PI/2; pts.push([Math.cos(a)*.15,.24+Math.sin(a)*.15]); }
-    add(b,lathe(pts,40),mat(v==="lilac"?PAL.lilac:PAL.mint,{roughness:.28}));
-    const bump=new T.SphereGeometry(.03,12,8); for(let i=0;i<14;i++){ const a=i*2.4, y=-.26+(i/14)*.52; add(b,bump,mat("#ffffff",{roughness:.4}),Math.cos(a)*.148,y,Math.sin(a)*.148).scale.set(1,1.6,.5); }
-    for(let k=0;k<2;k++){ const P=[]; for(let i=0;i<=12;i++){ const s=i/12; P.push(new T.Vector3(Math.sin(s*9+k*2)*.05+(k-1)*.04,-.36-s*.42,Math.cos(s*9+k)*.04)); } add(b,new T.TubeGeometry(new T.CatmullRomCurve3(P),40,.008,6,false),mat(PAL.fern)); }
-    b.rotation.z=.9; b.scale.setScalar(1.15);
+  /* bacterium: rod with bumpy surface, pili and wavy flagella */
+  B.bacterium=v=>{ const g=new T.Group(), b=new T.Group(); g.add(b); const pts=[]; for(let i=0;i<=12;i++){ const a=-Math.PI/2+i/12*Math.PI/2; pts.push([Math.cos(a)*.15,-.24+Math.sin(a)*.15]); } for(let i=0;i<=12;i++){ const a=i/12*Math.PI/2; pts.push([Math.cos(a)*.15,.24+Math.sin(a)*.15]); }
+    add(b,lathe(pts,48),mat(v==="lilac"?PAL.lilac:PAL.mint,{bumpMap:N2(),bumpScale:2.5,roughness:.3,sheen:.25,sheenColor:P("#ffffff")}));
+    const pil=new T.CylinderGeometry(.005,.004,.06,6), pm=mat(v==="lilac"?"#8f72f0":"#2fb88a",{roughness:.4});
+    for(let i=0;i<40;i++){ const a=rnd()*Math.PI*2, y=-.26+rnd()*.52, d=new T.Vector3(Math.cos(a),0,Math.sin(a)); const m=add(b,pil,pm,d.x*.18,y,d.z*.18); m.quaternion.setFromUnitVectors(UP,d); }
+    for(let k=0;k<3;k++){ const Q=[]; for(let i=0;i<=16;i++){ const s=i/16; Q.push(new T.Vector3(Math.sin(s*10+k*2)*.045+(k-1)*.035,-.38-s*.5,Math.cos(s*10+k)*.035)); } add(b,new T.TubeGeometry(new T.CatmullRomCurve3(Q),60,.0065,8,false),mat(PAL.fern,{roughness:.35})); }
+    b.rotation.z=.9; b.scale.setScalar(1.1);
     g.userData.a=(o,t,ph)=>{ o.rotation.y=t*.0004+ph; o.rotation.x=Math.sin(t*.0008+ph)*.25; }; return g; };
 
-  B.mushroom=v=>{ const g=new T.Group(); const capC=v==="lilac"?PAL.lilac:v==="butter"?PAL.butter:PAL.rose;
-    const cap=add(g,new T.SphereGeometry(1,40,20,0,Math.PI*2,0,Math.PI*.56),mat(capC)); cap.scale.set(.42,.3,.42); cap.position.y=.12;
-    const und=add(g,new T.CircleGeometry(.4,40),mat("#ffe4ee",{roughness:.6,side:T.DoubleSide})); und.rotation.x=Math.PI/2; und.position.y=.065;
-    add(g,lathe([[0,-.42],[.12,-.42],[.13,-.36],[.11,-.18],[.09,.0],[.085,.1],[0,.1]],32),mat(PAL.cream,{roughness:.45}));
-    const dg=new T.SphereGeometry(.045,16,10); for(let i=0;i<11;i++){ const d=fib(22,i); if(d.y<.12) continue; const m=add(g,dg,mat("#ffffff",{roughness:.4}),d.x*.42,.12+d.y*.3,d.z*.42); m.scale.y=.4; m.lookAt(m.position.x*2,(m.position.y-.12)*3+.12,m.position.z*2); }
+  /* mushroom: glossy speckled cap, gilled underside, ringed fibrous stem */
+  B.mushroom=v=>{ const g=new T.Group(); const capC=v==="lilac"?"#9a7bff":v==="butter"?"#ffbf2e":"#ff3f7a";
+    const cap=add(g,new T.SphereGeometry(1,64,32,0,Math.PI*2,0,Math.PI*.56),mat(capC,{bumpMap:N2(),bumpScale:1.5,roughness:.24})); cap.scale.set(.42,.3,.42); cap.position.y=.12;
+    const gills=ctex("gills",256,256,(x,w,h)=>{ x.fillStyle="#ffe9f1"; x.fillRect(0,0,w,h); x.strokeStyle="#e6b3c8"; x.lineWidth=1.4; for(let i=0;i<120;i++){ const a=i/120*Math.PI*2; x.beginPath(); x.moveTo(w/2+Math.cos(a)*18,h/2+Math.sin(a)*18); x.lineTo(w/2+Math.cos(a)*w/2,h/2+Math.sin(a)*h/2); x.stroke(); } },true);
+    const und=add(g,new T.CircleGeometry(.405,64),new T.MeshPhysicalMaterial({map:gills,bumpMap:gills,bumpScale:.8,roughness:.7,side:T.DoubleSide})); und.rotation.x=Math.PI/2; und.position.y=.066;
+    add(g,lathe([[0,-.42],[.13,-.42],[.14,-.37],[.115,-.2],[.095,0],[.088,.1],[0,.1]],40),mat("#f6ddc8",{bumpMap:N1(),bumpScale:2,roughness:.6,clearcoat:.2,sheen:.25,sheenColor:P("#ffffff")}));
+    const ring=add(g,new T.TorusGeometry(.098,.012,10,40),mat("#fbe8da",{roughness:.55})); ring.rotation.x=Math.PI/2; ring.position.y=-.02;
+    const dg=new T.SphereGeometry(.04,18,12), dm=mat("#ffffff",{roughness:.45,bumpMap:N1(),bumpScale:1});
+    for(let i=0;i<26;i++){ const d=fib(48,i); if(d.y<.1) continue; const s=.6+rnd()*.7; const m=add(g,dg,dm,d.x*.42,.12+d.y*.3,d.z*.42); m.scale.set(s,s*.4,s); m.quaternion.setFromUnitVectors(UP,new T.Vector3(d.x/.42,d.y/.3,d.z/.42).normalize()); }
     g.userData.a=(o,t,ph)=>{ o.rotation.y=Math.sin(t*.0005+ph)*.6; o.rotation.z=Math.sin(t*.0012+ph)*.08; }; return g; };
 
+  /* ladybird: lacquered elytra with seam and spots, pronotum, legs, antennae */
   B.ladybird=v=>{ const g=new T.Group(), b=new T.Group(); g.add(b); const A=.3,Bh=.24,C=.36;
-    const sh=add(b,new T.SphereGeometry(1,40,24,0,Math.PI*2,0,Math.PI/2),mat(v==="pink"?PAL.hot:PAL.red,{roughness:.22})); sh.scale.set(A,Bh,C);
-    const seam=[]; for(let i=0;i<=24;i++){ const th=-Math.PI/2+i/24*Math.PI; seam.push(new T.Vector3(0,Math.cos(th)*Bh+.004,Math.sin(th)*C)); } add(b,new T.TubeGeometry(new T.CatmullRomCurve3(seam),40,.007,6,false),mat(PAL.ink));
-    const sp=new T.SphereGeometry(.052,18,10);
-    [[.5,.62,.35],[-.5,.62,.35],[.62,.45,-.45],[-.62,.45,-.45],[.35,.85,-.1],[-.35,.85,-.1],[.25,.5,.78],[-.25,.5,.78]].forEach(([x,y,z])=>{ const d=new T.Vector3(x,y,z).normalize(), p=new T.Vector3(d.x*A,d.y*Bh,d.z*C), n=new T.Vector3(d.x/A,d.y/Bh,d.z/C).normalize(); const m=add(b,sp,mat(PAL.ink,{roughness:.3}),p.x,p.y,p.z); m.quaternion.setFromUnitVectors(UP,n); m.scale.set(1,.3,1); });
-    const hd=add(b,new T.SphereGeometry(.13,24,16,0,Math.PI*2,0,Math.PI/2),mat(PAL.ink,{roughness:.35}),0,0,.33); hd.scale.set(1,.85,.8);
-    [-1,1].forEach(s=>{ add(b,new T.SphereGeometry(.028,12,8),mat("#ffffff"),s*.055,.07,.425); const c=new T.QuadraticBezierCurve3(new T.Vector3(s*.04,.08,.4),new T.Vector3(s*.08,.16,.46),new T.Vector3(s*.13,.15,.52)); add(b,new T.TubeGeometry(c,12,.006,6,false),mat(PAL.ink)); });
-    const bel=add(b,new T.CircleGeometry(1,32),mat(PAL.ink,{side:T.DoubleSide})); bel.rotation.x=Math.PI/2; bel.scale.set(A,C,1);
-    b.position.y=-.05; b.rotation.x=.7; b.scale.setScalar(1.25);
+    const sh=add(b,new T.SphereGeometry(1,64,32,0,Math.PI*2,0,Math.PI/2),mat(v==="pink"?PAL.hot:PAL.red,{roughness:.14,clearcoatRoughness:.05,bumpMap:N1(),bumpScale:.4})); sh.scale.set(A,Bh,C);
+    const seam=[]; for(let i=0;i<=24;i++){ const th=-Math.PI/2+i/24*Math.PI; seam.push(new T.Vector3(0,Math.cos(th)*Bh+.003,Math.sin(th)*C)); } add(b,new T.TubeGeometry(new T.CatmullRomCurve3(seam),40,.006,6,false),mat(PAL.ink));
+    const sp=new T.SphereGeometry(.05,20,12), spm=mat(PAL.ink,{roughness:.2});
+    [[.5,.62,.35],[-.5,.62,.35],[.62,.45,-.45],[-.62,.45,-.45],[.35,.85,-.1],[-.35,.85,-.1],[.25,.5,.78],[-.25,.5,.78]].forEach(([x,y,z])=>{ const d=new T.Vector3(x,y,z).normalize(), p=new T.Vector3(d.x*A,d.y*Bh,d.z*C), n=new T.Vector3(d.x/A,d.y/Bh,d.z/C).normalize(); const m=add(b,sp,spm,p.x,p.y,p.z); m.quaternion.setFromUnitVectors(UP,n); m.scale.set(1,.28,1); });
+    const pro=add(b,new T.SphereGeometry(.14,32,16,0,Math.PI*2,0,Math.PI/2),mat(PAL.ink,{roughness:.2}),0,0,.3); pro.scale.set(1.15,.9,.75);
+    [-1,1].forEach(s=>{ const w=add(b,new T.SphereGeometry(.045,16,10),mat("#fff4f6",{roughness:.3}),s*.09,.05,.38); w.scale.set(1,.5,.8); });
+    const hd=add(b,new T.SphereGeometry(.075,24,16),mat(PAL.ink,{roughness:.25}),0,.01,.44); hd.scale.set(1,.7,.8);
+    [-1,1].forEach(s=>{ add(b,new T.SphereGeometry(.018,12,8),mat("#ffffff",{roughness:.05}),s*.04,.04,.5); const c=new T.QuadraticBezierCurve3(new T.Vector3(s*.03,.04,.5),new T.Vector3(s*.07,.12,.56),new T.Vector3(s*.12,.12,.6)); add(b,new T.TubeGeometry(c,12,.005,6,false),mat(PAL.ink));
+      for(let k=0;k<3;k++){ const z=.16-k*.17, Q=[new T.Vector3(s*.2,0,z),new T.Vector3(s*.33,-.02,z+.02),new T.Vector3(s*.38,-.1,z+.04)]; add(b,new T.TubeGeometry(new T.CatmullRomCurve3(Q),10,.009,6,false),mat(PAL.ink,{roughness:.3})); } });
+    const bel=add(b,new T.CircleGeometry(1,40),mat(PAL.ink,{side:T.DoubleSide})); bel.rotation.x=Math.PI/2; bel.scale.set(A,C,1);
+    b.position.y=-.05; b.rotation.x=.7; b.scale.setScalar(1.2);
     g.userData.a=(o,t,ph)=>{ o.rotation.y=Math.sin(t*.0006+ph)*.7; }; return g; };
 
-  B.rbc=v=>{ const g=new T.Group(), R=.48, P=[]; const z=r=>{ const q=r/R; return R*.5*Math.sqrt(Math.max(0,1-q*q))*(.207+2.003*q*q-1.123*q*q*q*q); };
-    for(let i=0;i<=24;i++){ const r=R*i/24; P.push([r,z(r)]); } for(let i=24;i>=0;i--){ const r=R*i/24; P.push([r,-z(r)]); }
-    P[0][0]=.0001; P[P.length-1][0]=.0001;
-    const geo=lathe(P,56), pp=geo.attributes.position, cc=[], cIn=new T.Color("#d81f45").convertSRGBToLinear(), cOut=new T.Color(v==="pink"?"#ff7aa2":"#ff7d86").convertSRGBToLinear();
-    for(let i=0;i<pp.count;i++){ const q=Math.min(1,Math.hypot(pp.getX(i),pp.getZ(i))/R), c=cIn.clone().lerp(cOut,Math.pow(q,.8)); cc.push(c.r,c.g,c.b); }
+  /* red blood cell: true biconcave profile, deep centre, satin surface */
+  B.rbc=v=>{ const g=new T.Group(), R=.48, Pp=[]; const z=r=>{ const q=r/R; return R*.5*Math.sqrt(Math.max(0,1-q*q))*(.207+2.003*q*q-1.123*q*q*q*q); };
+    for(let i=0;i<=32;i++){ const r=R*Math.sin(i/32*Math.PI/2); Pp.push([r,z(r)]); } for(let i=32;i>=0;i--){ const r=R*Math.sin(i/32*Math.PI/2); Pp.push([r,-z(r)]); }
+    Pp[0][0]=.0001; Pp[Pp.length-1][0]=.0001;
+    const geo=lathe(Pp,72), pp=geo.attributes.position, cc=[], cIn=P("#b3102f"), cOut=P(v==="pink"?"#ff6f98":"#ff5a6a");
+    for(let i=0;i<pp.count;i++){ const q=Math.min(1,Math.hypot(pp.getX(i),pp.getZ(i))/R), c=cIn.clone().lerp(cOut,Math.pow(q,.7)); cc.push(c.r,c.g,c.b); }
     geo.setAttribute("color",new T.Float32BufferAttribute(cc,3));
-    add(g,geo,new T.MeshPhysicalMaterial({vertexColors:true,roughness:.3,clearcoat:1,clearcoatRoughness:.12,envMapIntensity:.62}));
-    g.userData.a=(o,t,ph)=>{ o.rotation.x=.5+Math.sin(t*.0007+ph)*.25; o.rotation.z=t*.0003+ph; }; return g; };
+    add(g,geo,new T.MeshPhysicalMaterial({vertexColors:true,roughness:.36,clearcoat:.8,clearcoatRoughness:.2,sheen:.3,sheenColor:P("#ff9aab"),sheenRoughness:.4,envMapIntensity:.55}));
+    g.userData.a=(o,t,ph)=>{ o.rotation.x=1.1+Math.sin(t*.0007+ph)*.22; o.rotation.z=t*.0003+ph; }; return g; };
 
-  B.pollen=v=>{ const g=new T.Group(); add(g,new T.IcosahedronGeometry(.32,4),mat(v==="pink"?PAL.pink:PAL.butter,{roughness:.45}));
-    const sp=new T.ConeGeometry(.04,.12,10); for(let i=0;i<46;i++){ const d=fib(46,i), m=add(g,sp,mat(v==="pink"?PAL.blush:"#ffe9a8",{roughness:.4})); m.position.copy(d).multiplyScalar(.36); m.quaternion.setFromUnitVectors(UP,d); }
+  /* pollen grain: sculpted exine with spines */
+  B.pollen=v=>{ const g=new T.Group(); add(g,new T.IcosahedronGeometry(.31,6),mat(v==="pink"?"#ff8cc0":"#ffcf3d",{bumpMap:N2(),bumpScale:4,roughness:.5,sheen:.3,sheenColor:P("#fff0b3")}));
+    const sp=new T.ConeGeometry(.032,.12,12), sm=mat(v==="pink"?"#ffd3e6":"#fff0b3",{roughness:.35}); for(let i=0;i<56;i++){ const d=fib(56,i), m=add(g,sp,sm); m.position.copy(d).multiplyScalar(.35); m.quaternion.setFromUnitVectors(UP,d); }
     g.userData.a=(o,t,ph)=>{ o.rotation.y=t*.00035+ph; o.rotation.x=t*.0002; }; return g; };
 
   /* ---------- wire slots ---------- */
-  const items=[]; slots.forEach((el,i)=>{ const b=B[el.dataset.o]; if(!b) return; let model; try{ model=b(el.dataset.v); }catch(e){ console.error(e); return; }
+  const items=[];
+  slots.forEach((el,i)=>{ const b=B[el.dataset.o]; if(!b) return; let model; try{ model=b(el.dataset.v); }catch(e){ console.error(e); return; }
     const outer=new T.Group(), tilt=new T.Group(); tilt.add(model); outer.add(tilt);
     const r=(el.dataset.r||"0,0,0").split(",").map(n=>(+n||0)*Math.PI/180); tilt.rotation.set(r[0],r[1],r[2]);
     outer.visible=false; scene.add(outer); items.push({el,outer,model,ph:(i*1.7)%6.28,sp:+(el.dataset.sp||1),seen:0}); });
-  el3dReady();
-  function el3dReady(){ root.classList.add("has-3d"); }
+  root.classList.add("has-3d");
 
   let px=0,py=0,tx=0,ty=0,lastY=scrollY,vel=0,W=innerWidth,H=innerHeight,running=true,raf=0;
   addEventListener("pointermove",e=>{ tx=e.clientX/W-.5; ty=e.clientY/H-.5; },{passive:true});
