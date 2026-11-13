@@ -6,7 +6,8 @@ A multi-page website for Sir Umer Soni (O Level Biology 5090 and IGCSE Biology 0
 
 | File | What it is |
 |---|---|
-| `index.html` | Home: microscope-lens hero, diagram-first scroll story, courses, 19-topic slide box, study tools, Instagram/Facebook |
+| `index.html` | Home: arch portrait hero, diagram-first scroll story, crash course teaser, courses, five syllabus areas, 19-topic slide box, study tools, Instagram/Facebook |
+| `crash-course.html` | O Level Biology crash course, shown as coming soon: what it builds on, the method, the papers, a WhatsApp notify form and FAQ |
 | `courses.html` | O Level 5090 (four papers), 3-month O Level course, IGCSE 0610 Core vs Extended, ways to learn |
 | `syllabus.html` | All 19 (5090) and 21 (0610) topics with sub-topics, filters, search, a progress ring and a definition for each topic |
 | `past-papers.html` | 5090 and 0610 question papers + mark schemes (2016–2026), tracker with scores, exam timer with focus mode |
@@ -15,16 +16,17 @@ A multi-page website for Sir Umer Soni (O Level Biology 5090 and IGCSE Biology 0
 | `about.html` | About Sir Umer |
 | `contact.html` | Enrolment form that opens WhatsApp, contacts, FAQ |
 | `404.html` | Not-found page |
-| `umer-soni.webp` | Portrait cutout (transparent background) |
+| `umer-soni.webp` | Portrait cutout (transparent background, 1086×1448) |
 | `umer-soni.jpg` | Share image for WhatsApp/social previews (1200×630) |
 | `vercel.json`, `robots.txt`, `sitemap.xml` | Hosting and search files |
 
 ## Before going live: change these
 
 1. **WhatsApp number.** Search any page for `const WA=` and set Sir Umer's own number (country code, no `+` or spaces), plus `WA_DISPLAY`. It is currently the Cambridge Online / SWK admissions number, +92 346 3311647. The footer and contact page links use the same number, so search for `923463311647` and replace every occurrence.
-2. **Notes prices and titles** are demo values. Search for `PRODUCTS` in any page.
-3. **3-month course week plan** (Courses page) is labelled as an example plan. Replace it with the real schedule.
-4. **Domain.** `sitemap.xml`, `robots.txt` and the page `<head>` use `https://sirumersoni.vercel.app`. Change these if you use another domain.
+2. **Crash course.** `crash-course.html` says dates, timings and fees are coming soon. When they are announced, update that page and the home page teaser.
+3. **Notes prices and titles** are demo values. Search for `PRODUCTS` in any page.
+4. **3-month course week plan** (Courses page) is labelled as an example plan. Replace it with the real schedule.
+5. **Domain.** `sitemap.xml`, `robots.txt` and the page `<head>` use `https://sirumersoni.vercel.app`. Change these if you use another domain.
 
 Because every page carries its own copy of the shared code, a change like the WhatsApp number has to be made in every HTML file. Find-and-replace across the folder does this in one go.
 
@@ -37,7 +39,9 @@ Because every page carries its own copy of the shared code, a change like the Wh
 
 - Progress (tracker, ticked topics, known definitions, cart, theme, sound) is saved in the visitor's own browser only.
 - Past papers open from PapaCambridge. A few recent or rare variants may not be uploaded there yet.
-- Libraries load from CDNs: GSAP, Lenis and Three.js. Fonts: Unbounded, Hanken Grotesk, IBM Plex Mono.
+- Libraries load from CDNs: GSAP, Lenis and Three.js (r128). Fonts: Fraunces and Figtree.
+- Light theme only. The 3D organisms (DNA, flowers, butterflies, leaves, cells, viruses, bacteria, mushrooms, ladybirds, red blood cells, pollen) are built in code with Three.js. Each one sits in an invisible `<i class="o3" data-o="…">` slot in the page, so its position on mobile and desktop is set in the markup with CSS variables (`--x`, `--y`, `--w`, and `--mx`, `--my`, `--mw` for phones). Without WebGL the slots are skipped and the page still works.
+- The slim bar at the very bottom of every page credits Nexlyr Solutions (nexlyr.solutions).
 
 ## Sources
 
