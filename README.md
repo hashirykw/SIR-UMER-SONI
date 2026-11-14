@@ -17,7 +17,8 @@ A multi-page website for Sir Umer Soni (O Level Biology 5090 and IGCSE Biology 0
 | `contact.html` | Enrolment form that opens WhatsApp, contacts, FAQ |
 | `404.html` | Not-found page |
 | `umer-soni.webp` | Portrait cutout (transparent background, 1086×1448) |
-| `umer-soni.jpg` | Share image for WhatsApp/social previews (1200×630) |
+| `og-*.jpg` | Share images for WhatsApp, Instagram, Facebook and X previews, one per page (1200×630), with Sir Umer's photo and the 3D organisms |
+| `umer-soni.jpg` | Older general share image (kept for links already shared) |
 | `vercel.json`, `robots.txt`, `sitemap.xml` | Hosting and search files |
 
 ## Before going live: change these
@@ -26,7 +27,7 @@ A multi-page website for Sir Umer Soni (O Level Biology 5090 and IGCSE Biology 0
 2. **Crash course.** `crash-course.html` says dates, timings and fees are coming soon. When they are announced, update that page and the home page teaser.
 3. **Notes prices and titles** are demo values. Search for `PRODUCTS` in any page.
 4. **3-month course week plan** (Courses page) is labelled as an example plan. Replace it with the real schedule.
-5. **Domain.** `sitemap.xml`, `robots.txt` and the page `<head>` use `https://sirumersoni.vercel.app`. Change these if you use another domain.
+5. **Domain.** `sitemap.xml`, `robots.txt` and the page `<head>` use `https://sir-umer-soni.nexlyr.solutions`. Every page's canonical link, share tags (`og:*`, `twitter:*`) and share image point at this domain. Change these if you use another domain.
 
 Because every page carries its own copy of the shared code, a change like the WhatsApp number has to be made in every HTML file. Find-and-replace across the folder does this in one go.
 
